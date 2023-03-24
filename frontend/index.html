@@ -1,13 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recruiters Dairy</title>
+    <script>
+        var candidatecounter = 0;
+        function registationform() {
+            candidatecounter++
+            const div1 = document.getElementById('divmain');
+
+            var fieldset =document.createElement('fieldset');
+            var legend =document.createElement('legend');
+            
+            var newcandidate = document.createElement('h4');
+            newcandidate.innerHTML = `Candidate : ${candidatecounter}`;
+            
+            var divname= document.createElement('div');
+            var newcannamelabel = document.createElement('label');
+            newcannamelabel.innerText = "Name of Candidate :"
+            var newcannameinput = document.createElement('input');
+            newcannameinput.setAttribute("style", "margin-left:35px")
+
+            var divAddress= document.createElement('div');
+            var newAddresslabel = document.createElement('label');
+            newAddresslabel.innerText = "Address of Candidate  :"
+            var newAddressinput = document.createElement('input');
+            newAddressinput.setAttribute("type", "address");
+            newAddressinput.setAttribute("style", "margin-left:20px")
+
+            var divPhone= document.createElement('div');
+            var newcanPhonelabel = document.createElement('label');
+            newcanPhonelabel.innerText = "PhoneNo of Candidate  :"
+            var newPhoneinput = document.createElement('input');
+            newPhoneinput.setAttribute("type", "phonenumber");
+            newPhoneinput.setAttribute("style", "margin-left:12px")
+
+            var divEmail= document.createElement('div');
+            var newcanEmaillabel = document.createElement('label');
+            newcanEmaillabel.innerText = "Email of Candidate :"
+            var newcanEmailinput = document.createElement('input');
+            newcanEmailinput.setAttribute("type", "email");
+            newcanEmailinput.setAttribute("style", "margin-left:32px")
+            
+
+            var newcantextAreainput = document.createElement('textarea');
+            newcantextAreainput.innerText="Add Notes"
+            
+
+
+            div1.append(fieldset);
+            fieldset.append(legend);
+            legend.append(newcandidate)
+           
+            fieldset.append(divname);
+            divname.append(newcannamelabel);
+            divname.append(newcannameinput);
+            
+
+            fieldset.append(divAddress);
+            divAddress.append(newAddresslabel);
+            divAddress.append(newAddressinput);
+            
+            fieldset.append(divPhone)
+            divPhone.append(newcanPhonelabel);
+            divPhone.append(newPhoneinput);
+           
+            fieldset.append(divEmail)
+            divEmail.append(newcanEmaillabel);
+            divEmail.append(newcanEmailinput);
+
+            fieldset.append(newcantextAreainput);
+        }
+
+    </script>
 </head>
-<body>
-    <p>hellow world</p>
-    <input type="text">
+
+<body ">
+    <label for="jobId">Job Id</label>
+    <input style="margin-left: 8px;" id="jobId" type="number">&nbsp;&nbsp;
+    <label for="jobDescription">Job Description</label> 
+    <textarea style="margin-left: 8px;" name="" id="jobDescription" cols="20" rows="1"></textarea>    
+    <br><br>
+    <button onclick=" registationform()">Add new candidate</button>
+    <div id="divmain"></div>
+
+
 </body>
+
 </html>
