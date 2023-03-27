@@ -7,85 +7,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recruiters Dairy</title>
     <script>
-        var candidatecounter = 0;
-        function registationform() {
-            candidatecounter++
+        var candidateCounter = 0;
+        function registationForm() {
+            candidateCounter++
             const div1 = document.getElementById('divmain');
 
-            var fieldset =document.createElement('fieldset');
-            var legend =document.createElement('legend');
-            
-            var newcandidate = document.createElement('h4');
-            newcandidate.innerHTML = `Candidate : ${candidatecounter}`;
-            
-            var divname= document.createElement('div');
-            var newcannamelabel = document.createElement('label');
-            newcannamelabel.innerText = "Name of Candidate :"
-            var newcannameinput = document.createElement('input');
-            newcannameinput.setAttribute("style", "margin-left:35px")
+            var fieldSet = document.createElement('fieldset');
+            var legend = document.createElement('legend');
 
-            var divAddress= document.createElement('div');
-            var newAddresslabel = document.createElement('label');
-            newAddresslabel.innerText = "Address of Candidate  :"
-            var newAddressinput = document.createElement('input');
-            newAddressinput.setAttribute("type", "address");
-            newAddressinput.setAttribute("style", "margin-left:20px")
+            var newCandidate = document.createElement('h4');
+            newCandidate.innerHTML = `Candidate : ${candidateCounter}`;
 
-            var divPhone= document.createElement('div');
-            var newcanPhonelabel = document.createElement('label');
-            newcanPhonelabel.innerText = "PhoneNo of Candidate  :"
-            var newPhoneinput = document.createElement('input');
-            newPhoneinput.setAttribute("type", "phonenumber");
-            newPhoneinput.setAttribute("style", "margin-left:12px")
+            var divName = document.createElement('div');
+            var newCanNameLabel = document.createElement('label');
+            newCanNameLabel.innerText = "Name of Candidate :"
+            var newCanNameInput = document.createElement('input');
+            newCanNameInput.setAttribute("style", "margin-left:35px")
 
-            var divEmail= document.createElement('div');
-            var newcanEmaillabel = document.createElement('label');
-            newcanEmaillabel.innerText = "Email of Candidate :"
-            var newcanEmailinput = document.createElement('input');
-            newcanEmailinput.setAttribute("type", "email");
-            newcanEmailinput.setAttribute("style", "margin-left:32px")
-            
+            var divAddress = document.createElement('div');
+            var newAddressLabel = document.createElement('label');
+            newAddressLabel.innerText = "Address of Candidate  :"
+            var newAddressInput = document.createElement('input');
+            newAddressInput.setAttribute("type", "address");
+            newAddressInput.setAttribute("style", "margin-left:20px")
 
-            var newcantextAreainput = document.createElement('textarea');
-            newcantextAreainput.innerText="Add Notes"
-            newcantextAreainput.setAttribute("cols","44");
-            
+            var divPhone = document.createElement('div');
+            var newCanPhoneLabel = document.createElement('label');
+            newCanPhoneLabel.innerText = "PhoneNo of Candidate  :"
+            var newPhoneInput = document.createElement('input');
+            newPhoneInput.setAttribute("type", "phonenumber");
+            newPhoneInput.setAttribute("style", "margin-left:12px")
+
+            var divEmail = document.createElement('div');
+            var newCanEmailLabel = document.createElement('label');
+            newCanEmailLabel.innerText = "Email of Candidate :"
+            var newCanEmailInput = document.createElement('input');
+            newCanEmailInput.setAttribute("type", "email");
+            newCanEmailInput.setAttribute("style", "margin-left:32px")
 
 
-            div1.append(fieldset);
-            fieldset.append(legend);
-            legend.append(newcandidate)
-           
-            fieldset.append(divname);
-            divname.append(newcannamelabel);
-            divname.append(newcannameinput);
-            
+            var newCanTextareaInput = document.createElement('textarea');
+            newCanTextareaInput.innerText = "Add Notes"
+            newCanTextareaInput.setAttribute("cols", "44");
 
-            fieldset.append(divAddress);
-            divAddress.append(newAddresslabel);
-            divAddress.append(newAddressinput);
-            
-            fieldset.append(divPhone)
-            divPhone.append(newcanPhonelabel);
-            divPhone.append(newPhoneinput);
-           
-            fieldset.append(divEmail)
-            divEmail.append(newcanEmaillabel);
-            divEmail.append(newcanEmailinput);
 
-            fieldset.append(newcantextAreainput);
+
+            div1.append(fieldSet);
+            fieldSet.append(legend);
+            legend.append(newCandidate)
+
+            fieldSet.append(divName);
+            divName.append(newCanNameLabel);
+            divName.append(newCanNameInput);
+
+
+            fieldSet.append(divAddress);
+            divAddress.append(newAddressLabel);
+            divAddress.append(newAddressInput);
+
+            fieldSet.append(divPhone)
+            divPhone.append(newCanPhoneLabel);
+            divPhone.append(newPhoneInput);
+
+            fieldSet.append(divEmail)
+            divEmail.append(newCanEmailLabel);
+            divEmail.append(newCanEmailInput);
+
+            fieldSet.append(newCanTextareaInput);
         }
 
     </script>
 </head>
 
 <body ">
-    <label for="jobId">Job Id</label>
+    <label for=" jobId">Job Id</label>
     <input style="margin-left: 8px;" id="jobId" type="number">&nbsp;&nbsp;
-    <label for="jobDescription">Job Description</label> 
-    <textarea style="margin-left: 8px;" name="" id="jobDescription" cols="20" rows="1"></textarea>    
+    <label for="jobDescription">Job Description</label>
+    <textarea style="margin-left: 8px;" name="" id="jobDescription" cols="20" rows="1"></textarea>
     <br><br>
-    <button onclick=" registationform()">Add new candidate</button>
+    <button onclick=" registationForm()">Add new candidate</button>
     <div id="divmain"></div>
 
 
