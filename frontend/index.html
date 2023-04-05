@@ -1,12 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobs List</title>
 </head>
+
 <body>
     <button onclick="window.location='addJob.html'">Add Job</button>
+    <div id="tableJobs">
+
+    </div>
+
 </body>
+<script>
+    (() => {
+        var jobs = JSON.parse(localStorage.getItem('jobs'));
+        if (!jobs) {
+            return
+        }
+        const tableJobs = document.getElementById('tableJobs');
+        const table = document.createElement('table');
+        table.setAttribute("border", "2");
+
+        const trh1 = document.createElement('tr');
+        const tdh1 = document.createElement('td')
+        tableHeader1 = document.createElement('th4');
+        tableHeader1.innerText = 'JobId';
+        tdh1.appendChild(tableHeader1);
+        trh1.appendChild(tdh1);
+
+        tableHeader2 = document.createElement('th4');
+        tableHeader2.innerText = 'JobDescription';
+        const tdh2 = document.createElement('td');
+        tdh2.appendChild(tableHeader2);
+        trh1.appendChild(tdh2);
+
+        tableHeader3 = document.createElement('th4');
+        tableHeader3.innerText = 'No of Candidates';
+        const tdh3 = document.createElement('td');
+        tdh3.appendChild(tableHeader3);
+        trh1.appendChild(tdh3);
+
+        tableHeader4 = document.createElement('th4');
+        tableHeader4.innerText = 'Edit';
+        const tdh4 = document.createElement('td');
+        tdh4.appendChild(tableHeader4);
+        trh1.appendChild(tdh4);
+
+        table.appendChild(trh1);
+
+        const tablebody = document.createElement('tbody');
+        for (let i = 0; i < jobs.length; i++) {
+            const tr = document.createElement("tr");
+            const td = document.createElement("td");
+            const text1 = document.createTextNode(jobs[i].jobid);
+            td.appendChild(text1);
+            const td1 = document.createElement("td");
+            const text2 = document.createTextNode(jobs[i].description);
+            td1.appendChild(text2);
+            const td2 = document.createElement("td");
+            const text3 = document.createTextNode(jobs[i].candidates.length);
+            td2.appendChild(text3);
+            const td3 = document.createElement("td");
+            const editButton = document.createElement("button");
+            editButton.innerText = "Edit";
+            editButton.setAttribute("onclick", "window.location='addJob.html'");
+            td3.appendChild(editButton);
+            tr.appendChild(td);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tablebody.appendChild(tr);
+        }
+        table.appendChild(tablebody);
+        tableJobs.appendChild(table);
+    })()
+
+
+
+</script>
+
 </html>
