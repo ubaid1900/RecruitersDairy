@@ -40,7 +40,21 @@
             });
             objectJob.candidates = candidates
             console.log(objectJob)
+
+            let jobs = JSON.parse(localStorage.getItem('jobs'));
+
+            if (jobs) {
+                jobs.push(objectJob);
+            }
+            else {
+                jobs = [];
+
+                jobs.push(objectJob);
+            }
+
+            localStorage.setItem('jobs', JSON.stringify(jobs));
         }
+       
         var candidateCounter = 0;
         function registationForm() {
             candidateCounter++
@@ -120,7 +134,7 @@
 <body>
     <form action="" id="form1">
         <label for=" jobId">Job Id</label>
-        <input style="margin-left: 8px;" id="jobId" type="number">&nbsp;&nbsp;
+        <input style="margin-left: 8px;" id="jobId" type="number" required>&nbsp;&nbsp; 
         <label for="jobDescription">Job Description</label>
         <textarea style="margin-left: 8px;" name="" id="jobDescription" cols="20" rows="1"></textarea>
         <br><br>
