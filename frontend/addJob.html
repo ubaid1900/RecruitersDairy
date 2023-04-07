@@ -42,9 +42,27 @@
             console.log(objectJob)
 
             let jobs = JSON.parse(localStorage.getItem('jobs'));
+            if (!jobs) {
+                jobs = [];
+            }
+            let indexOfJob;
+            if (location.search.length > 0) {
+                var qureyString = location.search.substring(1);
+                var jobidSplit = qureyString.split("=");
+                var jobidValue = jobidSplit[1];
+                if (jobidValue) {
+                    indexOfJob = jobs.map((j) => {
+                        return j.jobid;
+                    }).indexOf(jobidValue);
+                }
+            }
 
             if (jobs) {
-                jobs.push(objectJob);
+                if (indexOfJob > -1) {
+                    jobs[indexOfJob] = objectJob
+                } else {
+                    jobs.push(objectJob);
+                }
             }
             else {
                 jobs = [];
@@ -56,8 +74,10 @@
         }
 
         var candidateCounter = 0;
-        function addCandidateForm() {
-
+        function addCandidateForm(candidate) {
+            if (!candidate) {
+                candidate = { name: '', address: '', email: '', phone: '', notes: '' };
+            }
             candidateCounter++
             const div1 = document.getElementById('divmain');
 
@@ -73,6 +93,7 @@
             var newCanNameInput = document.createElement('input');
             newCanNameInput.setAttribute("style", "margin-left:35px")
             newCanNameInput.setAttribute("id", "candidate" + `${candidateCounter}` + "name")
+            newCanNameInput.value = candidate.name;
 
             var divAddress = document.createElement('div');
             var newAddressLabel = document.createElement('label');
@@ -156,12 +177,20 @@
 
             var jobs = JSON.parse(localStorage.getItem('jobs'));
 
+            if (!jobs) {
+                jobs = [];
+            }
             jobs.forEach(e => {
                 if (e.jobid == jobidValue) {
-                    var elementfilljobid = document.getElementById('jobId')
+                    var elementfilljobid = document.getElementById('jobId');
+                    elementfilljobid.setAttribute('disabled', 'disabled');
                     elementfilljobid.value = e.jobid
                     var elementfilljobdes = document.getElementById('jobDescription')
                     elementfilljobdes.value = e.description
+                    e.candidates.forEach(function (candidate) {
+                        addCandidateForm(candidate);
+                    });
+                    return;
                 }
             })
         }
