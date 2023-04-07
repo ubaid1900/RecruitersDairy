@@ -67,7 +67,9 @@
             const td3 = document.createElement("td");
             const editButton = document.createElement("button");
             editButton.innerText = "Edit";
-            editButton.setAttribute("onclick", "window.location='addJob.html'");
+            editButton.addEventListener("click", function () {
+                window.location='addJob.html?jobid='+ jobs[i].jobid;   
+            } );
             td3.appendChild(editButton);
             tr.appendChild(td);
             tr.appendChild(td1);
@@ -77,10 +79,7 @@
         }
         table.appendChild(tablebody);
         tableJobs.appendChild(table);
-    })()
-
-
-
+    })();
 </script>
 
 </html>
