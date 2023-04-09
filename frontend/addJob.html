@@ -102,6 +102,7 @@
             newAddressInput.setAttribute("type", "address");
             newAddressInput.setAttribute("style", "margin-left:20px")
             newAddressInput.setAttribute("id", "candidate" + `${candidateCounter}` + "address")
+            newAddressInput.value=candidate.address;
 
             var divPhone = document.createElement('div');
             var newCanPhoneLabel = document.createElement('label');
@@ -110,6 +111,7 @@
             newPhoneInput.setAttribute("type", "phonenumber");
             newPhoneInput.setAttribute("style", "margin-left:12px")
             newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone")
+            newPhoneInput.value=candidate.phone;
 
             var divEmail = document.createElement('div');
             var newCanEmailLabel = document.createElement('label');
@@ -118,12 +120,13 @@
             newCanEmailInput.setAttribute("type", "email");
             newCanEmailInput.setAttribute("style", "margin-left:32px")
             newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email")
+            newCanEmailInput.value=candidate.email;
 
 
             var newCanTextareaInput = document.createElement('textarea');
             newCanTextareaInput.innerText = "Add Notes"
             newCanTextareaInput.setAttribute("cols", "44");
-
+            newCanTextareaInput.value=candidate.notes
 
 
             div1.append(fieldSet);
