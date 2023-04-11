@@ -9,37 +9,36 @@
     <script>
         function save() {
             const objectJob = {};
-            const form = document.getElementById("form1")
-            const jobId1 = form.querySelector("input").value
-            const jobDescription = form.querySelector("textarea").value
-            objectJob.jobid = jobId1
-            objectJob.description = jobDescription
+            const form = document.getElementById("form1");
+            const jobId1 = form.querySelector("input").value;
+            const jobDescription = form.querySelector("textarea").value;
+            objectJob.jobid = jobId1;
+            objectJob.description = jobDescription;
             const candidates = [];
             const div1 = document.getElementById('divmain');
             div1.querySelectorAll("fieldset").forEach(i => {
-                const objectCandidate = {}
-                const e = i.querySelectorAll("div")
+                const objectCandidate = {};
+                const e = i.querySelectorAll("div");
                 e.forEach(m => {
-                    const canInput = m.querySelector('input')
+                    const canInput = m.querySelector('input');
                     if (canInput.id.endsWith('name')) {
-                        objectCandidate.name = canInput.value
+                        objectCandidate.name = canInput.value;
                     }
                     if (canInput.id.endsWith('phone')) {
-                        objectCandidate.phone = canInput.value
+                        objectCandidate.phone = canInput.value;
                     }
                     if (canInput.id.endsWith('address')) {
-                        objectCandidate.address = canInput.value
+                        objectCandidate.address = canInput.value;
                     }
                     if (canInput.id.endsWith('email')) {
-                        objectCandidate.email = canInput.value
+                        objectCandidate.email = canInput.value;
                     }
                 });
-                const canText = i.querySelector('textarea').value
-                objectCandidate.notes = canText
-                candidates.push(objectCandidate)
+                const canText = i.querySelector('textarea').value;
+                objectCandidate.notes = canText;
+                candidates.push(objectCandidate);
             });
-            objectJob.candidates = candidates
-            console.log(objectJob)
+            objectJob.candidates = candidates;
 
             let jobs = JSON.parse(localStorage.getItem('jobs'));
             if (!jobs) {
@@ -59,7 +58,7 @@
 
             if (jobs) {
                 if (indexOfJob > -1) {
-                    jobs[indexOfJob] = objectJob
+                    jobs[indexOfJob] = objectJob;
                 } else {
                     jobs.push(objectJob);
                 }
@@ -102,31 +101,31 @@
             newAddressInput.setAttribute("type", "address");
             newAddressInput.setAttribute("style", "margin-left:20px")
             newAddressInput.setAttribute("id", "candidate" + `${candidateCounter}` + "address")
-            newAddressInput.value=candidate.address;
+            newAddressInput.value = candidate.address;
 
             var divPhone = document.createElement('div');
             var newCanPhoneLabel = document.createElement('label');
             newCanPhoneLabel.innerText = "PhoneNo of Candidate  :"
             var newPhoneInput = document.createElement('input');
             newPhoneInput.setAttribute("type", "phonenumber");
-            newPhoneInput.setAttribute("style", "margin-left:12px")
+            newPhoneInput.setAttribute("style", "margin-left:12px");
             newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone")
-            newPhoneInput.value=candidate.phone;
+            newPhoneInput.value = candidate.phone;
 
             var divEmail = document.createElement('div');
             var newCanEmailLabel = document.createElement('label');
             newCanEmailLabel.innerText = "Email of Candidate :"
             var newCanEmailInput = document.createElement('input');
             newCanEmailInput.setAttribute("type", "email");
-            newCanEmailInput.setAttribute("style", "margin-left:32px")
+            newCanEmailInput.setAttribute("style", "margin-left:32px");
             newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email")
-            newCanEmailInput.value=candidate.email;
+            newCanEmailInput.value = candidate.email;
 
 
             var newCanTextareaInput = document.createElement('textarea');
-            newCanTextareaInput.innerText = "Add Notes"
+            newCanTextareaInput.innerText = "Add Notes";
             newCanTextareaInput.setAttribute("cols", "44");
-            newCanTextareaInput.value=candidate.notes
+            newCanTextareaInput.value = candidate.notes;
 
 
             div1.append(fieldSet);
