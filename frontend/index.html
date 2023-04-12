@@ -10,12 +10,48 @@
 
 <body>
     <button onclick="window.location='addJob.html'">Add Job</button>
+    <a id="export" href="#" onclick="fnExcelReport();">Export</a>
+
     <div id="tableJobs">
 
     </div>
 
+
 </body>
 <script>
+    function fnExcelReport() {
+        var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+        tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+
+        tab_text = tab_text + '<x:Name>Test Sheet</x:Name>';
+
+        tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+        tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+
+        tab_text = tab_text + "<table border='1px'>";
+        tab_text = tab_text + excelsheet();
+        tab_text = tab_text + '</table></body></html>';
+
+        var data_type = 'data:application/vnd.ms-excel';
+
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+            if (window.navigator.msSaveBlob) {
+                var blob = new Blob([tab_text], {
+                    type: "application/csv;charset=utf-8;"
+                });
+                navigator.msSaveBlob(blob, 'Test file.xls');
+            }
+        } else {
+            document.getElementById('export').setAttribute('href'
+                , data_type + ', ' + encodeURIComponent(tab_text));
+            document.getElementById('export').setAttribute('download', 'jobs.xls');
+        }
+
+    }
+
     (() => {
         var jobs = JSON.parse(localStorage.getItem('jobs'));
         if (!jobs) {
@@ -68,8 +104,8 @@
             const editButton = document.createElement("button");
             editButton.innerText = "Edit";
             editButton.addEventListener("click", function () {
-                window.location='addJob.html?jobid='+ jobs[i].jobid;   
-            } );
+                window.location = 'addJob.html?jobid=' + jobs[i].jobid;
+            });
             td3.appendChild(editButton);
             tr.appendChild(td);
             tr.appendChild(td1);
@@ -80,6 +116,107 @@
         table.appendChild(tablebody);
         tableJobs.appendChild(table);
     })();
+    function excelsheet() {
+
+
+        var jobs = JSON.parse(localStorage.getItem('jobs'));
+        const tableJobs = document.getElementById('tableJobs1');
+        const table = document.createElement('table');
+        table.setAttribute("border", "2");
+
+        const trh1 = document.createElement('tr');
+        const tdh1 = document.createElement('td');
+        tableHeader1 = document.createElement('th');
+        tableHeader1.innerText = 'JobId';
+        tableHeader1.appendChild(tdh1);
+        trh1.appendChild(tableHeader1);
+
+        tableHeader2 = document.createElement('th');
+        tableHeader2.innerText = 'JobDescription';
+        const tdh2 = document.createElement('td');
+        tableHeader2.appendChild(tdh2);
+        trh1.appendChild(tableHeader2);
+
+        tableHeader3 = document.createElement('th');
+        const tdh3 = document.createElement('td');
+        tableHeader3.innerText = "Name";
+        tableHeader3.appendChild(tdh3);
+        trh1.appendChild(tableHeader3);
+
+        tableHeader4 = document.createElement('th');
+        const tdh4 = document.createElement('td');
+        tableHeader4.innerText = "Address";
+        tableHeader4.appendChild(tdh4);
+        trh1.appendChild(tableHeader4);
+
+        tableHeader5 = document.createElement('th');
+        const tdh5 = document.createElement('td');
+        tableHeader5.innerText = "Phone";
+        tableHeader5.appendChild(tdh5);
+        trh1.appendChild(tableHeader5);
+
+        tableHeader6 = document.createElement('th');
+        const tdh6 = document.createElement('td');
+        tableHeader6.innerText = "Email";
+        tableHeader6.appendChild(tdh6);
+        trh1.appendChild(tableHeader6);
+
+        tableHeader7 = document.createElement('th');
+        const tdh7 = document.createElement('td');
+        tableHeader7.innerText = "Notes";
+        tableHeader7.appendChild(tdh7);
+        trh1.appendChild(tableHeader7);
+
+        table.appendChild(trh1);
+
+        const tablebody = document.createElement('tbody');
+        for (let i = 0; i < jobs.length; i++) {
+            for (let j = 0; j < jobs[i].candidates.length; j++) {
+                const tr = document.createElement("tr");
+                const td = document.createElement("td");
+                const text1 = document.createTextNode(jobs[i].jobid);
+                console.log(jobs[i].jobid);
+                td.appendChild(text1);
+                const td1 = document.createElement("td");
+                const text2 = document.createTextNode(jobs[i].description);
+                console.log(jobs[i].description);
+                td1.appendChild(text2);
+                tr.appendChild(td);
+                tr.appendChild(td1);
+
+                const td2 = document.createElement("td");
+                const text3 = document.createTextNode(jobs[i].candidates[j].name);
+                td2.appendChild(text3);
+                tr.appendChild(td2);
+
+                const td3 = document.createElement("td");
+                const text4 = document.createTextNode(jobs[i].candidates[j].address);
+                td3.appendChild(text4);
+                tr.appendChild(td3);
+
+                const td4 = document.createElement("td");
+                const text5 = document.createTextNode(jobs[i].candidates[j].phone);
+                td4.appendChild(text5);
+                tr.appendChild(td4);
+
+                const td5 = document.createElement("td");
+                const text6 = document.createTextNode(jobs[i].candidates[j].email);
+                td5.appendChild(text6);
+                tr.appendChild(td5);
+
+                const td6 = document.createElement("td");
+                const text7 = document.createTextNode(jobs[i].candidates[j].notes);
+                td6.appendChild(text7);
+                tr.appendChild(td6);
+                tablebody.appendChild(tr);
+
+            }
+
+            table.appendChild(tablebody);
+            tableJobs1.appendChild(table);
+        }
+        return table.innerHTML;
+    };
 </script>
 
 </html>
