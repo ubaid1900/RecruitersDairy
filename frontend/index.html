@@ -120,51 +120,36 @@
 
 
         var jobs = JSON.parse(localStorage.getItem('jobs'));
-        const tableJobs = document.getElementById('tableJobs1');
         const table = document.createElement('table');
         table.setAttribute("border", "2");
 
         const trh1 = document.createElement('tr');
-        const tdh1 = document.createElement('td');
         tableHeader1 = document.createElement('th');
         tableHeader1.innerText = 'JobId';
-        tableHeader1.appendChild(tdh1);
         trh1.appendChild(tableHeader1);
 
         tableHeader2 = document.createElement('th');
         tableHeader2.innerText = 'JobDescription';
-        const tdh2 = document.createElement('td');
-        tableHeader2.appendChild(tdh2);
         trh1.appendChild(tableHeader2);
 
         tableHeader3 = document.createElement('th');
-        const tdh3 = document.createElement('td');
         tableHeader3.innerText = "Name";
-        tableHeader3.appendChild(tdh3);
         trh1.appendChild(tableHeader3);
 
         tableHeader4 = document.createElement('th');
-        const tdh4 = document.createElement('td');
         tableHeader4.innerText = "Address";
-        tableHeader4.appendChild(tdh4);
         trh1.appendChild(tableHeader4);
 
         tableHeader5 = document.createElement('th');
-        const tdh5 = document.createElement('td');
         tableHeader5.innerText = "Phone";
-        tableHeader5.appendChild(tdh5);
         trh1.appendChild(tableHeader5);
 
         tableHeader6 = document.createElement('th');
-        const tdh6 = document.createElement('td');
         tableHeader6.innerText = "Email";
-        tableHeader6.appendChild(tdh6);
         trh1.appendChild(tableHeader6);
 
         tableHeader7 = document.createElement('th');
-        const tdh7 = document.createElement('td');
         tableHeader7.innerText = "Notes";
-        tableHeader7.appendChild(tdh7);
         trh1.appendChild(tableHeader7);
 
         table.appendChild(trh1);
@@ -210,10 +195,13 @@
                 tr.appendChild(td6);
                 tablebody.appendChild(tr);
 
+                if (j % 2 == 0) {
+                    tr.setAttribute("style", "background-color:gray;");
+                }
+
             }
 
             table.appendChild(tablebody);
-            tableJobs1.appendChild(table);
         }
         return table.innerHTML;
     };
