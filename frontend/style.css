@@ -1,0 +1,10 @@
+body {
+    padding: 10px;
+}
+.banner {
+    font-family: cursive;
+    font-size: 50px;
+    text-align: center;
+    color: teal;
+    border-bottom: black 10px solid;
+}
