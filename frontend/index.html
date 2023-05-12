@@ -6,16 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobs List</title>
-    <style>
-        div tr:nth-child(even) {
-            background-color: grey;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    
 </head>
 
 <body>
-    <button onclick="window.location='addJob.html'">Add Job</button>
+    
+    <h1 class="mainheading">Recruiters Dairy</h1><hr>
+    <button id="addjobbtn" onclick="window.location='addJob.html'">Add Job</button>
     <a id="export" href="#" onclick="fnExcelReport();">Export</a>
 
     <div id="tableJobs">

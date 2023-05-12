@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recruiters Dairy</title>
+    <link rel="stylesheet" href="style.css">
     
     <script>
         function save() {
@@ -109,7 +110,7 @@
             newCanPhoneLabel.innerText = "PhoneNo of Candidate  :"
             var newPhoneInput = document.createElement('input');
             newPhoneInput.setAttribute("type", "phonenumber");
-            newPhoneInput.setAttribute("style", "margin-left:12px")
+            newPhoneInput.setAttribute("style", "margin-left:13px")
             newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone")
 
             var divEmail = document.createElement('div');
@@ -117,7 +118,7 @@
             newCanEmailLabel.innerText = "Email of Candidate :"
             var newCanEmailInput = document.createElement('input');
             newCanEmailInput.setAttribute("type", "email");
-            newCanEmailInput.setAttribute("style", "margin-left:32px")
+            newCanEmailInput.setAttribute("style", "margin-left:34px")
             newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email")
 
 
@@ -152,16 +153,12 @@
         }
 
     </script>
-    <style>
-        div fieldSet:nth-child(even){
-            background-color: gray;
-            color: white;
-        }  
-       
-    </style>
+    
 </head>
 
 <body>
+
+    <h1 class="mainheading">Recruiters Dairy</h1>
     <form action="" id="form1">
         <label for=" jobId">Job Id</label>
         <input style="margin-left: 8px;" id="jobId" type="number" required>&nbsp;&nbsp;
@@ -170,7 +167,7 @@
         <br><br>
         <button onclick="addCandidateForm()" type="button">Add new candidate</button>
         <div id="divmain"></div>
-        <button type="button" onclick="save()"></button>
+        <button type="button" onclick="save()">Save</button>
     </form>
 
 </body>
