@@ -7,14 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobs List</title>
     <link rel="stylesheet" href="style.css">
-    
+
 </head>
 
 <body>
-    
-    <h1 class="mainheading">Recruiters Dairy</h1><hr>
+
+    <h1 class="mainheading">Recruiters Dairy</h1>
+    <hr>
     <button id="addjobbtn" onclick="window.location='addJob.html'">Add Job</button>
-    <a id="export" href="#" onclick="fnExcelReport();">Export</a>
+    <a id="export" href="#" onclick="return fnExcelReport();">Export</a>
 
     <div id="tableJobs">
 
@@ -26,7 +27,10 @@
     function fnExcelReport() {
 
         var file = prompt("Please Enter the File Name");
-        console.log(file);
+        if (file == null || file == "") {
+            return false;
+        }
+
         var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
         tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
 
@@ -56,7 +60,6 @@
                 , data_type + ', ' + encodeURIComponent(tab_text));
             document.getElementById('export').setAttribute('download', `${file}.xls`);
         }
-
     }
 
     (() => {
@@ -71,27 +74,31 @@
         const trh1 = document.createElement('tr');
         const tdh1 = document.createElement('td')
         tableHeader1 = document.createElement('th4');
-        tableHeader1.innerText = 'JobId';
+        tableHeader1.innerText = 'Job Id';
         tdh1.appendChild(tableHeader1);
         trh1.appendChild(tdh1);
+        tableHeader1.setAttribute("style","padding:12px");
 
         tableHeader2 = document.createElement('th4');
-        tableHeader2.innerText = 'JobDescription';
+        tableHeader2.innerText = 'Job Description';
         const tdh2 = document.createElement('td');
         tdh2.appendChild(tableHeader2);
         trh1.appendChild(tdh2);
+        tableHeader2.setAttribute("style","padding:12px");
 
         tableHeader3 = document.createElement('th4');
         tableHeader3.innerText = 'No of Candidates';
         const tdh3 = document.createElement('td');
         tdh3.appendChild(tableHeader3);
         trh1.appendChild(tdh3);
+        tableHeader3.setAttribute("style","padding:12px");
 
         tableHeader4 = document.createElement('th4');
         tableHeader4.innerText = 'Edit';
         const tdh4 = document.createElement('td');
         tdh4.appendChild(tableHeader4);
         trh1.appendChild(tdh4);
+        tableHeader4.setAttribute("style","padding:12px");
 
         table.appendChild(trh1);
 
@@ -101,14 +108,19 @@
             const td = document.createElement("td");
             const text1 = document.createTextNode(jobs[i].jobid);
             td.appendChild(text1);
+            td.setAttribute("style","padding:5px")
             const td1 = document.createElement("td");
             const text2 = document.createTextNode(jobs[i].description);
             td1.appendChild(text2);
+            td1.setAttribute("style","padding:5px")
             const td2 = document.createElement("td");
             const text3 = document.createTextNode(jobs[i].candidates.length);
             td2.appendChild(text3);
+            td2.setAttribute("style","padding:5px")
+
             const td3 = document.createElement("td");
             const editButton = document.createElement("button");
+            td3.setAttribute("style","padding:5px")
             editButton.innerText = "Edit";
             editButton.addEventListener("click", function () {
                 window.location = 'addJob.html?jobid=' + jobs[i].jobid;
@@ -125,18 +137,17 @@
     })();
     function excelsheet() {
 
-
         var jobs = JSON.parse(localStorage.getItem('jobs'));
         const table = document.createElement('table');
         table.setAttribute("border", "2");
 
         const trh1 = document.createElement('tr');
         tableHeader1 = document.createElement('th');
-        tableHeader1.innerText = 'JobId';
+        tableHeader1.innerText = 'Job Id';
         trh1.appendChild(tableHeader1);
 
         tableHeader2 = document.createElement('th');
-        tableHeader2.innerText = 'JobDescription';
+        tableHeader2.innerText = 'Job Description';
         trh1.appendChild(tableHeader2);
 
         tableHeader3 = document.createElement('th');
@@ -203,7 +214,7 @@
                 tablebody.appendChild(tr);
 
                 if (j % 2 == 0) {
-                    tr.setAttribute("style", "background-color:gray;");
+                    tr.setAttribute("style", "background-color:#dfdfe2");
                 }
 
             }

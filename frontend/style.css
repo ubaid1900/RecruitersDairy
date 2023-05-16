@@ -4,12 +4,12 @@ body {
 }
 
 div tr:nth-child(even) {
-    background-color: rgba(44, 46, 146, 0.5) 
+    background-color: #dfdfe2
 }
 
 div fieldSet:nth-child(even) {
-    background-color: rgba(28, 29, 121, 0.5);
-    color: white;
+    background-color: rgba(168, 168, 236, 0.5);
+    color: black;
 }
 
 div fieldSet legend {
@@ -41,3 +41,7 @@ fieldset {
     margin-top: 20px;
     margin-right: 20px;
 }
+/* #savebutton{
+    display:none;
+    
+} */
