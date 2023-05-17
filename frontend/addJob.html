@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Recruiters Dairy</title>
+    <link rel="stylesheet" href="style.css">
     
     <script>
         function save() {
@@ -110,7 +111,7 @@
             newCanPhoneLabel.innerText = "PhoneNo of Candidate  :"
             var newPhoneInput = document.createElement('input');
             newPhoneInput.setAttribute("type", "phonenumber");
-            newPhoneInput.setAttribute("style", "margin-left:12px");
+            newPhoneInput.setAttribute("style", "margin-left:13px")
             newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone")
             newPhoneInput.value = candidate.phone;
 
@@ -119,10 +120,9 @@
             newCanEmailLabel.innerText = "Email of Candidate :"
             var newCanEmailInput = document.createElement('input');
             newCanEmailInput.setAttribute("type", "email");
-            newCanEmailInput.setAttribute("style", "margin-left:32px");
+            newCanEmailInput.setAttribute("style", "margin-left:34px")
             newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email")
             newCanEmailInput.value = candidate.email;
-
 
             var newCanTextareaInput = document.createElement('textarea');
             newCanTextareaInput.innerText = "Add Notes";
@@ -155,13 +155,7 @@
         }
 
     </script>
-    <style>
-        div fieldSet:nth-child(even){
-            background-color: gray;
-            color: white;
-        }  
-       
-    </style>
+    
 </head>
 
 <body>
@@ -174,7 +168,7 @@
         <br><br>
         <button onclick="addCandidateForm()" type="button">Add new candidate</button>
         <div id="divmain"></div>
-        <button type="button" onclick="save()">Save</button>
+        <button id="savebutton" type="button" onclick="save()">Save</button>
     </form>
 
 </body>

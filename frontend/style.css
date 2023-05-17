@@ -1,6 +1,41 @@
 body {
-    padding: 10px;
+    background-color: azure;
+    padding: 0%;
 }
+
+div tr:nth-child(even) {
+    background-color: #dfdfe2
+}
+
+div fieldSet:nth-child(even) {
+    background-color: rgba(168, 168, 236, 0.5);
+    color: black;
+}
+
+div fieldSet legend {
+    color: rgb(126, 8, 8);
+    font-style: italic;
+}
+
+#divmain {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+fieldset {
+    flex-direction: row;
+}
+
+#tableJobs {
+    margin-top: 30px;
+}
+
+#addjobbtn {
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
 .banner {
     font-family: cursive;
     font-size: 50px;
