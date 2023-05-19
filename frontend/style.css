@@ -17,11 +17,6 @@ div fieldSet legend {
     font-style: italic;
 }
 
-.mainheading {
-    text-align: center;
-    font-style: italic;
-}
-
 #divmain {
     display: flex;
     flex-wrap: wrap;
@@ -30,7 +25,6 @@ div fieldSet legend {
 
 fieldset {
     flex-direction: row;
-
 }
 
 #tableJobs {
@@ -40,4 +34,12 @@ fieldset {
 #addjobbtn {
     margin-top: 20px;
     margin-right: 20px;
+}
+
+.banner {
+    font-family: cursive;
+    font-size: 50px;
+    text-align: center;
+    color: teal;
+    border-bottom: black 10px solid;
 }

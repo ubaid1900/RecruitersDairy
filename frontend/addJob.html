@@ -5,42 +5,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Recruiters Dairy</title>
     <link rel="stylesheet" href="style.css">
 
     <script>
         function save() {
             const objectJob = {};
-            const form = document.getElementById("form1")
-            const jobId1 = form.querySelector("input").value
-            const jobDescription = form.querySelector("textarea").value
-            objectJob.jobid = jobId1
-            objectJob.description = jobDescription
+            const form = document.getElementById("form1");
+            const jobId1 = form.querySelector("input").value;
+            const jobDescription = form.querySelector("textarea").value;
+            objectJob.jobid = jobId1;
+            objectJob.description = jobDescription;
             const candidates = [];
             const div1 = document.getElementById('divmain');
             div1.querySelectorAll("fieldset").forEach(i => {
-                const objectCandidate = {}
-                const e = i.querySelectorAll("div")
+                const objectCandidate = {};
+                const e = i.querySelectorAll("div");
                 e.forEach(m => {
-                    const canInput = m.querySelector('input')
+                    const canInput = m.querySelector('input');
                     if (canInput.id.endsWith('name')) {
-                        objectCandidate.name = canInput.value
+                        objectCandidate.name = canInput.value;
                     }
                     if (canInput.id.endsWith('phone')) {
-                        objectCandidate.phone = canInput.value
+                        objectCandidate.phone = canInput.value;
                     }
                     if (canInput.id.endsWith('address')) {
-                        objectCandidate.address = canInput.value
+                        objectCandidate.address = canInput.value;
                     }
                     if (canInput.id.endsWith('email')) {
-                        objectCandidate.email = canInput.value
+                        objectCandidate.email = canInput.value;
                     }
                 });
-                const canText = i.querySelector('textarea').value
-                objectCandidate.notes = canText
-                candidates.push(objectCandidate)
+                const canText = i.querySelector('textarea').value;
+                objectCandidate.notes = canText;
+                candidates.push(objectCandidate);
             });
-            objectJob.candidates = candidates
+            objectJob.candidates = candidates;
 
             let jobs = JSON.parse(localStorage.getItem('jobs'));
             if (!jobs) {
@@ -61,7 +62,7 @@
 
             if (jobs) {
                 if (indexOfJob > -1) {
-                    jobs[indexOfJob] = objectJob
+                    jobs[indexOfJob] = objectJob;
                 } else {
                     jobs.push(objectJob);
                 }
@@ -125,10 +126,9 @@
             newCanEmailInput.value = candidate.email;
 
             var newCanTextareaInput = document.createElement('textarea');
-            newCanTextareaInput.innerText = "Add Notes"
+            newCanTextareaInput.innerText = "Add Notes";
             newCanTextareaInput.setAttribute("cols", "44");
-            newCanTextareaInput.value = candidate.notes
-
+            newCanTextareaInput.value = candidate.notes;
 
             div1.append(fieldSet);
             fieldSet.append(legend);
@@ -159,8 +159,7 @@
 </head>
 
 <body>
-
-    <h1 class="mainheading">Recruiters Dairy</h1>
+    <h1 class="banner">Recruiters Dairy</h1>
     <form action="" id="form1">
         <label for=" jobId">Job Id</label>
         <input style="margin-left: 8px;" id="jobId" type="number" required>&nbsp;&nbsp;
