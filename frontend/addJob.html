@@ -39,6 +39,7 @@
                 const canText = i.querySelector('textarea').value
                 objectCandidate.notes = canText
                 candidates.push(objectCandidate)
+                alert("Candidates Sucessfully Added")
             });
             objectJob.candidates = candidates
 
@@ -58,7 +59,6 @@
                     }).indexOf(jobidValue);
                 }
             }
-
             if (jobs) {
                 if (indexOfJob > -1) {
                     jobs[indexOfJob] = objectJob
@@ -129,7 +129,6 @@
             newCanTextareaInput.setAttribute("cols", "44");
             newCanTextareaInput.value = candidate.notes
 
-
             div1.append(fieldSet);
             fieldSet.append(legend);
             legend.append(newCandidate)
@@ -153,13 +152,10 @@
 
             fieldSet.append(newCanTextareaInput);
         }
-
     </script>
-
 </head>
 
 <body>
-
     <h1 class="mainheading">Recruiters Dairy</h1>
     <form action="" id="form1">
         <label for=" jobId">Job Id</label>
@@ -171,12 +167,7 @@
         <button onclick="addCandidateForm()" type="button">Add new candidate</button>
         <div id="divmain"></div>
         <button id="savebutton" type="button" onclick="save()">Save</button>
-
-
-
-
     </form>
-
 </body>
 <script>
     function load() {
@@ -208,14 +199,11 @@
                         addCandidateForm(candidate);
                     });
                     return;
-
                 }
             })
         }
     }
     load();
-
-
 </script>
 
 
