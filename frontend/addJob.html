@@ -37,9 +37,12 @@
                         objectCandidate.email = canInput.value;
                     }
                 });
-                const canText = i.querySelector('textarea').value;
-                objectCandidate.notes = canText;
-                candidates.push(objectCandidate);
+
+                const canText = i.querySelector('textarea').value
+                objectCandidate.notes = canText
+                candidates.push(objectCandidate)
+                alert("Candidates Sucessfully Added")
+
             });
             objectJob.candidates = candidates;
 
@@ -59,7 +62,6 @@
                     }).indexOf(jobidValue);
                 }
             }
-
             if (jobs) {
                 if (indexOfJob > -1) {
                     jobs[indexOfJob] = objectJob;
@@ -128,7 +130,9 @@
             var newCanTextareaInput = document.createElement('textarea');
             newCanTextareaInput.innerText = "Add Notes";
             newCanTextareaInput.setAttribute("cols", "44");
+
             newCanTextareaInput.value = candidate.notes;
+          
 
             div1.append(fieldSet);
             fieldSet.append(legend);
@@ -153,29 +157,24 @@
 
             fieldSet.append(newCanTextareaInput);
         }
-
     </script>
-
 </head>
 
 <body>
+
     <h1 class="banner">Recruiters Dairy</h1>
+
     <form action="" id="form1">
         <label for=" jobId">Job Id</label>
         <input style="margin-left: 8px;" id="jobId" type="number" required>&nbsp;&nbsp;
         <label for="jobDescription">Job Description</label>
-        <textarea style="margin-left: 8px;" name="" id="jobDescription" cols="20" rows="1"></textarea>
+        <textarea style="margin-left: 8px; " name="" id="jobDescription" cols="20" rows="1"></textarea>
         <input id="searchtext" type="text"><button type="button" onclick="load()">Search</button>
         <br><br>
         <button onclick="addCandidateForm()" type="button">Add new candidate</button>
         <div id="divmain"></div>
         <button id="savebutton" type="button" onclick="save()">Save</button>
-
-
-
-
     </form>
-
 </body>
 <script>
     function load() {
@@ -207,14 +206,11 @@
                         addCandidateForm(candidate);
                     });
                     return;
-
                 }
             })
         }
     }
     load();
-
-
 </script>
 
 
