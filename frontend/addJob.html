@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Recruiters Dairy</title>
     <link rel="stylesheet" href="style.css">
-    
+
     <script>
         function save() {
             const objectJob = {};
@@ -50,6 +50,7 @@
             let indexOfJob;
             if (location.search.length > 0) {
                 var qureyString = location.search.substring(1);
+                console.log(qureyString);
                 var jobidSplit = qureyString.split("=");
                 var jobidValue = jobidSplit[1];
                 if (jobidValue) {
@@ -129,7 +130,6 @@
             newCanTextareaInput.setAttribute("cols", "44");
             newCanTextareaInput.value = candidate.notes;
 
-
             div1.append(fieldSet);
             fieldSet.append(legend);
             legend.append(newCandidate)
@@ -155,7 +155,7 @@
         }
 
     </script>
-    
+
 </head>
 
 <body>
@@ -165,15 +165,21 @@
         <input style="margin-left: 8px;" id="jobId" type="number" required>&nbsp;&nbsp;
         <label for="jobDescription">Job Description</label>
         <textarea style="margin-left: 8px;" name="" id="jobDescription" cols="20" rows="1"></textarea>
+        <input id="searchtext" type="text"><button type="button" onclick="load()">Search</button>
         <br><br>
         <button onclick="addCandidateForm()" type="button">Add new candidate</button>
         <div id="divmain"></div>
         <button id="savebutton" type="button" onclick="save()">Save</button>
+
+
+
+
     </form>
 
 </body>
 <script>
     function load() {
+        document.getElementById("divmain").innerHTML = "";
         if (location.search.length > 0) {
             var qureyString = location.search.substring(1);
         }
@@ -193,15 +199,21 @@
                     elementfilljobid.value = e.jobid
                     var elementfilljobdes = document.getElementById('jobDescription')
                     elementfilljobdes.value = e.description
-                    e.candidates.forEach(function (candidate) {
+                    const elementSearch = document.getElementById('searchtext');
+                    const filterCandidates = e.candidates.filter(
+                        c => c.name.indexOf(elementSearch.value) > -1
+                    );
+                    filterCandidates.forEach(function (candidate) {
                         addCandidateForm(candidate);
                     });
                     return;
+
                 }
             })
         }
     }
     load();
+
 
 </script>
 
