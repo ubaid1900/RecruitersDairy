@@ -87,7 +87,7 @@
             const div1 = document.getElementById('divmain');
 
             var fieldSet = document.createElement('fieldset');
-            fieldSet.setAttribute("class","fieldsetClass")
+            fieldSet.setAttribute("class", "fieldsetClass")
             var legend = document.createElement('legend');
 
             var newCandidate = document.createElement('h4');
@@ -133,7 +133,7 @@
             newCanTextareaInput.setAttribute("cols", "44");
 
             newCanTextareaInput.value = candidate.notes;
-          
+
 
             div1.append(fieldSet);
             fieldSet.append(legend);
@@ -171,13 +171,13 @@
         <input class="inputClass" id="jobId" type="number" required>&nbsp;&nbsp;
         <label for="jobDescription">Job Description</label>
         <textarea name="" id="jobDescription" cols="20" rows="1"></textarea>
-        <input class="inputClass" id="searchText" type="text" >
-        <button class="buttonClass"  type="button" onclick="load()">Search</button>
+        <input class="inputClass" id="searchText" type="text">
+        <button class="buttonClass" type="button" onclick="load()">Search</button>
         <br><br>
-        <button class="buttonClass"   onclick="addCandidateForm()" type="button">Add new candidate</button>
+        <button class="buttonClass" onclick="addCandidateForm()" type="button">Add new candidate</button>
         <div id="divmain"></div>
         <br>
-        <button class="buttonclass"  id="savebutton" type="button" onclick="save()">Save</button>
+        <button class="buttonClass" id="savebutton" type="button" onclick="save()">Save</button>
     </form>
 </body>
 <script>
@@ -202,9 +202,9 @@
                     elementfilljobid.value = e.jobid
                     var elementfilljobdes = document.getElementById('jobDescription')
                     elementfilljobdes.value = e.description
-                    const elementSearch = document.getElementById('searchText');
+                    const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
                     const filterCandidates = e.candidates.filter
-                        (c=> c.address.indexOf(elementSearch.value)>-1 || c.name.indexOf(elementSearch.value)>-1 || c.phone.indexOf(elementSearch.value)>-1 || c.email.indexOf(elementSearch.value)>-1 || c.notes.indexOf(elementSearch.value)>-1);
+                        (c => c.address.toLowerCase().indexOf(elementSearchValue) > -1 || c.name.toLowerCase().indexOf(elementSearchValue) > -1 || c.phone.indexOf(elementSearchValue) > -1 || c.email.indexOf(elementSearchValue) > -1 || c.notes.indexOf(elementSearchValue) > -1);
                     filterCandidates.forEach(function (candidate) {
                         addCandidateForm(candidate);
                     });
