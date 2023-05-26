@@ -69,11 +69,14 @@
         else {
             jobs = JSON.parse(localStorage.getItem('jobs'));
         }
+        const divJobs = document.getElementById('divJobs');
 
-        if (!jobs) {
+        if (!jobs || !jobs.length) {
+            const divResult = document.createElement("div");
+            divResult.innerText = "NO Results Found";
+            divJobs.appendChild(divResult);
             return;
         }
-        const divJobs = document.getElementById('divJobs');
         const table = document.createElement('table');
         table.setAttribute("border", "2");
 

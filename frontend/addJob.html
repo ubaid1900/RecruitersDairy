@@ -11,7 +11,7 @@
 
     <script>
         function save() {
-            const objectJob = {};
+            const objectJob = { createdDate: new Date(), updatedDate: new Date() };
             const form = document.getElementById("form1");
             const jobId1 = form.querySelector("input").value;
             const jobDescription = form.querySelector("textarea").value;
@@ -41,7 +41,7 @@
                 const canText = i.querySelector('textarea').value
                 objectCandidate.notes = canText
                 candidates.push(objectCandidate)
-                alert("Candidates Sucessfully Added")
+                console.log(objectJob);
 
             });
             objectJob.candidates = candidates;
@@ -172,7 +172,7 @@
         <label for="jobDescription">Job Description</label>
         <textarea name="" id="jobDescription" cols="20" rows="1"></textarea>
         <input class="inputClass" id="searchText" type="text">
-        <button class="buttonClass" type="button" onclick="load()">Search</button>
+        <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
         <br><br>
         <button class="buttonClass" onclick="addCandidateForm()" type="button">Add new candidate</button>
         <div id="divmain"></div>
@@ -212,6 +212,7 @@
                 }
             })
         }
+        
     }
     load();
 </script>
