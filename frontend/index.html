@@ -12,19 +12,14 @@
 </head>
 
 <body>
-
-
     <h1 class="banner">Recruiters Dairy</h1>
-
     <hr>
-    <button id="addjobbtn" onclick="window.location='addJob.html'">Add Job</button>
-    <a id="export" href="#" onclick="return fnExcelReport();">Export</a>
-    <input id="searchTextIndex" type="text"> <button onclick="searchloadexcel()" type="button">Serach</button>
-
-    <div id="tableJobs">
-
+    <input class="inputClass" id="searchTextIndex" type="text">
+    <button class="buttonClass" onclick="searchloadexcel()" type="button">Search</button>
+    <div id="divJobs">
     </div>
-
+    <button class="buttonClass" id="addjobbtn" onclick="window.location='addJob.html'">Add Job</button>
+    <a id="export" href="#" onclick="return fnExcelReport();">Export</a>
 </body>
 <script>
     function fnExcelReport() {
@@ -64,19 +59,24 @@
             document.getElementById('export').setAttribute('download', `${file}.xls`);
         }
     }
-    function listtable(filterJobs) {
 
+    function listtable(filterJobs) {
+        let jobs = [];
         if (filterJobs) {
             jobs = filterJobs;
-            document.getElementById('tableJobs').innerHTML = "";
+            document.getElementById('divJobs').innerHTML = "";
         }
         else {
             jobs = JSON.parse(localStorage.getItem('jobs'));
         }
-        if (!jobs) {
+        const divJobs = document.getElementById('divJobs');
+
+        if (!jobs || !jobs.length) {
+            const divResult = document.createElement("div");
+            divResult.innerText = "NO Results Found";
+            divJobs.appendChild(divResult);
             return;
         }
-        const tableJobs = document.getElementById('tableJobs');
         const table = document.createElement('table');
         table.setAttribute("border", "2");
 
@@ -114,6 +114,7 @@
         const tablebody = document.createElement('tbody');
         for (let i = 0; i < jobs.length; i++) {
             const tr = document.createElement("tr");
+            tr.setAttribute("id", "trid");
             const td = document.createElement("td");
             const text1 = document.createTextNode(jobs[i].jobid);
             td.appendChild(text1);
@@ -131,6 +132,7 @@
             const editButton = document.createElement("button");
             td3.setAttribute("style", "padding:5px;")
             editButton.innerText = "Edit";
+            editButton.setAttribute("class", "editBtnClass")
             editButton.addEventListener("click", function () {
                 window.location = 'addJob.html?jobid=' + jobs[i].jobid;
             });
@@ -139,21 +141,33 @@
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
+
             tablebody.appendChild(tr);
+
         }
         table.appendChild(tablebody);
-        tableJobs.appendChild(table);
+        divJobs.appendChild(table);
+
     }
     listtable();
     function searchloadexcel() {
         var jobs = JSON.parse(localStorage.getItem('jobs'));
-        const elementSearch = document.getElementById('searchTextIndex');
-        // filterJobs = jobs.filter(e => (e.description.indexOf(elementSearch.value) > -1));
+        const elementSearchValue = document.getElementById('searchTextIndex').value.toLowerCase();
+
+        if (elementSearchValue == "") {
+            listtable(jobs);
+            return;
+        }
+        let filterJobs = [];
         filterJobs = jobs.filter(job => {
-            if (job.candidates.find(e => e.name.indexOf(elementSearch.value) > -1)) {
+            if (job.description.toLowerCase().indexOf(elementSearchValue) > -1 ||
+                job.candidates.find(e => e.name.toLowerCase().indexOf(elementSearchValue) > -1) || job.candidates.find(e => e.address.toLowerCase().indexOf(elementSearchValue) > -1) || job.candidates.find(e => e.phone.indexOf(elementSearchValue) > -1) || job.candidates.find(e => e.email.toLowerCase().indexOf(elementSearchValue) > -1) || job.candidates.find(e => e.notes.toLowerCase().indexOf(elementSearchValue) > -1)) {
                 return job;
             }
-        })
+            console.log(filterJobs);
+
+        });
+
         listtable(filterJobs);
 
     }
