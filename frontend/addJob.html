@@ -183,12 +183,14 @@
 <script>
     function load() {
         document.getElementById("divmain").innerHTML = "";
+
         if (location.search.length > 0) {
             var qureyString = location.search.substring(1);
+            var jobidSplit = qureyString.split("=");
+            var jobidValue = jobidSplit[1];
         }
-        var jobidSplit = qureyString.split("=");
-        var jobidValue = jobidSplit[1];
-        if (jobidValue != 0 || jobidValue != null) {
+
+        if (jobidValue != 0 && jobidValue != null) {
 
             var jobs = JSON.parse(localStorage.getItem('jobs'));
 
@@ -212,7 +214,11 @@
                 }
             })
         }
-        
+        else {
+            document.getElementById("btnSearch").setAttribute("style", "display:none");
+            document.getElementById("searchText").setAttribute("style", "display:none");
+        }
+
     }
     load();
 </script>
