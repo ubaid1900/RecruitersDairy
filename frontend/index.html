@@ -62,6 +62,7 @@
         }
 
     }
+    
 
     (() => {
         var jobs = JSON.parse(localStorage.getItem('jobs'));
@@ -86,42 +87,67 @@
         trh1.appendChild(tdh2);
 
         tableHeader3 = document.createElement('th4');
-        tableHeader3.innerText = 'No of Candidates';
+        tableHeader3.innerText = 'JobLocation';
         const tdh3 = document.createElement('td');
         tdh3.appendChild(tableHeader3);
         trh1.appendChild(tdh3);
 
         tableHeader4 = document.createElement('th4');
-        tableHeader4.innerText = 'Edit';
+        tableHeader4.innerText = 'Job PayRange';
         const tdh4 = document.createElement('td');
         tdh4.appendChild(tableHeader4);
         trh1.appendChild(tdh4);
+
+
+        tableHeader5 = document.createElement('th4');
+        tableHeader5.innerText = 'No of Candidates';
+        const tdh5 = document.createElement('td');
+        tdh5.appendChild(tableHeader5);
+        trh1.appendChild(tdh5);
+
+        tableHeader6 = document.createElement('th4');
+        tableHeader6.innerText = 'Edit';
+        const tdh6 = document.createElement('td');
+        tdh6.appendChild(tableHeader6);
+        trh1.appendChild(tdh6);
 
         table.appendChild(trh1);
 
         const tablebody = document.createElement('tbody');
         for (let i = 0; i < jobs.length; i++) {
             const tr = document.createElement("tr");
-            const td = document.createElement("td");
-            const text1 = document.createTextNode(jobs[i].jobid);
-            td.appendChild(text1);
             const td1 = document.createElement("td");
-            const text2 = document.createTextNode(jobs[i].description);
-            td1.appendChild(text2);
+            const text1 = document.createTextNode(jobs[i].jobid);
+            td1.appendChild(text1);
             const td2 = document.createElement("td");
-            const text3 = document.createTextNode(jobs[i].candidates.length);
-            td2.appendChild(text3);
+            const text2 = document.createTextNode(jobs[i].description);
+            td2.appendChild(text2);
             const td3 = document.createElement("td");
+            const text3 = document.createTextNode(jobs[i].jobLocation);
+            td3.appendChild(text3);
+            const td4 = document.createElement("td");
+            const text4 = document.createTextNode(jobs[i].jobPayRange);
+            td4.appendChild(text4);
+            const td5 = document.createElement("td");
+            const text5 = document.createTextNode(jobs[i].candidates.length);
+            td5.appendChild(text5);
+            const td6 = document.createElement("td");
             const editButton = document.createElement("button");
             editButton.innerText = "Edit";
             editButton.addEventListener("click", function () {
                 window.location = 'addJob.html?jobid=' + jobs[i].jobid;
             });
-            td3.appendChild(editButton);
-            tr.appendChild(td);
+            
+            td6.appendChild(editButton);
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
+            tr.appendChild(td4);
+            tr.appendChild(td5);
+            tr.appendChild(td6);
+
+
+
             tablebody.appendChild(tr);
         }
         table.appendChild(tablebody);

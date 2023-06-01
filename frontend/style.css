@@ -6,5 +6,51 @@ body {
     font-size: 50px;
     text-align: center;
     color: teal;
-    border-bottom: black 10px solid;
+    /* border-bottom: black 2px solid; */
+    
+}
+
+#jobid {
+    margin-left: 8px;
+}
+
+#jobDescription {
+    margin-bottom: -9px;
+    margin-left: 8px;
+    border-radius: 5px;
+    height: 20px;
+}
+
+#jobRequirements {
+    margin-bottom: -9px;
+    margin-left: 8px;
+    border-radius: 5px;
+    height: 20px;
+}
+
+.inputClass {
+    margin-top: 20px;
+    height: 22px;
+    border-radius: 5px;
+    border-width: 1px;
+}
+
+.buttonClass {
+    height: 25px;
+    border-radius: 5px;
+    background-color: rgba(134, 134, 184, 0.5);
+    border-width: 1px;
+}
+.editBtnClass{
+    border-radius: 5px;
+    background-color: rgba(134, 134, 184, 0.5);
+    width: 50px;
+    height: 23px;
+    border-width: 1px;
+}
+.fieldsetClass{
+    border-radius: 12px;
+}
+#searchText{
+    margin-left: 12px;
 }

@@ -7,15 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Recruiters Dairy</title>
-    
+
     <script>
         function save() {
             const objectJob = {};
             const form = document.getElementById("form1");
-            const jobId1 = form.querySelector("input").value;
-            const jobDescription = form.querySelector("textarea").value;
+            const jobId1 = document.getElementById("jobId").value;
+            const jobDescription = document.getElementById("jobDescription").value;
+            const jobRequirements = document.getElementById("jobRequirements").value;
+            const jobLocation = document.getElementById("jobLocation").value;
+            const jobPayRange = document.getElementById("jobPayRange").value;
             objectJob.jobid = jobId1;
             objectJob.description = jobDescription;
+            objectJob.jobRequirements = jobRequirements;
+            objectJob.jobLocation = jobLocation;
+            objectJob.jobPayRange = jobPayRange;
+
             const candidates = [];
             const div1 = document.getElementById('divmain');
             div1.querySelectorAll("fieldset").forEach(i => {
@@ -23,6 +30,9 @@
                 const e = i.querySelectorAll("div");
                 e.forEach(m => {
                     const canInput = m.querySelector('input');
+                    if (!canInput) {
+                        return;
+                    }
                     if (canInput.id.endsWith('name')) {
                         objectCandidate.name = canInput.value;
                     }
@@ -34,6 +44,9 @@
                     }
                     if (canInput.id.endsWith('email')) {
                         objectCandidate.email = canInput.value;
+                    }
+                    if (canInput.id.endsWith('submisionStatus')) {
+                        objectCandidate.submisionStatus = canInput.value;
                     }
                 });
                 const canText = i.querySelector('textarea').value;
@@ -77,7 +90,7 @@
         var candidateCounter = 0;
         function addCandidateForm(candidate) {
             if (!candidate) {
-                candidate = { name: '', address: '', email: '', phone: '', notes: '' };
+                candidate = { name: '', address: '', email: '', phone: '', notes: '', submitionStatus: '', createdDate: new Date() };
             }
             candidateCounter++
             const div1 = document.getElementById('divmain');
@@ -123,16 +136,34 @@
             newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email")
             newCanEmailInput.value = candidate.email;
 
+            var divSubmissionStatus = document.createElement('div');
+            divSubmissionStatus.setAttribute("id", "divCandidateStatus")
+            var newCanSubmissionStatusLbl = document.createElement('label');
+            var newCanSubmisionStatusText = document.createElement('input');
+            newCanSubmisionStatusText.setAttribute("type", "text");
+            newCanSubmisionStatusText.setAttribute("id", "candidate" + `${candidateCounter}` + "submisionStatus")
+            newCanSubmissionStatusLbl.innerText = "Submission Status:";
+            newCanSubmisionStatusText.setAttribute("class", "inputClass");
+            newCanSubmisionStatusText.value = candidate.submisionStatus;
 
             var newCanTextareaInput = document.createElement('textarea');
             newCanTextareaInput.innerText = "Add Notes";
             newCanTextareaInput.setAttribute("cols", "44");
             newCanTextareaInput.value = candidate.notes;
 
+            var divDate = document.createElement('div');
+            var newCanDateLabelCreated = document.createElement('label');
+            var newCanDateLabel = document.createElement('label');
+            newCanDateLabelCreated.innerText = "Created Date :";
+            newCanDateLabel.innerText = new Date();
 
             div1.append(fieldSet);
             fieldSet.append(legend);
             legend.append(newCandidate)
+
+            fieldSet.append(divDate);
+            divDate.append(newCanDateLabelCreated);
+            divDate.append(newCanDateLabel);
 
             fieldSet.append(divName);
             divName.append(newCanNameLabel);
@@ -152,15 +183,20 @@
             divEmail.append(newCanEmailInput);
 
             fieldSet.append(newCanTextareaInput);
+            fieldSet.append(divSubmissionStatus);
+            divSubmissionStatus.append(newCanSubmissionStatusLbl);
+            divSubmissionStatus.append(newCanSubmisionStatusText);
+
+           
+
         }
 
     </script>
     <style>
-        div fieldSet:nth-child(even){
+        div fieldSet:nth-child(even) {
             background-color: gray;
             color: white;
-        }  
-       
+        }
     </style>
 </head>
 
@@ -170,7 +206,16 @@
         <label for=" jobId">Job Id</label>
         <input style="margin-left: 8px;" id="jobId" type="number" required>&nbsp;&nbsp;
         <label for="jobDescription">Job Description</label>
-        <textarea style="margin-left: 8px;" name="" id="jobDescription" cols="20" rows="1"></textarea>
+        <textarea name="" id="jobDescription" cols="20" rows="1"></textarea>
+        <label for="jobRequirements">Job Requirements</label>
+        <textarea class="inputClass" name="" id="jobRequirements" cols="20" rows="1"></textarea>
+        <label for="jobLocation">Job Location</label>
+        <input style="margin-left: 8px;" id="jobLocation" type="text" required>
+        <label for="jobPayRange">Job PayRange</label>
+        <input style="margin-left: 8px;" id="jobPayRange" type="number" required>
+
+        <input class="inputClass" id="searchText" type="text">
+        <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
         <br><br>
         <button onclick="addCandidateForm()" type="button">Add new candidate</button>
         <div id="divmain"></div>
@@ -199,7 +244,16 @@
                     elementfilljobid.value = e.jobid
                     var elementfilljobdes = document.getElementById('jobDescription')
                     elementfilljobdes.value = e.description
-                    e.candidates.forEach(function (candidate) {
+                    var elementfilljobReq = document.getElementById('jobRequirements')
+                    elementfilljobReq.value = e.jobRequirements
+                    var elementfilljobLoc = document.getElementById('jobLocation')
+                    elementfilljobLoc.value = e.jobLocation
+                    var elementfilljobPay = document.getElementById('jobPayRange')
+                    elementfilljobPay.value = e.jobPayRange
+                    const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
+                    const filterCandidates = e.candidates.filter
+                        (c => c.address.toLowerCase().indexOf(elementSearchValue) > -1 || c.name.toLowerCase().indexOf(elementSearchValue) > -1 || c.phone.indexOf(elementSearchValue) > -1 || c.email.indexOf(elementSearchValue) > -1 || c.notes.indexOf(elementSearchValue) > -1 || c.submisionStatus.indexOf(elementSearchValue) > -1);
+                    filterCandidates.forEach(function (candidate) {
                         addCandidateForm(candidate);
                     });
                     return;
