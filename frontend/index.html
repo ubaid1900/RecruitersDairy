@@ -65,7 +65,7 @@
             document.getElementById('export').setAttribute('download', `${file}.xls`);
         }
     }
-    
+
 
     function listtable(filterJobs) {
         let jobs = [];
@@ -129,6 +129,12 @@
         tdh6.appendChild(tableHeader6);
         trh1.appendChild(tdh6);
 
+        tableHeader7 = document.createElement('th4');
+        tableHeader7.innerText = 'Delete';
+        const tdh7 = document.createElement('td');
+        tdh7.appendChild(tableHeader7);
+        trh1.appendChild(tdh7);
+
         table.appendChild(trh1);
 
         const tablebody = document.createElement('tbody');
@@ -159,8 +165,19 @@
             editButton.addEventListener("click", function () {
                 window.location = 'addJob.html?jobid=' + jobs[i].jobid;
             });
-            
+
+            const td7 = document.createElement("td");
+            const deleteButton = document.createElement("button");
+            td3.setAttribute("style", "padding:5px;")
+            deleteButton.innerText = "Delete";
+            deleteButton.setAttribute("class", "editBtnClass")
+            deleteButton.addEventListener("click", function () {
+                alert("delete button")
+            });
+
             td6.appendChild(editButton);
+            td7.appendChild(deleteButton);
+
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
@@ -168,6 +185,7 @@
             tr.appendChild(td4);
             tr.appendChild(td5);
             tr.appendChild(td6);
+            tr.appendChild(td7);
 
 
             tablebody.appendChild(tr);
