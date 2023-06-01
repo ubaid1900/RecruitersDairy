@@ -69,9 +69,10 @@
 
     function listtable(filterJobs) {
         let jobs = [];
+        document.getElementById('divJobs').innerHTML = "";
+
         if (filterJobs) {
             jobs = filterJobs;
-            document.getElementById('divJobs').innerHTML = "";
         }
         else {
             jobs = JSON.parse(localStorage.getItem('jobs'));
@@ -172,7 +173,9 @@
             deleteButton.innerText = "Delete";
             deleteButton.setAttribute("class", "editBtnClass")
             deleteButton.addEventListener("click", function () {
-                alert("delete button")
+                jobs.splice(i, 1);
+                localStorage.setItem("jobs", JSON.stringify(jobs));
+                listtable();
             });
 
             td6.appendChild(editButton);
