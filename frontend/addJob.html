@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <script type="text/javascript" src="dataEntryHelper.js"></script>
+    <script type="text/javascript" src="environmentVariables.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +12,18 @@
     <link rel="stylesheet" href="style.css">
 
     <script>
+        function fillJob() {
+            var e = getSeedJob();
+            var elementfilljobid = document.getElementById('jobId');
+            elementfilljobid.setAttribute('disabled', 'disabled');
+            elementfilljobid.value = e.jobid;
+            var elementfilljobdes = document.getElementById('jobDescription');
+            elementfilljobdes.value = e.description;
+            e.candidates.forEach(function (candidate) {
+                addCandidateForm(candidate);
+            });
+        }
+
         function save() {
             const objectJob = { createdDate: new Date(), updatedDate: new Date() };
             const form = document.getElementById("form1");
@@ -166,6 +180,7 @@
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
 
+    <button id="fillJob" onclick="fillJob()" type="button">Fill</button>
     <form action="" id="form1" style="margin-top: 25px;">
         <label for=" jobId">Job Id</label>
         <input class="inputClass" id="jobId" type="number" required>&nbsp;&nbsp;
@@ -182,6 +197,9 @@
 </body>
 <script>
     function load() {
+        if (init.environment !== 'development') {
+            document.getElementById('fillJob').setAttribute("style", "display:none");
+        }
         document.getElementById("divmain").innerHTML = "";
 
         if (location.search.length > 0) {
