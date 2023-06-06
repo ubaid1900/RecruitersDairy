@@ -4,7 +4,7 @@ function getSeedCandidates() {
         phone: '1234567890',
         email: 'jdoe@gmail.com',
         address: '123 High street',
-        status: 'Grooming',
+        submissionStatus: 'Grooming',
         notes: 'Just Started'
     }
     return [candidate];
