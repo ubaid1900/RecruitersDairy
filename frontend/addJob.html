@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <script type="text/javascript" src="dataEntryHelper.js"></script>
+    <script type="text/javascript" src="environmentVariables.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +11,20 @@
     <title>Recruiters Dairy</title>
 
     <script>
+        function fillJob() {
+            var e = getSeedJob();
+            var elementfilljobid = document.getElementById('jobId');
+            elementfilljobid.setAttribute('disabled', 'disabled');
+            elementfilljobid.value = e.jobid;
+            var elementfilljobdes = document.getElementById('jobDescription');
+            elementfilljobdes.value = e.description;
+            e.candidates.forEach(function (candidate) {
+                addCandidateForm(candidate);
+            });
+        }
+
         function save() {
-            const objectJob = {};
+            const objectJob = { createdDate: new Date(), updatedDate: new Date() };
             const form = document.getElementById("form1");
             const jobId1 = document.getElementById("jobId").value;
             const jobDescription = document.getElementById("jobDescription").value;
@@ -49,9 +63,12 @@
                         objectCandidate.submisionStatus = canInput.value;
                     }
                 });
-                const canText = i.querySelector('textarea').value;
-                objectCandidate.notes = canText;
-                candidates.push(objectCandidate);
+
+                const canText = i.querySelector('textarea').value
+                objectCandidate.notes = canText
+                candidates.push(objectCandidate)
+                console.log(objectJob);
+
             });
             objectJob.candidates = candidates;
 
@@ -62,6 +79,7 @@
             let indexOfJob;
             if (location.search.length > 0) {
                 var qureyString = location.search.substring(1);
+                console.log(qureyString);
                 var jobidSplit = qureyString.split("=");
                 var jobidValue = jobidSplit[1];
                 if (jobidValue) {
@@ -70,7 +88,6 @@
                     }).indexOf(jobidValue);
                 }
             }
-
             if (jobs) {
                 if (indexOfJob > -1) {
                     jobs[indexOfJob] = objectJob;
@@ -96,6 +113,7 @@
             const div1 = document.getElementById('divmain');
 
             var fieldSet = document.createElement('fieldset');
+            fieldSet.setAttribute("class", "fieldsetClass")
             var legend = document.createElement('legend');
 
             var newCandidate = document.createElement('h4');
@@ -123,7 +141,7 @@
             newCanPhoneLabel.innerText = "PhoneNo of Candidate  :"
             var newPhoneInput = document.createElement('input');
             newPhoneInput.setAttribute("type", "phonenumber");
-            newPhoneInput.setAttribute("style", "margin-left:12px");
+            newPhoneInput.setAttribute("style", "margin-left:13px")
             newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone")
             newPhoneInput.value = candidate.phone;
 
@@ -132,7 +150,7 @@
             newCanEmailLabel.innerText = "Email of Candidate :"
             var newCanEmailInput = document.createElement('input');
             newCanEmailInput.setAttribute("type", "email");
-            newCanEmailInput.setAttribute("style", "margin-left:32px");
+            newCanEmailInput.setAttribute("style", "margin-left:34px")
             newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email")
             newCanEmailInput.value = candidate.email;
 
@@ -149,6 +167,7 @@
             var newCanTextareaInput = document.createElement('textarea');
             newCanTextareaInput.innerText = "Add Notes";
             newCanTextareaInput.setAttribute("cols", "44");
+
             newCanTextareaInput.value = candidate.notes;
 
             var divDate = document.createElement('div');
@@ -190,7 +209,6 @@
            
 
         }
-
     </script>
     <style>
         div fieldSet:nth-child(even) {
@@ -201,12 +219,17 @@
 </head>
 
 <body>
+
     <h1 class="banner">Recruiters Dairy</h1>
-    <form action="" id="form1">
+    <hr>
+
+    <button id="fillJob" onclick="fillJob()" type="button">Fill</button>
+    <form action="" id="form1" style="margin-top: 25px;">
         <label for=" jobId">Job Id</label>
-        <input style="margin-left: 8px;" id="jobId" type="number" required>&nbsp;&nbsp;
+        <input class="inputClass" id="jobId" type="number" required>&nbsp;&nbsp;
         <label for="jobDescription">Job Description</label>
         <textarea name="" id="jobDescription" cols="20" rows="1"></textarea>
+
         <label for="jobRequirements">Job Requirements</label>
         <textarea class="inputClass" name="" id="jobRequirements" cols="20" rows="1"></textarea>
         <label for="jobLocation">Job Location</label>
@@ -217,20 +240,26 @@
         <input class="inputClass" id="searchText" type="text">
         <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
         <br><br>
-        <button onclick="addCandidateForm()" type="button">Add new candidate</button>
+        <button class="buttonClass" onclick="addCandidateForm()" type="button">Add new candidate</button>
         <div id="divmain"></div>
-        <button type="button" onclick="save()">Save</button>
+        <br>
+        <button class="buttonClass" id="savebutton" type="button" onclick="save()">Save</button>
     </form>
-
 </body>
 <script>
     function load() {
+        if (init.environment !== 'development') {
+            document.getElementById('fillJob').setAttribute("style", "display:none");
+        }
+        document.getElementById("divmain").innerHTML = "";
+
         if (location.search.length > 0) {
             var qureyString = location.search.substring(1);
+            var jobidSplit = qureyString.split("=");
+            var jobidValue = jobidSplit[1];
         }
-        var jobidSplit = qureyString.split("=");
-        var jobidValue = jobidSplit[1];
-        if (jobidValue != 0 || jobidValue != null) {
+
+        if (jobidValue != 0 && jobidValue != null) {
 
             var jobs = JSON.parse(localStorage.getItem('jobs'));
 
@@ -244,6 +273,7 @@
                     elementfilljobid.value = e.jobid
                     var elementfilljobdes = document.getElementById('jobDescription')
                     elementfilljobdes.value = e.description
+
                     var elementfilljobReq = document.getElementById('jobRequirements')
                     elementfilljobReq.value = e.jobRequirements
                     var elementfilljobLoc = document.getElementById('jobLocation')
@@ -253,6 +283,7 @@
                     const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
                     const filterCandidates = e.candidates.filter
                         (c => c.address.toLowerCase().indexOf(elementSearchValue) > -1 || c.name.toLowerCase().indexOf(elementSearchValue) > -1 || c.phone.indexOf(elementSearchValue) > -1 || c.email.indexOf(elementSearchValue) > -1 || c.notes.indexOf(elementSearchValue) > -1 || c.submisionStatus.indexOf(elementSearchValue) > -1);
+
                     filterCandidates.forEach(function (candidate) {
                         addCandidateForm(candidate);
                     });
@@ -260,9 +291,13 @@
                 }
             })
         }
+        else {
+            document.getElementById("btnSearch").setAttribute("style", "display:none");
+            document.getElementById("searchText").setAttribute("style", "display:none");
+        }
+
     }
     load();
-
 </script>
 
 
