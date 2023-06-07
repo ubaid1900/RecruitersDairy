@@ -17,6 +17,11 @@ div fieldSet legend {
     font-style: italic;
 }
 
+div fieldSet:nth-child(even) {
+    background-color: gray;
+    color: white;
+}
+
 #divmain {
     display: flex;
     flex-wrap: wrap;

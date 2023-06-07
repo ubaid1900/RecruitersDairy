@@ -59,8 +59,8 @@
                     if (canInput.id.endsWith('email')) {
                         objectCandidate.email = canInput.value;
                     }
-                    if (canInput.id.endsWith('submisionStatus')) {
-                        objectCandidate.submisionStatus = canInput.value;
+                    if (canInput.id.endsWith('submissionStatus')) {
+                        objectCandidate.submissionStatus = canInput.value;
                     }
                 });
 
@@ -157,12 +157,12 @@
             var divSubmissionStatus = document.createElement('div');
             divSubmissionStatus.setAttribute("id", "divCandidateStatus")
             var newCanSubmissionStatusLbl = document.createElement('label');
-            var newCanSubmisionStatusText = document.createElement('input');
-            newCanSubmisionStatusText.setAttribute("type", "text");
-            newCanSubmisionStatusText.setAttribute("id", "candidate" + `${candidateCounter}` + "submisionStatus")
+            var newCanSubmissionStatusText = document.createElement('input');
+            newCanSubmissionStatusText.setAttribute("type", "text");
+            newCanSubmissionStatusText.setAttribute("id", "candidate" + `${candidateCounter}` + "submissionStatus")
             newCanSubmissionStatusLbl.innerText = "Submission Status:";
-            newCanSubmisionStatusText.setAttribute("class", "inputClass");
-            newCanSubmisionStatusText.value = candidate.submisionStatus;
+            newCanSubmissionStatusText.setAttribute("class", "inputClass");
+            newCanSubmissionStatusText.value = candidate.submissionStatus;
 
             var newCanTextareaInput = document.createElement('textarea');
             newCanTextareaInput.innerText = "Add Notes";
@@ -204,18 +204,12 @@
             fieldSet.append(newCanTextareaInput);
             fieldSet.append(divSubmissionStatus);
             divSubmissionStatus.append(newCanSubmissionStatusLbl);
-            divSubmissionStatus.append(newCanSubmisionStatusText);
+            divSubmissionStatus.append(newCanSubmissionStatusText);
 
            
 
         }
     </script>
-    <style>
-        div fieldSet:nth-child(even) {
-            background-color: gray;
-            color: white;
-        }
-    </style>
 </head>
 
 <body>
@@ -282,7 +276,7 @@
                     elementfilljobPay.value = e.jobPayRange
                     const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
                     const filterCandidates = e.candidates.filter
-                        (c => c.address.toLowerCase().indexOf(elementSearchValue) > -1 || c.name.toLowerCase().indexOf(elementSearchValue) > -1 || c.phone.indexOf(elementSearchValue) > -1 || c.email.indexOf(elementSearchValue) > -1 || c.notes.indexOf(elementSearchValue) > -1 || c.submisionStatus.indexOf(elementSearchValue) > -1);
+                        (c => c.address.toLowerCase().indexOf(elementSearchValue) > -1 || c.name.toLowerCase().indexOf(elementSearchValue) > -1 || c.phone.indexOf(elementSearchValue) > -1 || c.email.indexOf(elementSearchValue) > -1 || c.notes.indexOf(elementSearchValue) > -1 || c.submissionStatus.indexOf(elementSearchValue) > -1);
 
                     filterCandidates.forEach(function (candidate) {
                         addCandidateForm(candidate);
