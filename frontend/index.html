@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="style.css">
     <title>Jobs List</title>
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="data.js"></script>
 
 </head>
 
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
+    <button id="seedJobs" onclick="seedJobs()" type="button">Seed</button>
     <input class="inputClass" id="searchTextIndex" type="text">
     <button class="buttonClass" onclick="searchloadexcel()" type="button">Search</button>
     <div id="divJobs">
@@ -22,6 +24,10 @@
     <a id="export" href="#" onclick="return fnExcelReport();">Export</a>
 </body>
 <script>
+    function seedJobs() {
+        setSeedData();
+        window.location = "index.html";
+    }
     function fnExcelReport() {
 
         var file = prompt("Please Enter the File Name");
