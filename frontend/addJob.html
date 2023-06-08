@@ -176,6 +176,12 @@
             newCanDateLabelCreated.innerText = "Created Date :";
             newCanDateLabel.innerText = new Date();
 
+            var divCanDelete = document.createElement('div');
+            divCanDelete.setAttribute("id", "divCanDelete")
+            var newCanDeleteBtn = document.createElement('button');
+            newCanDeleteBtn.setAttribute("class", "editBtnClass")
+            newCanDeleteBtn.innerText = "Delete"
+
             div1.append(fieldSet);
             fieldSet.append(legend);
             legend.append(newCandidate)
@@ -206,7 +212,8 @@
             divSubmissionStatus.append(newCanSubmissionStatusLbl);
             divSubmissionStatus.append(newCanSubmissionStatusText);
 
-
+            fieldSet.append(divCanDelete);
+            divCanDelete.append(newCanDeleteBtn);
 
         }
     </script>
