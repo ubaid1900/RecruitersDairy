@@ -60,10 +60,10 @@
                     if (canInput.id.endsWith('email')) {
                         objectCandidate.email = canInput.value;
                     }
-                    if (canInput.id.endsWith('submissionStatus')) {
-                        objectCandidate.submissionStatus = canInput.value;
-                    }
                 });
+
+                
+                objectCandidate.submissionStatusId = Number(i.querySelector('select').value);
 
                 const canText = i.querySelector('textarea').value
                 objectCandidate.notes = canText
@@ -206,7 +206,7 @@
             fieldSet.append(newCanTextareaInput);
             fieldSet.append(divSubmissionStatus);
             divSubmissionStatus.append(newCanSubmissionStatusLbl);
-            divSubmissionStatus.append(getSubmissionStatusSelect(candidate.submissionStatusId));
+            divSubmissionStatus.append(getSubmissionStatusSelect(candidate.submissionStatusId, "candidate" + `${candidateCounter}` + "submissionStatus"));
 
             fieldSet.append(divCanDelete);
             divCanDelete.append(newCanDeleteBtn);
