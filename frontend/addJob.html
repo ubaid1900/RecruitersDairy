@@ -105,7 +105,7 @@
         }
 
         var candidateCounter = 0;
-        function addCandidateForm(candidate,i) {
+        function addCandidateForm(candidate, i) {
             if (!candidate) {
                 candidate = { name: '', address: '', email: '', phone: '', notes: '', submitionStatus: '', createdDate: new Date() };
             }
@@ -177,14 +177,15 @@
             newCanDateLabel.innerText = new Date();
 
             var divCanDelete = document.createElement('div');
-            divCanDelete.setAttribute("id", "divCanDelete")
+            divCanDelete.setAttribute("id", "divCanDelete");
             var newCanDeleteBtn = document.createElement('button');
-            newCanDeleteBtn.setAttribute("type","button")
-            newCanDeleteBtn.setAttribute("class", "editBtnClass")
-            newCanDeleteBtn.innerText = "Delete"
+            newCanDeleteBtn.setAttribute("type", "button");
+            newCanDeleteBtn.setAttribute("class", "editBtnClass");
+            newCanDeleteBtn.innerText = "Delete";
+            const canIndex = candidateCounter - 1;
             newCanDeleteBtn.addEventListener("click", function () {
                 var jobs = JSON.parse(localStorage.getItem('jobs'));
-                jobs[i].candidates.splice(candidateCounter, 1);
+                jobs[i].candidates.splice(canIndex, 1);
                 localStorage.setItem("jobs", JSON.stringify(jobs));
                 load();
             });
@@ -256,7 +257,7 @@
 </body>
 <script>
     function load() {
-        candidateCounter=0;
+        candidateCounter = 0;
         if (init.environment !== 'development') {
             document.getElementById('fillJob').setAttribute("style", "display:none");
         }
@@ -275,7 +276,7 @@
             if (!jobs) {
                 jobs = [];
             }
-            jobs.forEach((e,i)=>{
+            jobs.forEach((e, i) => {
                 if (e.jobid == jobidValue) {
                     var elementfilljobid = document.getElementById('jobId');
                     elementfilljobid.setAttribute('disabled', 'disabled');
@@ -289,13 +290,13 @@
                     elementfilljobLoc.value = e.jobLocation
                     var elementfilljobPay = document.getElementById('jobPayRange')
                     elementfilljobPay.value = e.jobPayRange
-                    console.log("i=" +i);
+                    console.log("i=" + i);
                     const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
                     const filterCandidates = e.candidates.filter
                         (c => c.address.toLowerCase().indexOf(elementSearchValue) > -1 || c.name.toLowerCase().indexOf(elementSearchValue) > -1 || c.phone.indexOf(elementSearchValue) > -1 || c.email.indexOf(elementSearchValue) > -1 || c.notes.indexOf(elementSearchValue) > -1 || c.submissionStatus.indexOf(elementSearchValue) > -1);
 
                     filterCandidates.forEach(function (candidate) {
-                        addCandidateForm(candidate,i);
+                        addCandidateForm(candidate, i);
                     });
                     return;
                 }
