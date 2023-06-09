@@ -184,6 +184,7 @@
             newCanDeleteBtn.innerText = "Delete";
             const canIndex = candidateCounter - 1;
             newCanDeleteBtn.addEventListener("click", function () {
+                confirm("Are you sure to Delete a Candidate");
                 var jobs = JSON.parse(localStorage.getItem('jobs'));
                 jobs[i].candidates.splice(canIndex, 1);
                 localStorage.setItem("jobs", JSON.stringify(jobs));
@@ -244,7 +245,7 @@
         <label for="jobLocation">Job Location</label>
         <input style="margin-left: 8px;" id="jobLocation" type="text" required>
         <label for="jobPayRange">Job PayRange</label>
-        <input style="margin-left: 8px;" id="jobPayRange" type="number" required>
+        <input style="margin-left: 8px;" id="jobPayRange" type="text" required>
 
         <input class="inputClass" id="searchText" type="text">
         <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
