@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <script type="text/javascript" src="uiHelper.js"></script>
     <script type="text/javascript" src="dataEntryHelper.js"></script>
     <script type="text/javascript" src="environmentVariables.js"></script>
     <meta charset="UTF-8">
@@ -155,14 +156,9 @@
             newCanEmailInput.value = candidate.email;
 
             var divSubmissionStatus = document.createElement('div');
-            divSubmissionStatus.setAttribute("id", "divCandidateStatus")
+            divSubmissionStatus.setAttribute("id", "divCandidateStatus");
             var newCanSubmissionStatusLbl = document.createElement('label');
-            var newCanSubmissionStatusText = document.createElement('input');
-            newCanSubmissionStatusText.setAttribute("type", "text");
-            newCanSubmissionStatusText.setAttribute("id", "candidate" + `${candidateCounter}` + "submissionStatus")
             newCanSubmissionStatusLbl.innerText = "Submission Status:";
-            newCanSubmissionStatusText.setAttribute("class", "inputClass");
-            newCanSubmissionStatusText.value = candidate.submissionStatus;
 
             var newCanTextareaInput = document.createElement('textarea');
             newCanTextareaInput.innerText = "Add Notes";
@@ -210,7 +206,7 @@
             fieldSet.append(newCanTextareaInput);
             fieldSet.append(divSubmissionStatus);
             divSubmissionStatus.append(newCanSubmissionStatusLbl);
-            divSubmissionStatus.append(newCanSubmissionStatusText);
+            divSubmissionStatus.append(getSubmissionStatusSelect(candidate.submissionStatusId));
 
             fieldSet.append(divCanDelete);
             divCanDelete.append(newCanDeleteBtn);

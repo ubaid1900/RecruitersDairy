@@ -9,6 +9,7 @@ function getSeedCandidates() {
     }
     return [candidate];
 }
+
 function getSeedJob() {
     const job = {
         jobid: -1,

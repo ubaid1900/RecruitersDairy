@@ -1,3 +1,9 @@
+
+function getDateForDaysAgo(howManyDaysAgo) {
+  const dateDaysAgo = new Date(new Date().setDate(new Date().getDate() - howManyDaysAgo));
+  return dateDaysAgo;
+}
+
 function setSeedData() {
   var seedData = [
     {
@@ -11,13 +17,13 @@ function setSeedData() {
       "createdDate": new Date(),
       "updatedDate": new Date(),
       "candidates": [{
-        "createdDate": new Date(),
-        "updatedDate": new Date(),
+        "createdDate": getDateForDaysAgo(2),
+        "updatedDate": getDateForDaysAgo(1),
         "name": "Jhon",
         "address": "Bangalore",
         "phone": "908779078",
         "email": "john@hotmail.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 1,
         "notes": "third round completed"
       },
       {
@@ -27,7 +33,7 @@ function setSeedData() {
         "address": "Banjara Hills Hyderabad",
         "phone": "06305397499",
         "email": "saleem@gmail.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 2,
         "notes": "Selected"
       },
       {
@@ -37,7 +43,7 @@ function setSeedData() {
         "address": "Chanda Nagar",
         "phone": "98342132",
         "email": "ram@gmail.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 3,
         "notes": "waiting for Hr round"
       }]
     },
@@ -58,7 +64,7 @@ function setSeedData() {
         "address": "Bangalore",
         "phone": "568999910",
         "email": "russ@gmail.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 4,
         "notes": "negotiation in HR round"
       },
       {
@@ -68,7 +74,7 @@ function setSeedData() {
         "address": "ORR Hyderabad",
         "phone": "987663663",
         "email": "shaker@hotmail.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 1,
         "notes": "waiting for offer letter"
       },
       {
@@ -78,7 +84,7 @@ function setSeedData() {
         "address": "Akber bagh Hyderabad",
         "phone": "98457383",
         "email": "abdul@yahoo.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 2,
         "notes": "selected"
       },
       {
@@ -88,7 +94,7 @@ function setSeedData() {
         "address": "Wahed Nager, Hyderabad ",
         "phone": "87634343",
         "email": "kal@gamil.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 3,
         "notes": "HR round schdulded"
       },
       {
@@ -98,7 +104,7 @@ function setSeedData() {
         "address": "Ramu Nagar Hyderabad",
         "phone": "98677381",
         "email": "laxmi@yahoo.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 3,
         "notes": "Fresher first round completed."
       },
       {
@@ -108,7 +114,7 @@ function setSeedData() {
         "address": "Banglore",
         "phone": "78883354",
         "email": "sam@gmail.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 3,
         "notes": "three rounds completed"
       }]
     },
@@ -129,7 +135,7 @@ function setSeedData() {
         "address": "Dilsukh Nagar",
         "phone": "98747774",
         "email": "sri@gmail.com",
-        "submissionStatus": 'Scheduled for interview',
+        "submissionStatusId": 1,
         "notes": "waiting for HR round"
       },
       {
@@ -139,7 +145,7 @@ function setSeedData() {
         "address": "Amberpet Hyderabad",
         "phone": "98474774",
         "email": "shah@yahoo.com",
-        "submissionStatus": 'Interviewed',
+        "submissionStatusId": 2,
         "notes": "waiting for response"
       },
       {
@@ -149,8 +155,8 @@ function setSeedData() {
         "address": "Chanda Nagar Hyderabad",
         "phone": "987878343",
         "email": "ram@hotmail.com",
-        "submissionStatus": 'Grooming',
-        "notes": "waiting for offer letter"
+        "submissionStatusId": 1,
+        "notes": "Looks promising"
       }]
     },
     {
@@ -170,7 +176,7 @@ function setSeedData() {
         "address": "Mothi Nagar",
         "phone": "89334433",
         "email": "shan@yahoo.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 1,
         "notes": "waiting of offer letter"
       },
       {
@@ -180,7 +186,7 @@ function setSeedData() {
         "address": "Banglore",
         "phone": "23423432",
         "email": "asad@yahoo.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 1,
         "notes": "Appointed"
       }]
     },
@@ -201,7 +207,7 @@ function setSeedData() {
         "address": "Banglore",
         "phone": "23423453",
         "email": "arif@hotmai.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 1,
         "notes": "waiting of HR round"
       },
       {
@@ -211,7 +217,7 @@ function setSeedData() {
         "address": "Lic colony",
         "phone": "234523423",
         "email": "mohammed@gamil.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 1,
         "notes": "three rounds completed"
       },
       {
@@ -221,7 +227,7 @@ function setSeedData() {
         "address": "Amberpet",
         "phone": "2324123",
         "email": "Salman@gmail.com",
-        "submissionStatus": 'Grooming',
+        "submissionStatusId": 1,
         "notes": "waiting for ineterview"
       }]
     },
@@ -242,9 +248,10 @@ function setSeedData() {
         "address": "Delhi",
         "phone": "2432343",
         "email": "sham@gmail.com",
+        "submissionStatusId": 5,
         "notes": "Appointed"
       }]
     }];
-   localStorage.setItem("jobs", JSON.stringify(seedData))
+  localStorage.setItem("jobs", JSON.stringify(seedData))
 }
 
