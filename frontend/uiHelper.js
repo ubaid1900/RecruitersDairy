@@ -1,10 +1,10 @@
 function getSubmissionStatusSelect(selectedId, elementId) {
     const selectElement = document.createElement('select');
-    selectElement.setAttribute('name', elementId)
     selectElement.setAttribute('title', 'Please select a candidate status')
 
     if (elementId) {
-        selectElement.setAttribute('id', elementId)
+        selectElement.setAttribute('name', elementId);
+        selectElement.setAttribute('id', elementId);
     }
     const options = getSubmissionStatuses();
     for (let index = 0; index < options.length; index++) {
