@@ -184,11 +184,12 @@
             newCanDeleteBtn.innerText = "Delete";
             const canIndex = candidateCounter - 1;
             newCanDeleteBtn.addEventListener("click", function () {
-                confirm("Are you sure to Delete a Candidate");
-                var jobs = JSON.parse(localStorage.getItem('jobs'));
-                jobs[i].candidates.splice(canIndex, 1);
-                localStorage.setItem("jobs", JSON.stringify(jobs));
-                load();
+                if (confirm("Are you sure to Delete a Candidate")) {
+                    var jobs = JSON.parse(localStorage.getItem('jobs'));
+                    jobs[i].candidates.splice(canIndex, 1);
+                    localStorage.setItem("jobs", JSON.stringify(jobs));
+                    load();
+                }
             });
 
             div1.append(fieldSet);
@@ -243,10 +244,14 @@
         <label for="jobRequirements">Job Requirements</label>
         <textarea class="inputClass" name="" id="jobRequirements" cols="20" rows="1"></textarea>
         <label for="jobLocation">Job Location</label>
-        <input style="margin-left: 8px;" id="jobLocation" type="text" required>
-        <label for="jobPayRange">Job PayRange</label>
-        <input style="margin-left: 8px;" id="jobPayRange" type="text" required>
-
+        <input style="margin-left: 8px;" id="jobLocation" type="text" required class="inputClass">
+        <br>
+        <label for="">Job PayRange</label>
+        <input style="margin-left: 8px;" id="jobPayRange1" type="text" required class="inputClass">
+        <p style="display: inline;">to</p>
+        <input style="margin-left: 8px;" id="jobPayRange2" type="text" required class="inputClass">&nbsp;&nbsp;&nbsp;
+        <label for="" id="contactLbl">Contact Person : Mr Jhon Doe</label>&nbsp;&nbsp;&nbsp;
+        <label for="" id="contactPhone">Contact Phone : 984568234</label>
         <input class="inputClass" id="searchText" type="text">
         <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
         <br><br>
@@ -284,14 +289,12 @@
                     elementfilljobid.value = e.jobid
                     var elementfilljobdes = document.getElementById('jobDescription')
                     elementfilljobdes.value = e.description
-
                     var elementfilljobReq = document.getElementById('jobRequirements')
                     elementfilljobReq.value = e.jobRequirements
                     var elementfilljobLoc = document.getElementById('jobLocation')
                     elementfilljobLoc.value = e.jobLocation
                     var elementfilljobPay = document.getElementById('jobPayRange')
                     elementfilljobPay.value = e.jobPayRange
-                    console.log("i=" + i);
                     const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
                     const filterCandidates = e.candidates.filter
                         (c => c.address.toLowerCase().indexOf(elementSearchValue) > -1 || c.name.toLowerCase().indexOf(elementSearchValue) > -1 || c.phone.indexOf(elementSearchValue) > -1 || c.email.indexOf(elementSearchValue) > -1 || c.notes.indexOf(elementSearchValue) > -1 || c.submissionStatus.indexOf(elementSearchValue) > -1);

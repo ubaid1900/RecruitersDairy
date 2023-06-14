@@ -47,7 +47,7 @@ fieldset {
     text-align: center;
     color: teal;
     /* border-bottom: black 2px solid; */
-    
+
 }
 
 #jobid {
@@ -81,16 +81,35 @@ fieldset {
     background-color: rgba(134, 134, 184, 0.5);
     border-width: 1px;
 }
-.editBtnClass{
+.editBtnClass {
     border-radius: 5px;
     background-color: rgba(134, 134, 184, 0.5);
     width: 50px;
     height: 23px;
     border-width: 1px;
 }
-.fieldsetClass{
+.fieldsetClass {
     border-radius: 12px;
 }
-#searchText{
+#searchText {
     margin-left: 12px;
+}
+
+#contactLbl {
+    background-color: rgba(160, 160, 179, 0.5);
+    display: inline-block;
+    height: 30px;
+    border-radius: 7px;
+    padding: 4px;
+    padding-bottom: 0px;
+
+}
+
+#contactPhone {
+    background-color: rgba(160, 160, 179, 0.5);
+    display: inline-block;
+    height: 30px;
+    border-radius: 7px;
+    padding: 4px;
+    padding-bottom: 0px;
 }
