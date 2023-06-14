@@ -185,7 +185,7 @@
             newCanDeleteBtn.innerText = "Delete";
             const canIndex = candidateCounter - 1;
             newCanDeleteBtn.addEventListener("click", function () {
-                if (confirm("Are you sure to Delete a Candidate")) {
+                if (confirm("Are you sure to Delete a Candidate "+ `${candidate.name}`+" ?")) {
                     var jobs = JSON.parse(localStorage.getItem('jobs'));
                     jobs[i].candidates.splice(canIndex, 1);
                     localStorage.setItem("jobs", JSON.stringify(jobs));
