@@ -62,7 +62,7 @@
                     }
                 });
 
-                
+
                 objectCandidate.submissionStatusId = Number(i.querySelector('select').value);
 
                 const canText = i.querySelector('textarea').value
@@ -180,10 +180,12 @@
             newCanDeleteBtn.innerText = "Delete";
             const canIndex = candidateCounter - 1;
             newCanDeleteBtn.addEventListener("click", function () {
-                var jobs = JSON.parse(localStorage.getItem('jobs'));
-                jobs[i].candidates.splice(canIndex, 1);
-                localStorage.setItem("jobs", JSON.stringify(jobs));
-                load();
+                if (confirm("Are you sure to Delete a Candidate")) {
+                    var jobs = JSON.parse(localStorage.getItem('jobs'));
+                    jobs[i].candidates.splice(canIndex, 1);
+                    localStorage.setItem("jobs", JSON.stringify(jobs));
+                    load();
+                }
             });
 
             div1.append(fieldSet);
@@ -238,10 +240,14 @@
         <label for="jobRequirements">Job Requirements</label>
         <textarea class="inputClass" name="" id="jobRequirements" cols="20" rows="1"></textarea>
         <label for="jobLocation">Job Location</label>
-        <input style="margin-left: 8px;" id="jobLocation" type="text" required>
+        <input style="margin-left: 8px;" id="jobLocation" type="text" required class="inputClass"><br>
         <label for="jobPayRange">Job PayRange</label>
-        <input style="margin-left: 8px;" id="jobPayRange" type="number" required>
-
+        <input style="margin-left: 8px;" id="jobPayRange1" type="text" required class="inputClass">
+        <p style="display: inline;">to</p>
+        <input style="margin-left: 8px;" id="jobPayRange2" type="text" required
+            class="inputClass">&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="" id="contactLbl" class="classLbl">Contact Person : Mr John Doe</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="" id="contactPhone" class="classLbl">Contact Phone : 9823423423</label>
         <input class="inputClass" id="searchText" type="text">
         <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
         <br><br>
@@ -250,7 +256,7 @@
         <br>
         <button class="buttonClass" id="savebutton" type="button" onclick="save()">Save</button>
     </form>
-    
+
 </body>
 <script>
     function load() {
