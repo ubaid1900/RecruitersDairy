@@ -47,7 +47,7 @@ fieldset {
     text-align: center;
     color: teal;
     /* border-bottom: black 2px solid; */
-    
+
 }
 
 #jobid {
@@ -74,23 +74,23 @@ fieldset {
     border-radius: 5px;
     border-width: 1px;
 }
-
 .buttonClass {
     height: 25px;
     border-radius: 5px;
     background-color: rgba(134, 134, 184, 0.5);
     border-width: 1px;
 }
-.editBtnClass{
+.editBtnClass {
     border-radius: 5px;
     background-color: rgba(134, 134, 184, 0.5);
     width: 50px;
     height: 23px;
     border-width: 1px;
 }
-.fieldsetClass{
+.fieldsetClass {
     border-radius: 12px;
 }
-#searchText{
+#searchText {
     margin-left: 12px;
 }
+
