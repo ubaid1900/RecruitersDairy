@@ -31,13 +31,18 @@
             const jobDescription = document.getElementById("jobDescription").value;
             const jobRequirements = document.getElementById("jobRequirements").value;
             const jobLocation = document.getElementById("jobLocation").value;
-            const jobPayRange = document.getElementById("jobPayRange").value;
+            const jobPayRange1 = document.getElementById("jobPayRange1").value;
+            const jobPayRange2 = document.getElementById("jobPayRange2").value;
+            const jobContactPer = document.getElementById("contactPer").value;
+            const jobContactPhone = document.getElementById("contactPhone").value;
             objectJob.jobid = jobId1;
             objectJob.description = jobDescription;
             objectJob.jobRequirements = jobRequirements;
             objectJob.jobLocation = jobLocation;
-            objectJob.jobPayRange = jobPayRange;
-
+            objectJob.jobPayRange1 = jobPayRange1;
+            objectJob.jobPayRange2 = jobPayRange2;
+            objectJob.jobContactPer = jobContactPer;
+            objectJob.jobContactPhone = jobContactPhone;
             const candidates = [];
             const div1 = document.getElementById('divmain');
             div1.querySelectorAll("fieldset").forEach(i => {
@@ -62,7 +67,7 @@
                     }
                 });
 
-                
+
                 objectCandidate.submissionStatusId = Number(i.querySelector('select').value);
 
                 const canText = i.querySelector('textarea').value
@@ -180,10 +185,12 @@
             newCanDeleteBtn.innerText = "Delete";
             const canIndex = candidateCounter - 1;
             newCanDeleteBtn.addEventListener("click", function () {
-                var jobs = JSON.parse(localStorage.getItem('jobs'));
-                jobs[i].candidates.splice(canIndex, 1);
-                localStorage.setItem("jobs", JSON.stringify(jobs));
-                load();
+                if (confirm("Are you sure to Delete a Candidate "+ `${candidate.name}`+" ?")) {
+                    var jobs = JSON.parse(localStorage.getItem('jobs'));
+                    jobs[i].candidates.splice(canIndex, 1);
+                    localStorage.setItem("jobs", JSON.stringify(jobs));
+                    load();
+                }
             });
 
             div1.append(fieldSet);
@@ -238,10 +245,16 @@
         <label for="jobRequirements">Job Requirements</label>
         <textarea class="inputClass" name="" id="jobRequirements" cols="20" rows="1"></textarea>
         <label for="jobLocation">Job Location</label>
-        <input style="margin-left: 8px;" id="jobLocation" type="text" required>
+        <input style="margin-left: 8px;" id="jobLocation" type="text" required class="inputClass"><br>
         <label for="jobPayRange">Job PayRange</label>
-        <input style="margin-left: 8px;" id="jobPayRange" type="number" required>
-
+        <input style="margin-left: 8px;" id="jobPayRange1" type="text" required class="inputClass">
+        <p style="display: inline;">to</p>
+        <input style="margin-left: 8px;" id="jobPayRange2" type="text" required
+            class="inputClass">&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="">Contact Person</label>
+        <input id="contactPer" type="text" class="inputClass">
+        <label for="">Contact Phone </label>
+        <input id="contactPhone" type="number" class="inputClass">
         <input class="inputClass" id="searchText" type="text">
         <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
         <br><br>
@@ -250,6 +263,7 @@
         <br>
         <button class="buttonClass" id="savebutton" type="button" onclick="save()">Save</button>
     </form>
+
 </body>
 <script>
     function load() {
@@ -284,8 +298,16 @@
                     elementfilljobReq.value = e.jobRequirements
                     var elementfilljobLoc = document.getElementById('jobLocation')
                     elementfilljobLoc.value = e.jobLocation
-                    var elementfilljobPay = document.getElementById('jobPayRange')
-                    elementfilljobPay.value = e.jobPayRange
+                    var elementfilljobPay1 = document.getElementById('jobPayRange1')
+                    elementfilljobPay1.value = e.jobPayRange1
+                    var elementfilljobPay2 = document.getElementById('jobPayRange2')
+                    elementfilljobPay2.value = e.jobPayRange2
+                    var elementfillContactPerson = document.getElementById("contactPer")
+                    elementfillContactPerson.value = e.jobContactPer
+                    elementfillContactPerson.setAttribute('disabled', 'disabled');
+                    var elementfillContactPhone = document.getElementById("contactPhone")
+                    elementfillContactPhone.value = e.jobContactPhone
+                    elementfillContactPhone.setAttribute('disabled', 'disabled');
                     console.log("i=" + i);
                     const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
                     const filterCandidates = e.candidates.filter
