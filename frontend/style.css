@@ -94,11 +94,3 @@ fieldset {
     margin-left: 12px;
 }
 
-.classLbl {
-    background-color: rgba(203, 203, 221, 0.5);
-    display: inline-block;
-    height: 30px;
-    border-radius: 5px;
-    padding: 4px;
-    padding-bottom: 0px;
-}

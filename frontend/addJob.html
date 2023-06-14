@@ -31,13 +31,18 @@
             const jobDescription = document.getElementById("jobDescription").value;
             const jobRequirements = document.getElementById("jobRequirements").value;
             const jobLocation = document.getElementById("jobLocation").value;
-            const jobPayRange = document.getElementById("jobPayRange").value;
+            const jobPayRange1 = document.getElementById("jobPayRange1").value;
+            const jobPayRange2 = document.getElementById("jobPayRange2").value;
+            const jobContactPer = document.getElementById("contactPer").value;
+            const jobContactPhone = document.getElementById("contactPhone").value;
             objectJob.jobid = jobId1;
             objectJob.description = jobDescription;
             objectJob.jobRequirements = jobRequirements;
             objectJob.jobLocation = jobLocation;
-            objectJob.jobPayRange = jobPayRange;
-
+            objectJob.jobPayRange1 = jobPayRange1;
+            objectJob.jobPayRange2 = jobPayRange2;
+            objectJob.jobContactPer = jobContactPer;
+            objectJob.jobContactPhone = jobContactPhone;
             const candidates = [];
             const div1 = document.getElementById('divmain');
             div1.querySelectorAll("fieldset").forEach(i => {
@@ -246,8 +251,10 @@
         <p style="display: inline;">to</p>
         <input style="margin-left: 8px;" id="jobPayRange2" type="text" required
             class="inputClass">&nbsp;&nbsp;&nbsp;&nbsp;
-        <label for="" id="contactLbl" class="classLbl">Contact Person : Mr John Doe</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label for="" id="contactPhone" class="classLbl">Contact Phone : 9823423423</label>
+        <label for="">Contact Person</label>
+        <input id="contactPer" type="text" class="inputClass">
+        <label for="">Contact Phone </label>
+        <input id="contactPhone" type="number" class="inputClass">
         <input class="inputClass" id="searchText" type="text">
         <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
         <br><br>
@@ -291,8 +298,16 @@
                     elementfilljobReq.value = e.jobRequirements
                     var elementfilljobLoc = document.getElementById('jobLocation')
                     elementfilljobLoc.value = e.jobLocation
-                    var elementfilljobPay = document.getElementById('jobPayRange')
-                    elementfilljobPay.value = e.jobPayRange
+                    var elementfilljobPay1 = document.getElementById('jobPayRange1')
+                    elementfilljobPay1.value = e.jobPayRange1
+                    var elementfilljobPay2 = document.getElementById('jobPayRange2')
+                    elementfilljobPay2.value = e.jobPayRange2
+                    var elementfillContactPerson = document.getElementById("contactPer")
+                    elementfillContactPerson.value = e.jobContactPer
+                    elementfillContactPerson.setAttribute('disabled', 'disabled');
+                    var elementfillContactPhone = document.getElementById("contactPhone")
+                    elementfillContactPhone.value = e.jobContactPhone
+                    elementfillContactPhone.setAttribute('disabled', 'disabled');
                     console.log("i=" + i);
                     const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
                     const filterCandidates = e.candidates.filter
