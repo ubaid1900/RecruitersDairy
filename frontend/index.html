@@ -173,7 +173,7 @@
             deleteButton.innerText = "Delete";
             deleteButton.setAttribute("class", "editBtnClass")
             deleteButton.addEventListener("click", function () {
-                if (confirm("Are you sure to Delete a Job")) {
+                if (confirm("Are you sure to Delete Job  " +`${jobs[i].description}`+" ?")) {
                     jobs.splice(i, 1);
                     localStorage.setItem("jobs", JSON.stringify(jobs));
                     listtable();
