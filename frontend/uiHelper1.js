@@ -8,17 +8,17 @@ function getPayPeriod() {
 
     divpay.appendChild(payPeriodLbl);
     divpay.appendChild(selectElement);
-    
+
     const options = getPayPeriodOptions();
     for (let index = 0; index < options.length; index++) {
         const element = options[index];
         const optionElement = document.createElement('option');
         optionElement.value = element.id; optionElement.text = element.text;
-            optionElement.selected = true;
+        optionElement.selected = true;
         selectElement.append(optionElement);
     }
     return selectElement;
-   
+
 }
 
 function getPayPeriodOptions() {
