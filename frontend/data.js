@@ -255,3 +255,28 @@ function setSeedData() {
   localStorage.setItem("jobs", JSON.stringify(seedData))
 }
 
+function getSeedUsers() {
+  return [
+    { email: 'recruiter1@gmail.com', password: 'qwert1234', roleId: 1 },
+    { email: 'recruiter2@gmail.com', password: 'qwert1234', roleId: 1 },
+    { email: 'recruiter3@gmail.com', password: 'qwert1234', roleId: 1 },
+    {
+      email: 'teamlead1@gmail.com', password: 'qwert1234', roleId: 2
+      , teamMembers: ['recruiter1@gmail.com', 'recruiter2@gmail.com']
+    },
+    {
+      email: 'teamlead2@gmail.com', password: 'qwert1234', roleId: 2
+      , teamMembers: ['recruiter3@gmail.com']
+    },
+    { email: 'manager1@gmail.com', password: 'qwert1234', roleId: 3 },
+  ];
+}
+
+function getRoles() {
+  return [
+    { id: 1, Description: 'Recruiter' },
+    { id: 2, Description: 'Team Leader' },
+    { id: 3, Description: 'Manager' },
+  ];
+}
+

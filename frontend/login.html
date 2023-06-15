@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="data.js"></script>
+    <script>
+        function login() {
+            const email = document.getElementById('txtEmail').value;
+            const password = document.getElementById('txtPassword').value;
+
+            const users = getSeedUsers();
+            const user = users.find(p => p.email == email.trim());
+            if (user) {
+                debugger;
+                localStorage.setItem('currentUser', user.email);
+                event.preventDefault();
+                window.location = 'dashboard.html';
+            } else {
+                alert('Invalid username and/or password. Please enter valid user information and try again!');
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1 class="banner">Recruiters Dairy</h1>
+    <hr>
+    <form method="post" onsubmit="login()">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td>Password:</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input name="txtEmail" id="txtEmail" type="email" required></td>
+                <td><input name="txtPassword" id="txtPassword" type="password" required></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><button>Login</button></td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>
