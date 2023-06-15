@@ -3,6 +3,7 @@
 
 <head>
     <script type="text/javascript" src="uiHelper.js"></script>
+    <script type="text/javascript" src="uiHelper1.js"></script>
     <script type="text/javascript" src="dataEntryHelper.js"></script>
     <script type="text/javascript" src="environmentVariables.js"></script>
     <meta charset="UTF-8">
@@ -25,7 +26,8 @@
         }
 
         function save() {
-            const objectJob = { createdDate: new Date(), updatedDate: new Date() };
+            const date = new Date();
+            const objectJob = { createdDate: date, updatedDate: new Date() };
             const form = document.getElementById("form1");
             const jobId1 = document.getElementById("jobId").value;
             const jobDescription = document.getElementById("jobDescription").value;
@@ -35,6 +37,7 @@
             const jobPayRange2 = document.getElementById("jobPayRange2").value;
             const jobContactPer = document.getElementById("contactPer").value;
             const jobContactPhone = document.getElementById("contactPhone").value;
+            const jobPayPeriod = document.getElementById("payPeriodId").value;
             objectJob.jobid = jobId1;
             objectJob.description = jobDescription;
             objectJob.jobRequirements = jobRequirements;
@@ -43,6 +46,8 @@
             objectJob.jobPayRange2 = jobPayRange2;
             objectJob.jobContactPer = jobContactPer;
             objectJob.jobContactPhone = jobContactPhone;
+            objectJob.jobPayPeriod = jobPayPeriod;
+            console.log(jobPayPeriod);
             const candidates = [];
             const div1 = document.getElementById('divmain');
             div1.querySelectorAll("fieldset").forEach(i => {
@@ -67,13 +72,11 @@
                     }
                 });
 
-
                 objectCandidate.submissionStatusId = Number(i.querySelector('select').value);
 
                 const canText = i.querySelector('textarea').value
                 objectCandidate.notes = canText
                 candidates.push(objectCandidate)
-                console.log(objectJob);
 
             });
             objectJob.candidates = candidates;
@@ -111,6 +114,7 @@
         }
 
         var candidateCounter = 0;
+
         function addCandidateForm(candidate, i) {
             if (!candidate) {
                 candidate = { name: '', address: '', email: '', phone: '', notes: '', submitionStatus: '', createdDate: new Date() };
@@ -185,7 +189,7 @@
             newCanDeleteBtn.innerText = "Delete";
             const canIndex = candidateCounter - 1;
             newCanDeleteBtn.addEventListener("click", function () {
-                if (confirm("Are you sure to Delete a Candidate "+ `${candidate.name}`+" ?")) {
+                if (confirm("Are you sure to Delete a Candidate " + `${candidate.name}` + " ?")) {
                     var jobs = JSON.parse(localStorage.getItem('jobs'));
                     jobs[i].candidates.splice(canIndex, 1);
                     localStorage.setItem("jobs", JSON.stringify(jobs));
@@ -230,8 +234,7 @@
     </script>
 </head>
 
-<body>
-
+<body >
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
 
@@ -255,6 +258,8 @@
         <input id="contactPer" type="text" class="inputClass">
         <label for="">Contact Phone </label>
         <input id="contactPhone" type="number" class="inputClass">
+        <br><br>
+        <div id="payPeriod"></div>
         <input class="inputClass" id="searchText" type="text">
         <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
         <br><br>
@@ -265,6 +270,7 @@
     </form>
 
 </body>
+
 <script>
     function load() {
         candidateCounter = 0;
@@ -293,7 +299,6 @@
                     elementfilljobid.value = e.jobid
                     var elementfilljobdes = document.getElementById('jobDescription')
                     elementfilljobdes.value = e.description
-
                     var elementfilljobReq = document.getElementById('jobRequirements')
                     elementfilljobReq.value = e.jobRequirements
                     var elementfilljobLoc = document.getElementById('jobLocation')
@@ -304,11 +309,11 @@
                     elementfilljobPay2.value = e.jobPayRange2
                     var elementfillContactPerson = document.getElementById("contactPer")
                     elementfillContactPerson.value = e.jobContactPer
-                    elementfillContactPerson.setAttribute('disabled', 'disabled');
                     var elementfillContactPhone = document.getElementById("contactPhone")
                     elementfillContactPhone.value = e.jobContactPhone
-                    elementfillContactPhone.setAttribute('disabled', 'disabled');
-                    console.log("i=" + i);
+                    var elementfillContactPayPeriod = document.getElementById("payPeriodId");
+                    elementfillContactPayPeriod.value = e.jobPayPeriod;
+
                     const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
                     const filterCandidates = e.candidates.filter
                         (c => c.address.toLowerCase().indexOf(elementSearchValue) > -1 || c.name.toLowerCase().indexOf(elementSearchValue) > -1 || c.phone.indexOf(elementSearchValue) > -1 || c.email.indexOf(elementSearchValue) > -1 || c.notes.indexOf(elementSearchValue) > -1 || c.submissionStatus.indexOf(elementSearchValue) > -1);
@@ -326,6 +331,7 @@
         }
 
     }
+    getPayPeriod();
     load();
 </script>
 
