@@ -12,7 +12,7 @@
             const password = document.getElementById('txtPassword').value;
 
             const users = getSeedUsers();
-            const user = users.find(p => p.email == email.trim());
+            const user = users.find(p => p.email == email.trim() && p.password === password);
             if (user) {
                 debugger;
                 const userRole = getRoleById(user.roleId);
