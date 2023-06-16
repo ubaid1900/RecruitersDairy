@@ -10,11 +10,11 @@
         function searchToday() {
             let jobs = JSON.parse(localStorage.getItem('jobs'));
             jobs = jobs.filter(job => {
-                if (new Date(job.createdDate).toDateString() === new Date().toDateString()) {
+                if (new Date(job.updatedDate).toDateString() === new Date().toDateString()) {
                     return job;
                 }
                 if (job.candidates.some(
-                    candidate => new Date(candidate.createdDate).toDateString() === new Date().toDateString())) {
+                    candidate => new Date(candidate.updatedDate).toDateString() === new Date().toDateString())) {
                     return job;
                 }
             });
