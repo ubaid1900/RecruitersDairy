@@ -15,9 +15,24 @@
             const user = users.find(p => p.email == email.trim());
             if (user) {
                 debugger;
-                localStorage.setItem('currentUser', user.email);
+                const userRole = getRoleById(user.roleId);
+                if (!userRole) {
+                    alert(`Found the user but the user doesn't have an appropriate role.
+                     Please contact your administrator for your role to be setup.`);
+                    return;
+                }
+                localStorage.setItem('currentUser', JSON.stringify(user));
                 event.preventDefault();
-                window.location = 'dashboard.html';
+                if (userRole.Description === 'Team Leader') {
+                    window.location = 'dashboard.html';
+                }
+                if (userRole.Description === 'Manager') {
+                    // TODO:
+                    alert('need implementation!');
+                }
+                if (userRole.Description === 'Recruiter') {
+                    window.location = 'index.html';
+                }
             } else {
                 alert('Invalid username and/or password. Please enter valid user information and try again!');
             }

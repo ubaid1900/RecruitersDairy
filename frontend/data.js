@@ -280,3 +280,7 @@ function getRoles() {
   ];
 }
 
+function getRoleById(roleId) {
+  return getRoles().find(r => r.id === roleId);
+}
+
