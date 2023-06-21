@@ -1,6 +1,6 @@
 function getSubmissionStatusSelect(selectedId, elementId) {
     const selectElement = document.createElement('select');
-    selectElement.setAttribute('title', 'Please select a candidate status')
+    selectElement.setAttribute('title', 'Please select a submission status')
 
     if (elementId) {
         selectElement.setAttribute('name', elementId);

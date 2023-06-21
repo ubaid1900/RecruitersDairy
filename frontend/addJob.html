@@ -27,7 +27,7 @@
 
         function save() {
             const date = new Date();
-            const objectJob = { createdDate: date, updatedDate: new Date() };
+            let objectJob = { updatedDate: date };
             const form = document.getElementById("form1");
             const jobId1 = document.getElementById("jobId").value;
             const jobDescription = document.getElementById("jobDescription").value;
@@ -51,7 +51,7 @@
             const candidates = [];
             const div1 = document.getElementById('divmain');
             div1.querySelectorAll("fieldset").forEach(i => {
-                const objectCandidate = {};
+                const objectCandidate = { updatedDate: date };
                 const e = i.querySelectorAll("div");
                 e.forEach(m => {
                     const canInput = m.querySelector('input');
@@ -99,18 +99,43 @@
             }
             if (jobs) {
                 if (indexOfJob > -1) {
+                    objectJob.createdDate = jobs[indexOfJob].createdDate;
+
+                    // candidate if exists will already have createdDate
+                    // in that case preserve else set new date
+                    // Assumption: the index of candidate in localStorage matches the index of candidate built here
+                    for (let index = 0; index < jobs[indexOfJob].candidates.length; index++) {
+                        const element = jobs[indexOfJob].candidates[index];
+                        if (element.createdDate) {
+                            objectJob.candidates[index].createdDate = element.createdDate;
+                        } else {
+                            objectJob.candidates[index].createdDate = date;
+                        }
+                    }
+
                     jobs[indexOfJob] = objectJob;
+
                 } else {
+                    objectJob = setCreatedDate(objectJob, date);
+                    objectJob.createdDate = date;
                     jobs.push(objectJob);
                 }
             }
             else {
                 jobs = [];
-
+                objectJob = setCreatedDate(objectJob, date);
+                objectJob.createdDate = date;
                 jobs.push(objectJob);
             }
 
             localStorage.setItem('jobs', JSON.stringify(jobs));
+        }
+
+        function setCreatedDate(job, date) {
+            for (let index = 0; index < job.candidates.length; index++) {
+                job.candidates[index].createdDate = date;
+            }
+            return job;
         }
 
         var candidateCounter = 0;
@@ -234,7 +259,7 @@
     </script>
 </head>
 
-<body >
+<body>
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
 
