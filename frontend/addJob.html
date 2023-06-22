@@ -104,9 +104,9 @@
                     // candidate if exists will already have createdDate
                     // in that case preserve else set new date
                     // Assumption: the index of candidate in localStorage matches the index of candidate built here
-                    for (let index = 0; index < jobs[indexOfJob].candidates.length; index++) {
+                    for (let index = 0; index < objectJob.candidates.length; index++) {
                         const element = jobs[indexOfJob].candidates[index];
-                        if (element.createdDate) {
+                        if (element) {
                             objectJob.candidates[index].createdDate = element.createdDate;
                         } else {
                             objectJob.candidates[index].createdDate = date;
@@ -203,8 +203,9 @@
             var divDate = document.createElement('div');
             var newCanDateLabelCreated = document.createElement('label');
             var newCanDateLabel = document.createElement('label');
-            newCanDateLabelCreated.innerText = "Created Date :";
-            newCanDateLabel.innerText = new Date();
+            newCanDateLabelCreated.innerText = "Last Updated Date: ";
+            const updatedDateDisplay = `${new Date(candidate.updatedDate).toDateString()} ${new Date(candidate.updatedDate).toLocaleTimeString()}`;
+            newCanDateLabel.innerText = updatedDateDisplay;
 
             var divCanDelete = document.createElement('div');
             divCanDelete.setAttribute("id", "divCanDelete");
