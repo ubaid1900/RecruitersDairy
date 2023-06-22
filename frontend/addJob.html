@@ -204,7 +204,7 @@
             var newCanDateLabelCreated = document.createElement('label');
             var newCanDateLabel = document.createElement('label');
             newCanDateLabelCreated.innerText = "Last Updated Date: ";
-            const updatedDateDisplay = `${new Date(candidate.updatedDate).toDateString()} ${new Date(candidate.updatedDate).toLocaleTimeString()}`;
+            const updatedDateDisplay = getDateDisplay(new Date(candidate.updatedDate));
             newCanDateLabel.innerText = updatedDateDisplay;
 
             var divCanDelete = document.createElement('div');
