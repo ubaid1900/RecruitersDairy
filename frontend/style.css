@@ -2,6 +2,42 @@ body {
     background-color: azure;
     padding: 0px;
 }
+.inputClass {
+    margin-top: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border-width: 1px;
+    align-content: end;
+}
+
+#divForm{
+    display: grid;
+    grid-template-columns: 180px 200px;
+    grid-template-rows: 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+    justify-items: start;
+    align-items: end;
+    }
+    #divSearchBtn{
+        display: grid;
+        grid-template-columns: 180px 200px;
+        align-items:end ;
+        justify-items: start;
+    }
+    
+    #divCandidateId{
+        display: grid;
+        grid-template-columns: 300px;
+        grid-template-rows: 40px 40px 40px 40px 40px 40px 40px;
+        align-items: end;
+        justify-items: start;
+    }
+    #divCandidateStatus{
+        display: grid;
+        grid-template-columns: 150px 200px;
+        grid-template-rows: 35px;
+        align-items: end;
+        justify-items: start;
+    }
 
 div tr:nth-child(even) {
     background-color: #dfdfe2
@@ -31,10 +67,11 @@ div fieldSet:nth-child(even) {
 fieldset {
     flex-direction: row;
 }
-
+/* 
 #divJobs {
     margin-top: 30px;
-}
+    background-color: red;
+} */
 
 #addjobbtn {
     margin-top: 20px;
@@ -50,29 +87,32 @@ fieldset {
 
 }
 
-#jobid {
+/* #jobId {
     margin-left: 8px;
-}
+    align-self: start;
+    /* display: inline-block; */
+/* } */ */
 
-#jobDescription {
+/* #jobDescription {
     margin-bottom: -9px;
     margin-left: 8px;
     border-radius: 5px;
     height: 20px;
-}
+} */
 
-#jobRequirements {
+/* #jobRequirements {
     margin-bottom: -9px;
     margin-left: 8px;
     border-radius: 5px;
     height: 20px;
-}
+} */
 
 .inputClass {
     margin-top: 20px;
     height: 22px;
     border-radius: 5px;
     border-width: 1px;
+    align-content: end;
 }
 .buttonClass {
     height: 25px;
@@ -90,7 +130,111 @@ fieldset {
 .fieldsetClass {
     border-radius: 12px;
 }
-#searchText {
+/* #searchText {
     margin-left: 12px;
+} */
+/* #form1{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+} */
+/* #divJobid{
+    display: inline; */
+/* } */
+
+/* #divForm {
+    /* width: 1000px; */
+    /* display:grid;
+    grid-template-columns: 600px ;
+    grid-template-rows: 50px; */
+    /* grid-template-rows: 1fr,1fr; */
+/* } */ */
+/* #divJobid{
+    width: 300px;
+    display: grid;
+    grid-template-columns:300px 300 px ;
+    background-color: red;
+} */ */
+/* #jobIdLbl{
+    display: inline-block
+} */
+/* #divJobId{
+    background-color: red;
+    display: inline-block;
+} */
+
+/* #divJobId1{
+    background-color: red;
+/* } */
+
+
+ /* #divJobName{
+    display: grid;
+    grid-template-columns: 150px 200px;
+    grid-template-rows: 35px;
+    align-items: end;
+    justify-items: start; 
 }
+#divJobReq{
+    display: grid;
+    grid-template-columns: 150px 200px;
+    grid-template-rows: 35px;
+    align-items: end;
+    justify-items: start;
+}
+#divJobDes{
+    display: grid;
+    grid-template-columns: 150px 200px;
+    grid-template-rows: 35px;
+    align-items: end;
+    justify-items: start;
+
+}
+#divJobLoc{
+    display: grid;
+    grid-template-columns: 150px 200px;
+    grid-template-rows: 35px;
+    align-items: end;
+    justify-items: start;
+}
+#divPayRan1{
+    display: grid;
+    grid-template-columns: 150px 200px;
+    grid-template-rows: 35px;
+    align-items: end;
+    justify-items: start;
+}
+#divPayRan2{
+    display: grid;
+    grid-template-columns: 150px 200px;
+    grid-template-rows: 35px;
+    align-items: end;
+    justify-items: start;
+}
+#divContact{
+    display: grid;
+    grid-template-columns: 150px 200px;
+    grid-template-rows: 35px;
+    align-items: end;
+    justify-items: start;
+}
+#divContPhone{
+    display: grid;
+    grid-template-columns: 150px 200px;
+    grid-template-rows: 35px;
+    align-items: end;
+    justify-items: start;
+}
+
+
+#divSearchBtn{
+    display: grid;
+    grid-template-columns: 150px 200px;
+    grid-template-rows: 35px;
+    align-items: end;
+    justify-items: start; 
+
+} 
+ */
+
 
