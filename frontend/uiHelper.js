@@ -38,3 +38,10 @@ function getSubmissionStatuses() {
         },
     ];
 }
+
+function getDateDisplay(date) {
+    if (!date.toDateString) {
+        return '';
+    }
+    return `${date.toDateString()} ${date.toLocaleTimeString()}`;
+}

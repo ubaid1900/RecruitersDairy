@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="data.js"></script>
+    <script>
+
+        //////
+        // Time Complexity: O(n square)
+        // Space Complexity: O(n)
+
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
+        function hasDuplicates(array) {
+            // for (let j = 0; j < array.length; j++) {
+            //     const element = array[j];
+
+            //     array.forEach(element => {
+                    
+            //     });
+
+                
+            // }
+            // approach 2
+            // for (let index = 0; index < array.length; index++) {
+            //     const element = array[index];
+            //     if (array.indexOf(element) !== array.lastIndexOf(element)) {
+            //         return true;
+            //     }
+            // }
+            // return false;
+
+            // approach 3
+            // 1. sort
+            // 2. compare adjacent elements
+
+            // approach 4 using Set
+            // TC: O(n)
+            // SC: O(n)
+            const set = new Set(array);
+            return set.size !== array.length;
+        }
+
+        let 
+        arrHasDuplicates = hasDuplicates([1, 2, 3]); // false
+        debugger;
+        arrHasDuplicates = hasDuplicates([1, 1, 2]); // true
+        arrHasDuplicates = hasDuplicates(["cat", "dog", "rat"]); // false
+        arrHasDuplicates = hasDuplicates(["cat", "dog", "cat"]); // true
+
+
+
+
+
+
+
+
+        /////////////////////
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
+        function minMaxValueInArray(arr) {
+            if (arr) {
+                if (arr.length === 0) {
+                    return null;
+                }
+                let currentMax = arr[0];
+                // approach 1
+                // if (arr.length === 1) {
+                //     return currentMax;
+                // }
+                // arr.forEach(element => {
+                //     if (currentMax < element) {
+                //         currentMax = element;
+                //     }
+                // };                
+                // return currentMax;
+
+                // approach 2
+                // for (let index = 1; index < arr.length; index++) {
+                //     const element = arr[index];
+                //     if (currentMax < element) {
+                //         currentMax = element;
+                //     }
+                // }
+                // return currentMax;
+
+                // approach 3
+                arr.sort(function (a, b) {
+                    return a - b;
+                });
+                // return [ arr[0], arr[arr.length - 1]];
+                return {min: arr[0], max: arr[arr.length - 1]};
+
+            } else {
+                return null;
+            }
+        }
+
+        var minMax = maximumValueInArray([5, 77, 19]);
+        console.log(minMax.max === 77 ? 'passed' : 'failed');
+        console.log(minMax.min === 5 ? 'passed' : 'failed');
+
+        minMax = maximumValueInArray([-1, -10, -3]);
+        console.log(minMax === -1 ? 'passed' : 'failed');
+
+        minMax = maximumValueInArray([343, 89, 2323, 1213, 23232]);
+        console.log(minMax === 23232 ? 'passed' : 'failed');
+
+        minMax = maximumValueInArray([89, 89, 23232, 1213, 23232]);
+        console.log(minMax === 23232 ? 'passed' : 'failed');
+
+        minMax = maximumValueInArray([]);
+        console.log(minMax === null ? 'passed' : 'failed');
+
+        minMax = maximumValueInArray();
+        console.log(minMax === null ? 'passed' : 'failed');
+
+        // TDD - Test Driven Development
+        // happy path
+        // edge cases/ corner cases
+
+
+        ////////////////////////
+        function login() {
+            const email = document.getElementById('txtEmail').value;
+            const password = document.getElementById('txtPassword').value;
+
+            const users = getSeedUsers();
+            const user = users.find(p => p.email == email.trim() && p.password === password);
+            if (user) {
+                debugger;
+                const userRole = getRoleById(user.roleId);
+                if (!userRole) {
+                    alert(`Found the user but the user doesn't have an appropriate role.
+                     Please contact your administrator for your role to be setup.`);
+                    return;
+                }
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                event.preventDefault();
+                if (userRole.Description === 'Team Leader') {
+                    window.location = 'dashboard.html';
+                }
+                if (userRole.Description === 'Manager') {
+                    // TODO:
+                    alert('need implementation!');
+                }
+                if (userRole.Description === 'Recruiter') {
+                    window.location = 'index.html';
+                }
+            } else {
+                alert('Invalid username and/or password. Please enter valid user information and try again!');
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1 class="banner">Recruiters Dairy</h1>
+    <hr>
+    <form method="post" onsubmit="login()">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td>Password:</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input name="txtEmail" id="txtEmail" type="email" required></td>
+                <td><input name="txtPassword" id="txtPassword" type="password" required></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><button>Login</button></td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>
