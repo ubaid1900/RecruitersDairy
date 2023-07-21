@@ -13,6 +13,23 @@
     <title>Recruiters Dairy</title>
 
     <script>
+         (() => {
+            const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
+            console.log(currentUsers);
+            if (currentUsers && currentUsers != null) {
+                if (currentUsers.roleId == "1") {
+                }
+                else {
+                    alert("You are not allowed in this page")
+                    window.location = 'login.html';
+                }
+            }
+            else {
+                alert("You are not allower to view this page")
+                window.location = "login.html"
+            }
+        })();
+
         function fillJob() {
             var e = getSeedJob();
             var elementfilljobid = document.getElementById('jobId');
@@ -100,6 +117,8 @@
             if (jobs) {
                 if (indexOfJob > -1) {
                     objectJob.createdDate = jobs[indexOfJob].createdDate;
+                    objectJob.createdBy = jobs[indexOfJob].createdBy;
+
 
                     // candidate if exists will already have createdDate
                     // in that case preserve else set new date
@@ -108,23 +127,31 @@
                         const element = jobs[indexOfJob].candidates[index];
                         if (element) {
                             objectJob.candidates[index].createdDate = element.createdDate;
+                            objectJob.candidates[index].createdBy = element.createdBy;
+
                         } else {
                             objectJob.candidates[index].createdDate = date;
+                            objectJob.candidates[index].createdBy = currentUser.email;
+
                         }
                     }
 
                     jobs[indexOfJob] = objectJob;
 
                 } else {
-                    objectJob = setCreatedDate(objectJob, date);
+                    objectJob = setCreatedDateAndEmail(objectJob, date,currentUser.email);
                     objectJob.createdDate = date;
+                    objectJob.createdBy = currentUser.email;
+                    objectJob.updatedBy = currentUser.email;
                     jobs.push(objectJob);
                 }
             }
             else {
                 jobs = [];
-                objectJob = setCreatedDate(objectJob, date);
+                objectJob = setCreatedDateAndEmail(objectJob, date,currentUser.email);
                 objectJob.createdDate = date;
+                objectJob.createdBy = currentUser.email;
+                objectJob.updatedBy = currentUser.email;
                 jobs.push(objectJob);
             }
 
@@ -132,9 +159,11 @@
         }
         let divPayPeriod = document.getElementsByClassName('payPeriodClass');
         // divPayPeriod.append(getPayPeriod(candidate.createdDate));
-        function setCreatedDate(job, date) {
+        function setCreatedDateAndEmail(job, date,email) {
             for (let index = 0; index < job.candidates.length; index++) {
                 job.candidates[index].createdDate = date;
+                job.candidates[index].createdBy = email;
+
             }
             return job;
         }
@@ -215,12 +244,14 @@
             newCanTextareaInput.setAttribute("cols", "32");
             newCanTextareaInput.value = candidate.notes;
 
-            // var divDate = document.createElement('div');
-            // var newCanDateLabelCreated = document.createElement('label');
-            // var newCanDateLabel = document.createElement('label');
-            // newCanDateLabelCreated.innerText = "Last Updated Date: ";
-            // const updatedDateDisplay = `${new Date(candidate.updatedDate).toDateString()} ${new Date(candidate.updatedDate).toLocaleTimeString()}`;
-            // newCanDateLabel.innerText = updatedDateDisplay;
+            if (candidateCounter > 0 && candidate.name != "") {
+                var divDate = document.createElement('div');
+                var newCanDateLabelCreated = document.createElement('label');
+                var newCanDateLabel = document.createElement('label');
+                newCanDateLabelCreated.innerText = "Last Updated Date: ";
+                const updatedDateDisplay = `${new Date(candidate.updatedDate).toDateString()} ${new Date(candidate.updatedDate).toLocaleTimeString()}`;
+                newCanDateLabel.innerText = updatedDateDisplay;
+            }
 
             var divCanDelete = document.createElement('div');
             divCanDelete.setAttribute("id", "divCanDelete");
@@ -243,9 +274,12 @@
             fieldSet.append(divCandidate);
             legend.append(newCandidate)
 
-            // divCandidate.append(divDate);
-            // divDate.append(newCanDateLabelCreated);
-            // divDate.append(newCanDateLabel);
+            
+            if (candidateCounter > 0 && candidate.name != "") {
+                divCandidate.append(divDate);
+                divDate.append(newCanDateLabelCreated);
+                divDate.append(newCanDateLabel);
+            }
 
             divCandidate.append(divName);
             divName.append(newCanNameLabel);

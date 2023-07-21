@@ -14,7 +14,7 @@ body {
 #divForm {
     display: grid;
     grid-template-columns: 180px 200px;
-    grid-template-rows: 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+    grid-template-rows: 38px 38px 38px 38px 38px 38px 38px 38px 38px;
     justify-items: start;
     align-items: end;
 }
