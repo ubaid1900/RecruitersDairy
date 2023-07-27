@@ -3,6 +3,45 @@ body {
     padding: 0px;
 }
 
+.inputClass {
+    margin-top: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border-width: 1px;
+    align-content: end;
+}
+
+#divForm {
+    display: grid;
+    grid-template-columns: 180px 200px;
+    grid-template-rows: 38px 38px 38px 38px 38px 38px 38px 38px 38px;
+    justify-items: start;
+    align-items: end;
+}
+
+#divSearchBtn {
+    display: grid;
+    grid-template-columns: 180px 200px;
+    align-items: end;
+    justify-items: start;
+}
+
+#divCandidateId {
+    display: grid;
+    grid-template-columns: 300px;
+    grid-template-rows: 40px 40px 40px 40px 40px 40px 40px;
+    align-items: end;
+    justify-items: start;
+}
+
+#divCandidateStatus {
+    display: grid;
+    grid-template-columns: 125px 200px;
+    grid-template-rows: 35px;
+    align-items: end;
+    justify-items: start;
+}
+
 div tr:nth-child(even) {
     background-color: #dfdfe2
 }
@@ -32,9 +71,6 @@ fieldset {
     flex-direction: row;
 }
 
-#divJobs {
-    margin-top: 30px;
-}
 
 #addjobbtn {
     margin-top: 20px;
@@ -46,26 +82,7 @@ fieldset {
     font-size: 40px;
     text-align: center;
     color: teal;
-    /* border-bottom: black 2px solid; */
 
-}
-
-#jobid {
-    margin-left: 8px;
-}
-
-#jobDescription {
-    margin-bottom: -9px;
-    margin-left: 8px;
-    border-radius: 5px;
-    height: 20px;
-}
-
-#jobRequirements {
-    margin-bottom: -9px;
-    margin-left: 8px;
-    border-radius: 5px;
-    height: 20px;
 }
 
 .inputClass {
@@ -73,13 +90,16 @@ fieldset {
     height: 22px;
     border-radius: 5px;
     border-width: 1px;
+    align-content: end;
 }
+
 .buttonClass {
     height: 25px;
     border-radius: 5px;
     background-color: rgba(134, 134, 184, 0.5);
     border-width: 1px;
 }
+
 .editBtnClass {
     border-radius: 5px;
     background-color: rgba(134, 134, 184, 0.5);
@@ -87,10 +107,7 @@ fieldset {
     height: 23px;
     border-width: 1px;
 }
+
 .fieldsetClass {
     border-radius: 12px;
 }
-#searchText {
-    margin-left: 12px;
-}
-

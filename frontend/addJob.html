@@ -13,6 +13,23 @@
     <title>Recruiters Dairy</title>
 
     <script>
+         (() => {
+            const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
+            console.log(currentUsers);
+            if (currentUsers && currentUsers != null) {
+                if (currentUsers.roleId == "1") {
+                }
+                else {
+                    alert("You are not allowed in this page")
+                    window.location = 'login.html';
+                }
+            }
+            else {
+                alert("You are not allower to view this page")
+                window.location = "login.html"
+            }
+        })();
+
         function fillJob() {
             var e = getSeedJob();
             var elementfilljobid = document.getElementById('jobId');
@@ -26,6 +43,7 @@
         }
 
         function save() {
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
             const date = new Date();
             let objectJob = { updatedDate: date };
             const form = document.getElementById("form1");
@@ -37,7 +55,7 @@
             const jobPayRange2 = document.getElementById("jobPayRange2").value;
             const jobContactPer = document.getElementById("contactPer").value;
             const jobContactPhone = document.getElementById("contactPhone").value;
-            const jobPayPeriod = document.getElementById("payPeriodId").value;
+            // const jobPayPeriod = document.getElementById("payPeriodId").value;
             objectJob.jobid = jobId1;
             objectJob.description = jobDescription;
             objectJob.jobRequirements = jobRequirements;
@@ -46,8 +64,8 @@
             objectJob.jobPayRange2 = jobPayRange2;
             objectJob.jobContactPer = jobContactPer;
             objectJob.jobContactPhone = jobContactPhone;
-            objectJob.jobPayPeriod = jobPayPeriod;
-            console.log(jobPayPeriod);
+            // objectJob.jobPayPeriod = jobPayPeriod;
+            // console.log(jobPayPeriod);
             const candidates = [];
             const div1 = document.getElementById('divmain');
             div1.querySelectorAll("fieldset").forEach(i => {
@@ -100,6 +118,8 @@
             if (jobs) {
                 if (indexOfJob > -1) {
                     objectJob.createdDate = jobs[indexOfJob].createdDate;
+                    objectJob.createdBy = jobs[indexOfJob].createdBy;
+
 
                     // candidate if exists will already have createdDate
                     // in that case preserve else set new date
@@ -108,32 +128,43 @@
                         const element = jobs[indexOfJob].candidates[index];
                         if (element) {
                             objectJob.candidates[index].createdDate = element.createdDate;
+                            objectJob.candidates[index].createdBy = element.createdBy;
+
                         } else {
                             objectJob.candidates[index].createdDate = date;
+                            objectJob.candidates[index].createdBy = currentUser.email;
+
                         }
                     }
 
                     jobs[indexOfJob] = objectJob;
 
                 } else {
-                    objectJob = setCreatedDate(objectJob, date);
+                    objectJob = setCreatedDateAndEmail(objectJob, date,currentUser.email);
                     objectJob.createdDate = date;
+                    objectJob.createdBy = currentUser.email;
+                    objectJob.updatedBy = currentUser.email;
                     jobs.push(objectJob);
                 }
             }
             else {
                 jobs = [];
-                objectJob = setCreatedDate(objectJob, date);
+                objectJob = setCreatedDateAndEmail(objectJob, date,currentUser.email);
                 objectJob.createdDate = date;
+                objectJob.createdBy = currentUser.email;
+                objectJob.updatedBy = currentUser.email;
                 jobs.push(objectJob);
             }
 
             localStorage.setItem('jobs', JSON.stringify(jobs));
         }
-
-        function setCreatedDate(job, date) {
+        let divPayPeriod = document.getElementsByClassName('payPeriodClass');
+        // divPayPeriod.append(getPayPeriod(candidate.createdDate));
+        function setCreatedDateAndEmail(job, date,email) {
             for (let index = 0; index < job.candidates.length; index++) {
                 job.candidates[index].createdDate = date;
+                job.candidates[index].createdBy = email;
+
             }
             return job;
         }
@@ -153,28 +184,39 @@
 
             var newCandidate = document.createElement('h4');
             newCandidate.innerHTML = `Candidate : ${candidateCounter}`;
+            var divCandidate = document.createElement("div");
+            divCandidate.setAttribute("id", "divCandidateId")
 
             var divName = document.createElement('div');
             var newCanNameLabel = document.createElement('label');
-            newCanNameLabel.innerText = "Name of Candidate :"
+            newCanNameLabel.setAttribute("class", "labelclass");
+            newCanNameLabel.innerText = "Name  :"
             var newCanNameInput = document.createElement('input');
+            newCanNameInput.setAttribute("placeholder", "Enter the Name")
+            newCanNameInput.setAttribute("class", "inputClass");
             newCanNameInput.setAttribute("style", "margin-left:35px")
             newCanNameInput.setAttribute("id", "candidate" + `${candidateCounter}` + "name")
             newCanNameInput.value = candidate.name;
 
             var divAddress = document.createElement('div');
             var newAddressLabel = document.createElement('label');
-            newAddressLabel.innerText = "Address of Candidate  :"
+            newAddressLabel.setAttribute("class", "labelclass");
+            newAddressLabel.innerText = "Address   :"
             var newAddressInput = document.createElement('input');
+            newAddressInput.setAttribute("placeholder", "Enter the Address")
+            newAddressInput.setAttribute("class", "inputClass");
             newAddressInput.setAttribute("type", "address");
-            newAddressInput.setAttribute("style", "margin-left:20px")
-            newAddressInput.setAttribute("id", "candidate" + `${candidateCounter}` + "address")
+            newAddressInput.setAttribute("style", "margin-left:20px");
+            newAddressInput.setAttribute("id", "candidate" + `${candidateCounter}` + "address");
             newAddressInput.value = candidate.address;
 
             var divPhone = document.createElement('div');
             var newCanPhoneLabel = document.createElement('label');
-            newCanPhoneLabel.innerText = "PhoneNo of Candidate  :"
+            newCanPhoneLabel.setAttribute("class", "labelclass");
+            newCanPhoneLabel.innerText = "PhoneNo   :"
             var newPhoneInput = document.createElement('input');
+            newPhoneInput.setAttribute("placeholder", "Enter the Phone Number");
+            newPhoneInput.setAttribute("class", "inputClass");
             newPhoneInput.setAttribute("type", "phonenumber");
             newPhoneInput.setAttribute("style", "margin-left:13px")
             newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone")
@@ -182,8 +224,11 @@
 
             var divEmail = document.createElement('div');
             var newCanEmailLabel = document.createElement('label');
-            newCanEmailLabel.innerText = "Email of Candidate :"
+            newCanEmailLabel.setAttribute("class", "labelclass");
+            newCanEmailLabel.innerText = "Email  :"
             var newCanEmailInput = document.createElement('input');
+            newCanEmailInput.setAttribute("placeholder", "Enter the Email")
+            newCanEmailInput.setAttribute("class", "inputClass");
             newCanEmailInput.setAttribute("type", "email");
             newCanEmailInput.setAttribute("style", "margin-left:34px")
             newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email")
@@ -195,17 +240,19 @@
             newCanSubmissionStatusLbl.innerText = "Submission Status:";
 
             var newCanTextareaInput = document.createElement('textarea');
+            newCanTextareaInput.setAttribute("placeholder", "Enter the Notes");
             newCanTextareaInput.innerText = "Add Notes";
-            newCanTextareaInput.setAttribute("cols", "44");
-
+            newCanTextareaInput.setAttribute("cols", "32");
             newCanTextareaInput.value = candidate.notes;
 
-            var divDate = document.createElement('div');
-            var newCanDateLabelCreated = document.createElement('label');
-            var newCanDateLabel = document.createElement('label');
-            newCanDateLabelCreated.innerText = "Last Updated Date: ";
-            const updatedDateDisplay = getDateDisplay(new Date(candidate.updatedDate));
-            newCanDateLabel.innerText = updatedDateDisplay;
+            if (candidateCounter > 0 && candidate.name != "") {
+                var divDate = document.createElement('div');
+                var newCanDateLabelCreated = document.createElement('label');
+                var newCanDateLabel = document.createElement('label');
+                newCanDateLabelCreated.innerText = "Last Updated Date: ";
+                const updatedDateDisplay = `${new Date(candidate.updatedDate).toDateString()} ${new Date(candidate.updatedDate).toLocaleTimeString()}`;
+                newCanDateLabel.innerText = updatedDateDisplay;
+            }
 
             var divCanDelete = document.createElement('div');
             divCanDelete.setAttribute("id", "divCanDelete");
@@ -225,35 +272,39 @@
 
             div1.append(fieldSet);
             fieldSet.append(legend);
+            fieldSet.append(divCandidate);
             legend.append(newCandidate)
 
-            fieldSet.append(divDate);
-            divDate.append(newCanDateLabelCreated);
-            divDate.append(newCanDateLabel);
+            
+            if (candidateCounter > 0 && candidate.name != "") {
+                divCandidate.append(divDate);
+                divDate.append(newCanDateLabelCreated);
+                divDate.append(newCanDateLabel);
+            }
 
-            fieldSet.append(divName);
+            divCandidate.append(divName);
             divName.append(newCanNameLabel);
             divName.append(newCanNameInput);
 
 
-            fieldSet.append(divAddress);
+            divCandidate.append(divAddress);
             divAddress.append(newAddressLabel);
             divAddress.append(newAddressInput);
 
-            fieldSet.append(divPhone)
+            divCandidate.append(divPhone)
             divPhone.append(newCanPhoneLabel);
             divPhone.append(newPhoneInput);
 
-            fieldSet.append(divEmail)
+            divCandidate.append(divEmail)
             divEmail.append(newCanEmailLabel);
             divEmail.append(newCanEmailInput);
 
-            fieldSet.append(newCanTextareaInput);
-            fieldSet.append(divSubmissionStatus);
+            divCandidate.append(newCanTextareaInput);
+            divCandidate.append(divSubmissionStatus);
             divSubmissionStatus.append(newCanSubmissionStatusLbl);
             divSubmissionStatus.append(getSubmissionStatusSelect(candidate.submissionStatusId, "candidate" + `${candidateCounter}` + "submissionStatus"));
 
-            fieldSet.append(divCanDelete);
+            divCandidate.append(divCanDelete);
             divCanDelete.append(newCanDeleteBtn);
 
         }
@@ -265,35 +316,41 @@
     <hr>
 
     <button id="fillJob" onclick="fillJob()" type="button">Fill</button>
-    <form action="" id="form1" style="margin-top: 25px;">
-        <label for=" jobId">Job Id</label>
-        <input class="inputClass" id="jobId" type="number" required>&nbsp;&nbsp;
-        <label for="jobDescription">Job Description</label>
-        <textarea name="" id="jobDescription" cols="20" rows="1"></textarea>
 
-        <label for="jobRequirements">Job Requirements</label>
-        <textarea class="inputClass" name="" id="jobRequirements" cols="20" rows="1"></textarea>
-        <label for="jobLocation">Job Location</label>
-        <input style="margin-left: 8px;" id="jobLocation" type="text" required class="inputClass"><br>
-        <label for="jobPayRange">Job PayRange</label>
-        <input style="margin-left: 8px;" id="jobPayRange1" type="text" required class="inputClass">
-        <p style="display: inline;">to</p>
-        <input style="margin-left: 8px;" id="jobPayRange2" type="text" required
-            class="inputClass">&nbsp;&nbsp;&nbsp;&nbsp;
-        <label for="">Contact Person</label>
-        <input id="contactPer" type="text" class="inputClass">
-        <label for="">Contact Phone </label>
-        <input id="contactPhone" type="number" class="inputClass">
-        <br><br>
-        <div id="payPeriod"></div>
-        <input class="inputClass" id="searchText" type="text">
-        <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
-        <br><br>
-        <button class="buttonClass" onclick="addCandidateForm()" type="button">Add new candidate</button>
-        <div id="divmain"></div>
-        <br>
-        <button class="buttonClass" id="savebutton" type="button" onclick="save()">Save</button>
+
+    <form action="" id="form1" style="margin-top: 25px;">
+        <div id="divForm">
+            <label id="jobIdLbl" for=" jobId">Job Id</label>
+            <input class="inputClass" id="jobId" type="number" placeholder="Endter Id">
+            <label for="jobDescription">Job Description</label>
+            <textarea class="inputClass name="" id="jobDescription" cols="21" rows="1" placeholder="Enter Description"></textarea>
+            <label for="jobRequirements">Job Requirements</label>
+            <textarea class="inputClass" name="" id="jobRequirements" cols="21" rows="1" placeholder="Enter Requirements"></textarea>
+            <label for="jobLocation">Job Location</label>
+            <input id="jobLocation" type="text" required class="inputClass" placeholder="Enter Location">
+            <label for="jobPayRange">Job PayRange</label>
+            <input id="jobPayRange1" type="text" required class="inputClass" placeholder="Enter PayRange">
+            <p style="margin-bottom: 0px;">to</p>
+            <input id="jobPayRange2" type="text" required class="inputClass" placeholder="Enter PayRange">
+            <label for="">Contact Person</label>
+            <input id="contactPer" type="text" class="inputClass" placeholder="Enter ContactPerson">
+            <label for="">Contact Phone </label>
+            <input id="contactPhone" type="number" class="inputClass" placeholder="Enter ContactPhone">
+            <label for="" id="payPeriodLbl">PayPeriod</label>
+            <br>
+            <div id="divSearchBtn">
+                <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
+                <input class="inputClass" id="searchText" type="text">
+            </div>
+        </div>
     </form>
+    <br>
+    <button class="buttonClass" onclick="addCandidateForm()" type="button">Add new candidate</button>
+    <div id="divmain"></div>
+    <br>
+    <button class="buttonClass" id="savebutton" type="button" onclick="save()">Save</button>
+
+
 
 </body>
 
@@ -337,8 +394,8 @@
                     elementfillContactPerson.value = e.jobContactPer
                     var elementfillContactPhone = document.getElementById("contactPhone")
                     elementfillContactPhone.value = e.jobContactPhone
-                    var elementfillContactPayPeriod = document.getElementById("payPeriodId");
-                    elementfillContactPayPeriod.value = e.jobPayPeriod;
+                    var elementfillContactPayPeriod = document.getElementById("payPeriod");
+                    // elementfillContactPayPeriod.value = e.jobPayPeriod;
 
                     const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
                     const filterCandidates = e.candidates.filter
@@ -357,7 +414,6 @@
         }
 
     }
-    getPayPeriod();
     load();
 </script>
 

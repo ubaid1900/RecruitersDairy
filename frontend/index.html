@@ -24,6 +24,23 @@
     <a id="export" href="#" onclick="return fnExcelReport();">Export</a>
 </body>
 <script>
+     (() => {
+            const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
+            console.log(currentUsers);
+            if (currentUsers && currentUsers != null) {
+                if (currentUsers.roleId == "1") {
+                } 
+                else {
+                    alert("You are not allowed in this page")
+                    window.location = 'login.html';
+                }
+            }
+            else {
+                alert("You are not allower to view this page")
+                window.location = "login.html"
+            }
+        })();
+   
     function seedJobs() {
         setSeedData();
         window.location = "index.html";
