@@ -14,6 +14,8 @@ function setSeedData() {
       "jobLocation": 'Hyderabad',
       "jobPayRange": '10L-20L',
       "payPeriod": "Yearly",
+      "jobContactPer": 'Peter Hook',
+      "jobContactPhone": '9874751258',
       "createdDate": getDateForDaysAgo(2),
       "updatedDate": getDateForDaysAgo(1),
       "candidates": [{
@@ -55,6 +57,8 @@ function setSeedData() {
       "jobLocation": 'Hyderabad',
       "jobPayRange": '10K-20K',
       "payPeriod": "Monthly",
+      "jobContactPer": 'Peter Hook',
+      "jobContactPhone": '9874751258',
       "createdDate": new Date(),
       "updatedDate": new Date(),
       "candidates": [{
@@ -126,6 +130,8 @@ function setSeedData() {
       "jobLocation": 'Hyderabad',
       "jobPayRange": '10K-20K',
       "payPeriod": "Monthly",
+      "jobContactPer": 'Peter Hook',
+      "jobContactPhone": '9874751258',
       "createdDate": new Date(),
       "updatedDate": new Date(),
       "candidates": [{
@@ -167,6 +173,8 @@ function setSeedData() {
       "jobLocation": 'Hyderabad',
       "jobPayRange": '10K-20K',
       "payPeriod": "Monthly",
+      "jobContactPer": 'Peter Hook',
+      "jobContactPhone": '9874751258',
       "createdDate": new Date(),
       "updatedDate": new Date(),
       "candidates": [{
@@ -198,6 +206,8 @@ function setSeedData() {
       "jobLocation": 'Hyderabad',
       "jobPayRange": '10K-20K',
       "payPeriod": "Monthly",
+      "jobContactPer": 'Peter Hook',
+      "jobContactPhone": '9874751258',
       "createdDate": new Date(),
       "updatedDate": new Date(),
       "candidates": [{
@@ -239,6 +249,8 @@ function setSeedData() {
       "jobLocation": 'Hyderabad',
       "jobPayRange": '10K-20K',
       "payPeriod": "Monthly",
+      "jobContactPer": 'Peter Hook',
+      "jobContactPhone": '9874751258',
       "createdDate": getDateForDaysAgo(2),
       "updatedDate": getDateForDaysAgo(1),
       "candidates": [{

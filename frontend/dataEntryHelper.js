@@ -15,7 +15,9 @@ function getSeedJob() {
         jobid: -1,
         description: 'Software Engineer',
         client: 'TCS',
-        requirements: '5 years of .NET, 5 years of javascript',
+        jobRequirements: '5 years of .NET, 5 years of javascript',
+        jobContactPer: 'Peter Hook',
+        jobContactPhone: '9874751258',
         location: 'Hyderabad',
         payRange: '10L-20L',
         candidates: getSeedCandidates()

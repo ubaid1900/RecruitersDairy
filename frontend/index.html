@@ -198,12 +198,6 @@
     }
     listtable();
 
-    function createTd(text) {
-        const tdVar = document.createElement("td");
-        const textVar = document.createTextNode(text);
-        tdVar.appendChild(textVar);
-        return tdVar;
-    }
     function searchloadexcel() {
         var jobs = JSON.parse(localStorage.getItem('jobs'));
         const elementSearchValue = document.getElementById('searchTextIndex').value.toLowerCase();
