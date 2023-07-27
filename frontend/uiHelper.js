@@ -45,3 +45,10 @@ function getDateDisplay(date) {
     }
     return `${date.toDateString()} ${date.toLocaleTimeString()}`;
 }
+
+function createTd(text) {
+    const tdVar = document.createElement("td");
+    const textVar = document.createTextNode(text);
+    tdVar.appendChild(textVar);
+    return tdVar;
+}
