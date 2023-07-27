@@ -44,7 +44,8 @@
 
         function save() {
             const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-            const date = new Date();
+            let date = new Date();
+            date= date.toDateString();
             let objectJob = { updatedDate: date };
             const form = document.getElementById("form1");
             const jobId1 = document.getElementById("jobId").value;

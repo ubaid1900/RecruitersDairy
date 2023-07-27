@@ -31,19 +31,18 @@
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
     <button class="buttonClass" onclick="searchToday()" type="button">Today</button>
-    <button class="buttonClass" onclick="searchToday()" type="button">Yesterday</button>
-    <button class="buttonClass" onclick="searchToday()" type="button">This Month</button>
+    <button class="buttonClass" onclick="searchYesterday()" type="button">Yesterday</button>
+    <button class="buttonClass" onclick="searchMonth()" type="button">This Month</button>
     <div id="divJobs">
     </div>
 </body>
 <script>
 
-    function newJobs() {
+    function newJobs(jobs) {
 
         jobs = JSON.parse(localStorage.getItem('jobs'));
         let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-        const divJobs = document.getElementById('divJobs');
-
+        let divJobs = document.getElementById('divJobs');
         if (!jobs || !jobs.length) {
             const divResult = document.createElement("div");
             divResult.innerText = "NO Results Found";
@@ -69,76 +68,52 @@
         trh1.appendChild(tdh2);
         tableHeader2.setAttribute("style", "padding:12px");
 
-        tableHeader3 = document.createElement('th4');
-        tableHeader3.innerText = 'Job Id';
-        const tdh3 = document.createElement('td');
-        tdh3.appendChild(tableHeader3);
-        trh1.appendChild(tdh3);
-        tableHeader3.setAttribute("style", "padding:12px");
-
-        tableHeader4 = document.createElement('th4');
-        tableHeader4.innerText = 'Job Description';
-        const tdh4 = document.createElement('td');
-        tdh4.appendChild(tableHeader4);
-        trh1.appendChild(tdh4);
-        tableHeader4.setAttribute("style", "padding:12px");
-
-        tableHeader5 = document.createElement('th4');
-        tableHeader5.innerText = 'No of candidates';
-        const tdh5 = document.createElement('td');
-        tdh5.appendChild(tableHeader5);
-        trh1.appendChild(tdh5);
-        tableHeader5.setAttribute("style", "padding:12px");
-
         table.appendChild(trh1);
 
         const tablebody = document.createElement('tbody');
-
-        let text;
         let noOfJobs = 0;
+        let jobCreatedBy;
+        let nameOfRecruiter;
+        var teamLeadRecruiters = [];
+        teamLeadRecruiters = currentUser.teamMembers.filter(p => p)
+        for (let j = 0; j < teamLeadRecruiters.length; j++) {
+            for (let i = 0; i < jobs.length; i++) {
+                jobCreatedBy = document.createTextNode(jobs[i].createdBy);
+                if (jobCreatedBy.nodeValue == teamLeadRecruiters[j]) {
+                    noOfJobs++;
 
-        for (let i = 0; i < jobs.length; i++) {
-            text = document.createTextNode(jobs[i].createdBy);
-            var arry = [];
-            arry = currentUser.teamMembers.filter(p => p)
-            for (let j = 0; j < arry.length; j++) {
-                if (text.nodeValue == arry[j]) {
-                    noOfJobs++
-       
-                    textOfJobs = document.createTextNode(noOfJobs);
-                    textOfJobId = document.createTextNode(jobs[i].jobid);
-                    textOfJobDescription = document.createTextNode(jobs[i].description);
-                    textOfJobNoOfCandidates = document.createTextNode(jobs[i].candidates.length);
-       
-                    const tr1 = document.createElement("tr");
-                    const td1 = document.createElement("td");
-                    const td2 = document.createElement("td");
-                    const td3 = document.createElement("td");
-                    const td4 = document.createElement("td");
-                    const td5 = document.createElement("td");
-
-                    td1.append(text);
-                    td2.append(textOfJobs.nodeValue);
-                    td3.append(textOfJobId.nodeValue);
-                    td4.append(textOfJobDescription.nodeValue);
-                    td5.append(textOfJobNoOfCandidates.nodeValue);
-       
-                    tr1.appendChild(td1);
-                    tr1.appendChild(td2);
-                    tr1.appendChild(td3);
-                    tr1.appendChild(td4);
-                    tr1.appendChild(td5);
-                    tablebody.appendChild(tr1);
-       
-                    noOfJobs = 0;
+                    textOfnoOfJobs = document.createTextNode(noOfJobs);
+                    nameOfRecruiter = jobCreatedBy.nodeValue;
                 }
             }
-         
+            const tr1 = document.createElement("tr");
+            const td1 = document.createElement("td");
+            const td2 = document.createElement("td");
+            td1.append(nameOfRecruiter);
+            td2.append(textOfnoOfJobs.nodeValue);
+
+            tr1.appendChild(td1);
+            tr1.appendChild(td2);
+            tablebody.appendChild(tr1);
+
+            noOfJobs = 0;
         }
         table.appendChild(tablebody);
         divJobs.appendChild(table);
     }
     newJobs();
+    function searchToday() {
+        let divJobs = document.getElementById('divJobs');
+        divJobs = "";
+        jobs = JSON.parse(localStorage.getItem('jobs'));
+        var date = new Date();
+        var date1 = date.toDateString();
+        var date2;
+        var jobsOfToday;
+
+        jobOfToday = jobs.filter(p => p.createdDate == date1);
+        newJobs(jobOfToday);
+    }
 
 </script>
 
