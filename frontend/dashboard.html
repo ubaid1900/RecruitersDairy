@@ -30,17 +30,25 @@
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
+    <div id="divButtons">
+        <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup" checked>:Today
+        <input id="YesterdayRadioBtn" type="radio" value="Yesterday" name="datesGroup">:Yesterday
+        <input id="ThisMonthRadioBtn" type="radio" value="ThisMonth" name="datesGroup"> This Month
+    </div>
+    <button id="calenderBtn" onclick="canlenderDisplay" >Calender</button>
+<!-- 
     <button class="buttonClass" onclick="searchToday()" type="button">Today</button>
-    <button class="buttonClass" onclick="searchYesterday()" type="button">Yesterday</button>
-    <button class="buttonClass" onclick="searchMonth()" type="button">This Month</button>
+    <button id="buttonYesterday" class="buttonClass" onclick="searchYesterday()" type="button">Yesterday</button>
+    <button id="buttonThisMonth" class="buttonClass" onclick="searchMonth()" type="button">This Month</button> -->
     <div id="divJobs">
     </div>
 </body>
 <script>
 
     function newJobs(jobs) {
-
-        jobs = JSON.parse(localStorage.getItem('jobs'));
+        if (!jobs) {
+            jobs = JSON.parse(localStorage.getItem('jobs'));
+        }
         let currentUser = JSON.parse(localStorage.getItem("currentUser"));
         let divJobs = document.getElementById('divJobs');
         if (!jobs || !jobs.length) {
@@ -81,17 +89,17 @@
                 jobCreatedBy = document.createTextNode(jobs[i].createdBy);
                 if (jobCreatedBy.nodeValue == teamLeadRecruiters[j]) {
                     noOfJobs++;
-
-                    textOfnoOfJobs = document.createTextNode(noOfJobs);
                     nameOfRecruiter = jobCreatedBy.nodeValue;
                 }
             }
+            
             const tr1 = document.createElement("tr");
             const td1 = document.createElement("td");
             const td2 = document.createElement("td");
+            if (nameOfRecruiter && noOfJobs) {
             td1.append(nameOfRecruiter);
-            td2.append(textOfnoOfJobs.nodeValue);
-
+            td2.append(noOfJobs);
+            }
             tr1.appendChild(td1);
             tr1.appendChild(td2);
             tablebody.appendChild(tr1);
@@ -102,18 +110,52 @@
         divJobs.appendChild(table);
     }
     newJobs();
-    function searchToday() {
-        let divJobs = document.getElementById('divJobs');
-        divJobs = "";
-        jobs = JSON.parse(localStorage.getItem('jobs'));
-        var date = new Date();
-        var date1 = date.toDateString();
-        var date2;
-        var jobsOfToday;
 
-        jobOfToday = jobs.filter(p => p.createdDate == date1);
-        newJobs(jobOfToday);
+    let divButtons = document.getElementById("divButtons")
+    let input = divButtons.querySelectorAll('input')
+    input.forEach(e => {
+
+        if (e.id == "todayRadioBtn") {
+            e.addEventListener("change", searchToday([new Date().toDateString()]))
+        }
+        if (e.id == "YesterdayRadioBtn") {
+            e.addEventListener("change", searchToday([new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString()]));
+        }
+        if (e.id == "ThisMonthRadioBtn") {
+            e.addEventListener("change", searchToday(
+                (() => {
+                    let thisMonthDays = [];
+                    let dateSet = {};
+                    let todayDate = new Date().getDate()
+                    for (let i = 1; i <= todayDate; i++) {
+                        let dateSet = new Date(new Date().setDate(i)).toDateString()
+                        console.log(dateSet);
+                        thisMonthDays.push(dateSet);
+                    }
+                    return thisMonthDays;
+                })()
+            ))
+        }
+    })
+    function searchToday(date) {
+        // document.getElementById('divJobs').innerHTML = "";
+        jobs = JSON.parse(localStorage.getItem('jobs'));
+        var jobsOfToday = [];
+        jobs.forEach(p => {
+            date.forEach(j => {
+                (p.candidates.forEach(k => {
+                    if (k.updatedDate == j) {
+                        jobsOfToday.push(p)
+                        return jobsOfToday
+                    }
+                }))
+            })
+
+        })
+        newJobs(jobsOfToday);
     }
+
+
 
 </script>
 
