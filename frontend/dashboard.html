@@ -30,16 +30,15 @@
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
-    <div id="divButtons">
-        <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup" checked>:Today
+    <div id="divButtons" style="display: inline">
+        <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup">:Today
         <input id="YesterdayRadioBtn" type="radio" value="Yesterday" name="datesGroup">:Yesterday
         <input id="ThisMonthRadioBtn" type="radio" value="ThisMonth" name="datesGroup"> This Month
     </div>
-    <button id="calenderBtn" onclick="canlenderDisplay" >Calender</button>
-<!-- 
-    <button class="buttonClass" onclick="searchToday()" type="button">Today</button>
-    <button id="buttonYesterday" class="buttonClass" onclick="searchYesterday()" type="button">Yesterday</button>
-    <button id="buttonThisMonth" class="buttonClass" onclick="searchMonth()" type="button">This Month</button> -->
+    <input type="date" id="calenderId1">
+    <input type="date" id="calenderId2">
+    <button onclick="showDates(d1,d2)">Button</button>
+
     <div id="divJobs">
     </div>
 </body>
@@ -92,13 +91,13 @@
                     nameOfRecruiter = jobCreatedBy.nodeValue;
                 }
             }
-            
+
             const tr1 = document.createElement("tr");
             const td1 = document.createElement("td");
             const td2 = document.createElement("td");
             if (nameOfRecruiter && noOfJobs) {
-            td1.append(nameOfRecruiter);
-            td2.append(noOfJobs);
+                td1.append(nameOfRecruiter);
+                td2.append(noOfJobs);
             }
             tr1.appendChild(td1);
             tr1.appendChild(td2);
@@ -114,31 +113,32 @@
     let divButtons = document.getElementById("divButtons")
     let input = divButtons.querySelectorAll('input')
     input.forEach(e => {
-
-        if (e.id == "todayRadioBtn") {
-            e.addEventListener("change", searchToday([new Date().toDateString()]))
-        }
-        if (e.id == "YesterdayRadioBtn") {
-            e.addEventListener("change", searchToday([new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString()]));
-        }
-        if (e.id == "ThisMonthRadioBtn") {
-            e.addEventListener("change", searchToday(
-                (() => {
-                    let thisMonthDays = [];
-                    let dateSet = {};
-                    let todayDate = new Date().getDate()
-                    for (let i = 1; i <= todayDate; i++) {
-                        let dateSet = new Date(new Date().setDate(i)).toDateString()
-                        console.log(dateSet);
-                        thisMonthDays.push(dateSet);
-                    }
-                    return thisMonthDays;
-                })()
-            ))
-        }
+        e.addEventListener("change", function () {
+            if (e.id == "todayRadioBtn") {
+                searchToday([new Date().toDateString()])
+            }
+            if (e.id == "YesterdayRadioBtn") {
+                searchToday([new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString()]);
+            }
+            if (e.id == "ThisMonthRadioBtn") {
+                searchToday(
+                    (() => {
+                        let thisMonthDays = [];
+                        let dateSet = {};
+                        let todayDate = new Date().getDate()
+                        for (let i = 1; i <= todayDate; i++) {
+                            let dateSet = new Date(new Date().setDate(i)).toDateString()
+                            console.log(dateSet);
+                            thisMonthDays.push(dateSet);
+                        }
+                        return thisMonthDays;
+                    })()
+                )
+            }
+        })
     })
     function searchToday(date) {
-        // document.getElementById('divJobs').innerHTML = "";
+        document.getElementById('divJobs').innerHTML = "";
         jobs = JSON.parse(localStorage.getItem('jobs'));
         var jobsOfToday = [];
         jobs.forEach(p => {
@@ -154,8 +154,38 @@
         })
         newJobs(jobsOfToday);
     }
+    var date1;
+    var date2;
+    var d1 = document.getElementById("calenderId1")
+    var d2 = document.getElementById("calenderId2")
+    function showDates(d1, d2) {
+        jobs = JSON.parse(localStorage.getItem('jobs'));
+
+        date1 = new Date(d1.value);
+        date2 = new Date(d2.value);
+        var minDate = date1.getDate();
+        var maxDate = date2.getDay();
+        var minMonth = date1.getMonth();
+        var maxMonth = date2.getMonth();
+        var jobsOfToday = [];
+        var minRangeDay = [];
+
+        jobs.forEach(p => {
+            p.candidates.forEach(j => {
+                new Date(j.updatedDate).getDate();
+                new Date(j.updatedDate).getMonth();
+                if (minDate < new Date(j.updatedDate).getDate() && minMonth == new Date(j.updatedDate).getMonth()) {
+                    for (let m = minDate; m <= new Date(j.updatedDate).getDate(); m++) {
+                        minRangeDay = new Date().setDate(m + 1)
+                        minRangeDay.push(minRangeDay)
+                        console.log(minRangeDay);
+                    }
+                }
+            })
+        })
 
 
+    }
 
 </script>
 
