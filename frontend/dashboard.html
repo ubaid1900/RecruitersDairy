@@ -30,14 +30,14 @@
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
-    <div id="divButtons" style="display: inline">
+    <div id="divButtons" style="display: inline; margin-right: 40px;">
         <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup">:Today
         <input id="YesterdayRadioBtn" type="radio" value="Yesterday" name="datesGroup">:Yesterday
         <input id="ThisMonthRadioBtn" type="radio" value="ThisMonth" name="datesGroup"> This Month
     </div>
     <input type="date" id="calenderId1">
     <input type="date" id="calenderId2">
-    <button onclick="showDates(d1,d2)">Button</button>
+    <button onclick="showDates()">Button</button>
 
     <div id="divJobs">
     </div>
@@ -115,20 +115,19 @@
     input.forEach(e => {
         e.addEventListener("change", function () {
             if (e.id == "todayRadioBtn") {
-                searchToday([new Date().toDateString()])
+                searchByDates([new Date().toDateString()])
             }
             if (e.id == "YesterdayRadioBtn") {
-                searchToday([new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString()]);
+                searchByDates([new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString()]);
             }
             if (e.id == "ThisMonthRadioBtn") {
-                searchToday(
+                searchByDates(
                     (() => {
                         let thisMonthDays = [];
                         let dateSet = {};
                         let todayDate = new Date().getDate()
                         for (let i = 1; i <= todayDate; i++) {
-                            let dateSet = new Date(new Date().setDate(i)).toDateString()
-                            console.log(dateSet);
+                            dateSet = new Date(new Date().setDate(i)).toDateString()
                             thisMonthDays.push(dateSet);
                         }
                         return thisMonthDays;
@@ -137,14 +136,14 @@
             }
         })
     })
-    function searchToday(date) {
+    function searchByDates(date) {
         document.getElementById('divJobs').innerHTML = "";
         jobs = JSON.parse(localStorage.getItem('jobs'));
         var jobsOfToday = [];
         jobs.forEach(p => {
             date.forEach(j => {
                 (p.candidates.forEach(k => {
-                    if (k.updatedDate == j) {
+                    if (k.updatedDate == j || p.updatedDate == j) {
                         jobsOfToday.push(p)
                         return jobsOfToday
                     }
@@ -156,33 +155,47 @@
     }
     var date1;
     var date2;
-    var d1 = document.getElementById("calenderId1")
-    var d2 = document.getElementById("calenderId2")
-    function showDates(d1, d2) {
+
+    function showDates() {
+        document.getElementById('divJobs').innerHTML = "";
+
+        var d1 = document.getElementById("calenderId1").value
+        var d2 = document.getElementById("calenderId2").value
+
+        date1 = new Date(d1);
+        date2 = new Date(d2);
+
+        if (!d1 || !d2) {
+            alert("Please pick dates from the Calender");
+            return;
+        }
         jobs = JSON.parse(localStorage.getItem('jobs'));
 
-        date1 = new Date(d1.value);
-        date2 = new Date(d2.value);
+
         var minDate = date1.getDate();
-        var maxDate = date2.getDay();
+        var maxDate = date2.getDate();
         var minMonth = date1.getMonth();
         var maxMonth = date2.getMonth();
-        var jobsOfToday = [];
-        var minRangeDay = [];
+        var rangeOfDates = [];
+        var dayInRange = {};
+        var jobsInRange=[];
 
+        for (let m = minDate; m <= maxDate; m++) {
+            minRangeDay = new Date(new Date(new Date((new Date().setDate(m + 1)))).setMonth(minMonth)).toDateString()
+            rangeOfDates.push(dayInRange)
+        }
         jobs.forEach(p => {
             p.candidates.forEach(j => {
-                new Date(j.updatedDate).getDate();
-                new Date(j.updatedDate).getMonth();
                 if (minDate < new Date(j.updatedDate).getDate() && minMonth == new Date(j.updatedDate).getMonth()) {
-                    for (let m = minDate; m <= new Date(j.updatedDate).getDate(); m++) {
-                        minRangeDay = new Date().setDate(m + 1)
-                        minRangeDay.push(minRangeDay)
-                        console.log(minRangeDay);
-                    }
+                    rangeOfDates.forEach(e => {
+                        if (e== j.updatedDate || e==p.updatedDate) {
+                            jobsInRange.push(p)
+                        }
+                    });
                 }
             })
         })
+        newJobs(jobsInRange);
 
 
     }
