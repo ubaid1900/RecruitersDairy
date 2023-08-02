@@ -36,7 +36,7 @@ function setSeedData() {
         "createdDate": new Date(),
         "updatedDate": new Date(),
         "createdBy": 'recruiter1@gmail.com',
-        "updatedBY": 'recruiter1@gmail.com',
+        "updatedBy": 'recruiter1@gmail.com',
         "name": "Mohd saleem",
         "address": "Banjara Hills Hyderabad",
         "phone": "06305397499",

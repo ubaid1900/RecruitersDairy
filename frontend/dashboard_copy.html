@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
+    <script>
+        (() => {
+            const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
+            console.log(currentUsers);
+            if (currentUsers && currentUsers != null) {
+                if (currentUsers.roleId == "2") {
+                }
+                else {
+                    alert("You are not allowed in this page")
+                    window.location = 'login.html';
+                }
+            }
+            else {
+                alert("You are not allower to view this page")
+                window.location = "login.html"
+            }
+        })();
+
+    </script>
+</head>
+
+<body>
+    <h1 class="banner">Recruiters Dairy</h1>
+    <hr>
+    <div id="divButtons" style="display: inline; margin-right: 40px;">
+        <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup">:Today
+        <input id="YesterdayRadioBtn" type="radio" value="Yesterday" name="datesGroup">:Yesterday
+        <input id="ThisMonthRadioBtn" type="radio" value="ThisMonth" name="datesGroup"> This Month
+    </div>
+    <input type="date" id="calenderId1">
+    <input type="date" id="calenderId2">
+    <button onclick="showDates()">Button</button>
+
+    <div id="divJobs">
+    </div>
+</body>
+<script>
+
+    function newJobs(jobs) {
+        if (!jobs) {
+            jobs = JSON.parse(localStorage.getItem('jobs'));
+        }
+        let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        let divJobs = document.getElementById('divJobs');
+        if (!jobs || !jobs.length) {
+            const divResult = document.createElement("div");
+            divResult.innerText = "NO Results Found";
+            divJobs.appendChild(divResult);
+            return;
+        }
+
+        const table = document.createElement('table');
+        table.setAttribute("border", "2");
+
+        const trh1 = document.createElement('tr');
+        const tdh1 = document.createElement('td')
+        tableHeader1 = document.createElement('th4');
+        tableHeader1.innerText = 'Name Of The Recruiter';
+        tdh1.appendChild(tableHeader1);
+        trh1.appendChild(tdh1);
+        tableHeader1.setAttribute("style", "padding:12px");
+
+        tableHeader2 = document.createElement('th4');
+        tableHeader2.innerText = 'No of Jobs';
+        const tdh2 = document.createElement('td');
+        tdh2.appendChild(tableHeader2);
+        trh1.appendChild(tdh2);
+        tableHeader2.setAttribute("style", "padding:12px");
+
+        table.appendChild(trh1);
+
+        const tablebody = document.createElement('tbody');
+        let noOfJobs = 0;
+        let jobCreatedBy;
+        let nameOfRecruiter;
+        var teamLeadRecruiters = [];
+        teamLeadRecruiters = currentUser.teamMembers.filter(p => p)
+        for (let j = 0; j < teamLeadRecruiters.length; j++) {
+            for (let i = 0; i < jobs.length; i++) {
+                jobCreatedBy = document.createTextNode(jobs[i].createdBy);
+                if (jobCreatedBy.nodeValue == teamLeadRecruiters[j]) {
+                    noOfJobs++;
+                    nameOfRecruiter = jobCreatedBy.nodeValue;
+                }
+            }
+
+            const tr1 = document.createElement("tr");
+            const td1 = document.createElement("td");
+            const td2 = document.createElement("td");
+            if (nameOfRecruiter && noOfJobs) {
+                td1.append(nameOfRecruiter);
+                td2.append(noOfJobs);
+            }
+            tr1.appendChild(td1);
+            tr1.appendChild(td2);
+            tablebody.appendChild(tr1);
+
+            noOfJobs = 0;
+        }
+        table.appendChild(tablebody);
+        divJobs.appendChild(table);
+    }
+    newJobs();
+
+    let divButtons = document.getElementById("divButtons")
+    let input = divButtons.querySelectorAll('input')
+    input.forEach(e => {
+        e.addEventListener("change", function () {
+            if (e.id == "todayRadioBtn") {
+                // searchByDates([new Date().toDateString()])
+                searchByDate(new Date().toDateString());
+            }
+            if (e.id == "YesterdayRadioBtn") {
+                // searchByDates([new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString()]);
+                searchByDate(new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString());
+            }
+            if (e.id == "ThisMonthRadioBtn") {
+                const first = new Date();
+                first.setDate(1);
+                first.setHours(0);
+                first.setMinutes(0);
+                first.setSeconds(0);
+                const firstOfTheMonth = first.toDateString();
+                const today = new Date(new Date().setDate(new Date().getDate() + 1)).toDateString();
+                searchByDateRange(firstOfTheMonth, today);
+                // searchByDates(
+                //     (() => {
+                //         let thisMonthDays = [];
+                //         let dateSet = {};
+                //         let todayDate = new Date().getDate()
+                //         for (let i = 1; i <= todayDate; i++) {
+                //             dateSet = new Date(new Date().setDate(i)).toDateString()
+                //             thisMonthDays.push(dateSet);
+                //         }
+                //         return thisMonthDays;
+                //     })()
+                // )
+            }
+        })
+    })
+    function searchByDates(date) {
+        document.getElementById('divJobs').innerHTML = "";
+        jobs = JSON.parse(localStorage.getItem('jobs'));
+        // var jobsOfToday = [];
+        // jobs.forEach(p => {
+        //     date.forEach(j => {
+        //         (p.candidates.forEach(k => {
+        //             if (k.updatedDate == j || p.updatedDate == j) {
+        //                 jobsOfToday.push(p)
+        //                 return jobsOfToday
+        //             }
+        //         }))
+        //     })
+
+        // })
+        var jobsOfToday = jobs.filter(
+            job => {
+                let candidateUpdates = false;
+                if (job.candidates) {
+                    candidateUpdates = job.candidates.some(c => date.some(d => d == new Date(c.updatedDate).toDateString()));
+                }
+                let jobUpdates = date.some(d => d == new Date(job.updatedDate).toDateString());
+                if (candidateUpdates || jobUpdates) {
+                    return job;
+                }
+            }
+        );
+        newJobs(jobsOfToday);
+    }
+    
+    function searchByDate(dateString) {
+        document.getElementById('divJobs').innerHTML = "";
+        jobs = JSON.parse(localStorage.getItem('jobs'));
+        var jobsOfToday = jobs.filter(
+            job => {
+                let candidateUpdates = false;
+                if (job.candidates) {
+                    candidateUpdates = job.candidates.some(c => dateString == new Date(c.updatedDate).toDateString());
+                }
+                let jobUpdates = dateString == new Date(job.updatedDate).toDateString();
+                if (candidateUpdates || jobUpdates) {
+                    return job;
+                }
+            }
+        );
+        newJobs(jobsOfToday);
+    }
+    
+    function searchByDateRange(dateString1, dateString2) {
+        const date1 = new Date(dateString1);
+        const date2 = new Date(dateString2);
+        document.getElementById('divJobs').innerHTML = "";
+        jobs = JSON.parse(localStorage.getItem('jobs'));
+        var jobsCounter = [];
+        var jobsOfToday = jobs.filter(
+            job => {
+                let candidateUpdates = false;
+                if (job.candidates) {
+                    candidateUpdates = job.candidates.some(
+                        c => new Date(c.updatedDate) >= date1 && new Date(c.updatedDate) <= date2
+                        );
+                }
+                let jobUpdates = new Date(job.updatedDate) >= date1 && new Date(job.updatedDate) <= date2;
+                if (candidateUpdates || jobUpdates) {
+                    const counted = jobsCounter.find(jc => jc?.email == job.updatedBy);
+                    if (!counted) {
+                        jobsCounter.push({ email: job.updatedBy, count: 1});
+                    } else {
+                        counted.count++;
+                    }
+                    return job;
+                }
+            }
+        );
+        newJobs(jobsOfToday);
+    }
+    
+    var date1;
+    var date2;
+
+    function showDates() {
+        document.getElementById('divJobs').innerHTML = "";
+
+        var d1 = document.getElementById("calenderId1").value
+        var d2 = document.getElementById("calenderId2").value
+
+        date1 = new Date(d1);
+        date2 = new Date(d2);
+
+        if (!d1 || !d2) {
+            alert("Please pick dates from the Calender");
+            return;
+        }
+        jobs = JSON.parse(localStorage.getItem('jobs'));
+
+
+        var minDate = date1.getDate();
+        var maxDate = date2.getDate();
+        var minMonth = date1.getMonth();
+        var maxMonth = date2.getMonth();
+        var rangeOfDates = [];
+        var dayInRange = {};
+        var jobsInRange=[];
+
+        for (let m = minDate; m <= maxDate; m++) {
+            minRangeDay = new Date(new Date(new Date((new Date().setDate(m + 1)))).setMonth(minMonth)).toDateString()
+            rangeOfDates.push(dayInRange)
+        }
+        jobs.forEach(p => {
+            p.candidates.forEach(j => {
+                if (minDate < new Date(j.updatedDate).getDate() && minMonth == new Date(j.updatedDate).getMonth()) {
+                    rangeOfDates.forEach(e => {
+                        if (e== j.updatedDate || e==p.updatedDate) {
+                            jobsInRange.push(p)
+                        }
+                    });
+                }
+            })
+        })
+        newJobs(jobsInRange);
+
+
+    }
+
+</script>
+
+</html>
