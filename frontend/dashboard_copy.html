@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Dashboard</title>
+    <script src="uiHelper.js"></script>
     <script>
         (() => {
             const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
@@ -175,7 +176,7 @@
         );
         newJobs(jobsOfToday);
     }
-    
+
     function searchByDate(dateString) {
         document.getElementById('divJobs').innerHTML = "";
         jobs = JSON.parse(localStorage.getItem('jobs'));
@@ -193,7 +194,7 @@
         );
         newJobs(jobsOfToday);
     }
-    
+
     function searchByDateRange(dateString1, dateString2) {
         const date1 = new Date(dateString1);
         const date2 = new Date(dateString2);
@@ -206,13 +207,13 @@
                 if (job.candidates) {
                     candidateUpdates = job.candidates.some(
                         c => new Date(c.updatedDate) >= date1 && new Date(c.updatedDate) <= date2
-                        );
+                    );
                 }
                 let jobUpdates = new Date(job.updatedDate) >= date1 && new Date(job.updatedDate) <= date2;
                 if (candidateUpdates || jobUpdates) {
                     const counted = jobsCounter.find(jc => jc?.email == job.updatedBy);
                     if (!counted) {
-                        jobsCounter.push({ email: job.updatedBy, count: 1});
+                        jobsCounter.push({ email: job.updatedBy, count: 1 });
                     } else {
                         counted.count++;
                     }
@@ -222,7 +223,7 @@
         );
         newJobs(jobsOfToday);
     }
-    
+
     var date1;
     var date2;
 
@@ -248,7 +249,7 @@
         var maxMonth = date2.getMonth();
         var rangeOfDates = [];
         var dayInRange = {};
-        var jobsInRange=[];
+        var jobsInRange = [];
 
         for (let m = minDate; m <= maxDate; m++) {
             minRangeDay = new Date(new Date(new Date((new Date().setDate(m + 1)))).setMonth(minMonth)).toDateString()
@@ -258,7 +259,7 @@
             p.candidates.forEach(j => {
                 if (minDate < new Date(j.updatedDate).getDate() && minMonth == new Date(j.updatedDate).getMonth()) {
                     rangeOfDates.forEach(e => {
-                        if (e== j.updatedDate || e==p.updatedDate) {
+                        if (e == j.updatedDate || e == p.updatedDate) {
                             jobsInRange.push(p)
                         }
                     });
@@ -270,6 +271,71 @@
 
     }
 
+    function lookupByStatus(jobs) {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        
+        const statuses = getSubmissionStatuses();        
+
+        jobs = jobs.filter(j =>
+            currentUser.teamMembers.includes(j.updatedBy)
+            ||
+            j.candidates.some(c => currentUser.teamMembers.includes(c.updatedBy))
+        );
+        const jobsCounter = [];
+        jobs.forEach(job => {
+            job.candidates?.forEach(c => {
+                const counted = jobsCounter.find(jc =>
+                    jc?.email == job.updatedBy
+                    &&
+                    jc?.statusId == c.submissionStatusId
+                );
+                if (!counted) {
+                    jobsCounter.push({
+                        email: job.updatedBy
+                        , statusId: c.submissionStatusId
+                        , status: statuses.find(s => s.id == c.submissionStatusId).text
+                        , count: 1
+                    });
+                } else {
+                    counted.count++;
+                }
+            });
+        });
+        debugger;
+        return jobsCounter;
+    }
+
+    function loadJobsByStatus(jobsByStatus) {
+        if (!jobsByStatus) {
+            console.error('input was null!');
+            return;
+        }
+        const tableElement = document.createElement('table');
+        jobsByStatus.forEach(j => {
+            const trElement = document.createElement('tr');
+
+            const tdEmail = document.createElement('td');
+            tdEmail.innerText = j.email;
+            trElement.append(tdEmail);
+
+            const tdCount = document.createElement('td');
+            tdCount.innerText = j.count;
+            trElement.append(tdCount);
+
+            const tdStatus = document.createElement('td');
+            tdStatus.innerText = j.status;
+            trElement.append(tdStatus);
+
+            tableElement.append(trElement);
+        });
+        const divJobs = document.getElementById('divJobs');
+        divJobs.append(document.createElement('hr'));
+        divJobs.append(tableElement);
+    }
+    
+    const jobsByStatus = lookupByStatus(JSON.parse(localStorage.getItem('jobs')));
+
+    loadJobsByStatus(jobsByStatus);
 </script>
 
 </html>
