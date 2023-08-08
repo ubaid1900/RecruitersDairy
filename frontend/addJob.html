@@ -45,7 +45,7 @@
         function save() {
             const currentUser = JSON.parse(localStorage.getItem("currentUser"));
             let date = new Date();
-            date= date.toDateString();
+            // date= date.toDateString();
             let objectJob = { updatedDate: date };
             const form = document.getElementById("form1");
             const jobId1 = document.getElementById("jobId").value;
@@ -160,7 +160,6 @@
             localStorage.setItem('jobs', JSON.stringify(jobs));
         }
         let divPayPeriod = document.getElementsByClassName('payPeriodClass');
-        // divPayPeriod.append(getPayPeriod(candidate.createdDate));
         function setCreatedDateAndEmail(job, date,email) {
             for (let index = 0; index < job.candidates.length; index++) {
                 job.candidates[index].createdDate = date;
