@@ -9,7 +9,6 @@
     <script>
         (() => {
             const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
-            console.log(currentUsers);
             if (currentUsers && currentUsers != null) {
                 if (currentUsers.roleId == "2") {
                 }
@@ -33,11 +32,12 @@
     <div id="divButtons" style="display: inline; margin-right: 40px;">
         <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup">:Today
         <input id="YesterdayRadioBtn" type="radio" value="Yesterday" name="datesGroup">:Yesterday
-        <input id="ThisMonthRadioBtn" type="radio" value="ThisMonth" name="datesGroup"> This Month
+
     </div>
-    <input type="date" id="calenderId1">
+    <input type="date" onchange="selectedDate()" id="calenderId1"><br><br>
     <input type="date" id="calenderId2">
-    <button onclick="showDates()">Button</button>
+    <input type="date" id="calenderId3">
+    <button id="btnRangeOfDatesId">Range Of Date</button>
 
     <div id="divJobs">
     </div>
@@ -63,6 +63,7 @@
         const trh1 = document.createElement('tr');
         const tdh1 = document.createElement('td')
         tableHeader1 = document.createElement('th4');
+        
         tableHeader1.innerText = 'Name Of The Recruiter';
         tdh1.appendChild(tableHeader1);
         trh1.appendChild(tdh1);
@@ -74,6 +75,13 @@
         tdh2.appendChild(tableHeader2);
         trh1.appendChild(tdh2);
         tableHeader2.setAttribute("style", "padding:12px");
+
+        tableHeader3 = document.createElement('th4');
+        tableHeader3.innerText = 'view';
+        const tdh3 = document.createElement('td');
+        tdh3.appendChild(tableHeader3);
+        trh1.appendChild(tdh3);
+        tableHeader3.setAttribute("style", "padding:12px");
 
         table.appendChild(trh1);
 
@@ -95,18 +103,27 @@
             const tr1 = document.createElement("tr");
             const td1 = document.createElement("td");
             const td2 = document.createElement("td");
+            const td3 = document.createElement("td");
+            const viewBtn = document.createElement("button")
+            viewBtn.setAttribute("id", "viewBtnId")
+            viewBtn.setAttribute("onclick", "viewDetails()")
+            viewBtn.innerText = "view"
             if (nameOfRecruiter && noOfJobs) {
                 td1.append(nameOfRecruiter);
                 td2.append(noOfJobs);
+                td3.append(viewBtn)
             }
             tr1.appendChild(td1);
             tr1.appendChild(td2);
+            tr1.appendChild(td3);
+
             tablebody.appendChild(tr1);
 
             noOfJobs = 0;
         }
         table.appendChild(tablebody);
         divJobs.appendChild(table);
+
     }
     newJobs();
 
@@ -115,90 +132,78 @@
     input.forEach(e => {
         e.addEventListener("change", function () {
             if (e.id == "todayRadioBtn") {
-                searchByDates([new Date().toDateString()])
+                document.getElementById('divJobs').innerHTML = "";
+                let jobs = JSON.parse(localStorage.getItem('jobs'));
+                searchByDate(jobs, new Date());
             }
             if (e.id == "YesterdayRadioBtn") {
-                searchByDates([new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString()]);
+                document.getElementById('divJobs').innerHTML = "";
+                let jobs = JSON.parse(localStorage.getItem('jobs'));
+                searchByDate(jobs, new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString());
             }
-            if (e.id == "ThisMonthRadioBtn") {
-                searchByDates(
-                    (() => {
-                        let thisMonthDays = [];
-                        let dateSet = {};
-                        let todayDate = new Date().getDate()
-                        for (let i = 1; i <= todayDate; i++) {
-                            dateSet = new Date(new Date().setDate(i)).toDateString()
-                            thisMonthDays.push(dateSet);
-                        }
-                        return thisMonthDays;
-                    })()
-                )
-            }
+
         })
     })
-    function searchByDates(date) {
+    let btnRangeOfDates = document.getElementById("btnRangeOfDatesId")
+    btnRangeOfDates.addEventListener("click", () => {
+        let dateString1 = document.getElementById('calenderId2').value;
+        let dateString2 = document.getElementById('calenderId3').value;
         document.getElementById('divJobs').innerHTML = "";
-        jobs = JSON.parse(localStorage.getItem('jobs'));
-        var jobsOfToday = [];
-        jobs.forEach(p => {
-            date.forEach(j => {
-                (p.candidates.forEach(k => {
-                    if (k.updatedDate == j || p.updatedDate == j) {
-                        jobsOfToday.push(p)
-                        return jobsOfToday
-                    }
-                }))
-            })
+        let jobs = JSON.parse(localStorage.getItem('jobs'));
+        searchByRangeOfDates(jobs, dateString1, dateString2);
+    })
+    function selectedDate() {
+        let selectedDate = document.getElementById('calenderId1')
+        let dateString = selectedDate.value
+        document.getElementById('divJobs').innerHTML = "";
+        let jobs = JSON.parse(localStorage.getItem('jobs'));
+        searchByDate(jobs, dateString);
+    };
+    let dateString;
+    function searchByDate(jobs, dateString) {
 
+        var filteredJobs = [];
+        let candidatesupdate = false;
+        filteredJobs = jobs.filter(job => {
+            if (job.candidates) {
+                candidatesupdate = job.candidates.some(can => new Date(can.updatedDate).toDateString() == new Date(dateString).toDateString())
+            }
+            let jobsupdate = new Date(job.updatedDate).toDateString() == new Date(dateString).toDateString()
+            if (candidatesupdate || jobsupdate) {
+                return job;
+            }
         })
-        newJobs(jobsOfToday);
+
+        newJobs(filteredJobs);
     }
-    var date1;
-    var date2;
 
-    function showDates() {
-        document.getElementById('divJobs').innerHTML = "";
+    function searchByRangeOfDates(jobs, dateString1, dateString2) {
 
-        var d1 = document.getElementById("calenderId1").value
-        var d2 = document.getElementById("calenderId2").value
+        var jobsCounter = [];
 
-        date1 = new Date(d1);
-        date2 = new Date(d2);
+        var jobFilter = jobs.filter(job => {
+            let candidateUpdate = false;
+            candidateUpdate = job.candidates.some(can => {
+                new Date(can.updatedDate).toLocaleDateString() >= new Date(dateString1).toLocaleDateString() && new Date(can.updatedDate).toLocaleDateString() <= new Date(dateString2).toLocaleDateString();
+            });
+            var jobUpdate =
+                new Date(job.updatedDate).toLocaleDateString() >= new Date(dateString1).toLocaleDateString() && new Date(job.updatedDate).toLocaleDateString() <= new Date(dateString2).toLocaleDateString();
 
-        if (!d1 || !d2) {
-            alert("Please pick dates from the Calender");
-            return;
-        }
-        jobs = JSON.parse(localStorage.getItem('jobs'));
-
-
-        var minDate = date1.getDate();
-        var maxDate = date2.getDate();
-        var minMonth = date1.getMonth();
-        var maxMonth = date2.getMonth();
-        var rangeOfDates = [];
-        var dayInRange = {};
-        var jobsInRange=[];
-
-        for (let m = minDate; m <= maxDate; m++) {
-            minRangeDay = new Date(new Date(new Date((new Date().setDate(m + 1)))).setMonth(minMonth)).toDateString()
-            rangeOfDates.push(dayInRange)
-        }
-        jobs.forEach(p => {
-            p.candidates.forEach(j => {
-                if (minDate < new Date(j.updatedDate).getDate() && minMonth == new Date(j.updatedDate).getMonth()) {
-                    rangeOfDates.forEach(e => {
-                        if (e== j.updatedDate || e==p.updatedDate) {
-                            jobsInRange.push(p)
-                        }
-                    });
+            if (jobUpdate || candidateUpdate) {
+                let counted = jobsCounter.find(jc => jc.email == job.createdBy)
+                if (!counted) {
+                    jobsCounter.push({ email: job.createdBy, count: 1 });
                 }
-            })
-        })
-        newJobs(jobsInRange);
+                else {
+                    counted.count++;
+                }
+                return job;
+            };
+        });
+        newJobs(jobFilter);
 
+    };
 
-    }
 
 </script>
 

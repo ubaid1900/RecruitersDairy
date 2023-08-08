@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Dashboard</title>
     <script src="uiHelper.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         (() => {
             const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
@@ -41,6 +42,11 @@
     <button onclick="showDates()">Button</button>
 
     <div id="divJobs">
+    </div>
+
+    <div>
+        <canvas id="myChart"></canvas>
+        <canvas id="recruitersChart"></canvas>
     </div>
 </body>
 <script>
@@ -273,8 +279,8 @@
 
     function lookupByStatus(jobs) {
         const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-        
-        const statuses = getSubmissionStatuses();        
+
+        const statuses = getSubmissionStatuses();
 
         jobs = jobs.filter(j =>
             currentUser.teamMembers.includes(j.updatedBy)
@@ -332,10 +338,59 @@
         divJobs.append(document.createElement('hr'));
         divJobs.append(tableElement);
     }
-    
+
     const jobsByStatus = lookupByStatus(JSON.parse(localStorage.getItem('jobs')));
 
     loadJobsByStatus(jobsByStatus);
+
+    function chartJobsByStatus(jobsByStatus) {
+        const recruitersCtx = document.getElementById('recruitersChart');
+
+        new Chart(recruitersCtx, {
+            type: 'bar',
+            data: {
+                labels: jobsByStatus.map(j => j.email + '-' + j.status),
+                datasets: [{
+                    label: 'Recruiters by candidate status',
+                    data: jobsByStatus.map(j => j.count),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+    chartJobsByStatus(jobsByStatus);
 </script>
+
+
+<!-- <script>
+
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script> -->
 
 </html>
