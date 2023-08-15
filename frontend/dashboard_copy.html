@@ -130,40 +130,7 @@
            
         })
     })
-<<<<<<< Updated upstream
-    function searchByDates(date) {
-        document.getElementById('divJobs').innerHTML = "";
-        jobs = JSON.parse(localStorage.getItem('jobs'));
-        // var jobsOfToday = [];
-        // jobs.forEach(p => {
-        //     date.forEach(j => {
-        //         (p.candidates.forEach(k => {
-        //             if (k.updatedDate == j || p.updatedDate == j) {
-        //                 jobsOfToday.push(p)
-        //                 return jobsOfToday
-        //             }
-        //         }))
-        //     })
-
-        // })
-        var jobsOfToday = jobs.filter(
-            job => {
-                let candidateUpdates = false;
-                if (job.candidates) {
-                    candidateUpdates = job.candidates.some(c => date.some(d => d == new Date(c.updatedDate).toDateString()));
-                }
-                let jobUpdates = date.some(d => d == new Date(job.updatedDate).toDateString());
-                if (candidateUpdates || jobUpdates) {
-                    return job;
-                }
-            }
-        );
-        newJobs(jobsOfToday);
-    }
-
-=======
    
->>>>>>> Stashed changes
     function searchByDate(dateString) {
         document.getElementById('divJobs').innerHTML = "";
         jobs = JSON.parse(localStorage.getItem('jobs'));
