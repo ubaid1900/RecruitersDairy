@@ -4,7 +4,8 @@ using System.Configuration;
 using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Cosmos;
-using RecruitersDairy.Models;
+using Newtonsoft.Json;
+
 namespace RecruitersDairyDb
 {
     class Program
@@ -71,7 +72,7 @@ namespace RecruitersDairyDb
         private async Task CreateContainerAsync()
         {
             // Create a new container
-            this.RDContainer = await this.RDDatabase.CreateContainerIfNotExistsAsync(RDContainerId, "/Id", 400);
+            this.RDContainer = await this.RDDatabase.CreateContainerIfNotExistsAsync(RDContainerId, "/id", 400);
             Console.WriteLine("Created Container: {0}\n", this.RDContainer.Id);
         }
 
@@ -135,6 +136,27 @@ namespace RecruitersDairyDb
         //{
         //    throw new NotImplementedException();
         //}
+    }
+
+    public class Job
+    {
+
+        [JsonProperty("id")]
+        public string? Id { get; set; }
+        public string? Description { get; set; }
+        public string? Client { get; set; }
+        public string? Requirements { get; set; }
+        public string? Location { get; set; }
+        public string? PayRange { get; set; }
+        public string? PayPeriod { get; set; }
+        public string? ContactPer { get; set; }
+        public string? ContactPhone { get; set; }
+        public DateTime Created { get; set; }
+        // public Recruiter[]? CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
+        public DateTime Updated { get; set; }
+        // public Recruiter[]? UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
     }
 }
 // See https://aka.ms/new-console-template for more information
