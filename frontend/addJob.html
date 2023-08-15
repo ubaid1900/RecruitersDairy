@@ -318,20 +318,20 @@
     <button id="fillJob" onclick="fillJob()" type="button">Fill</button>
 
 
-    <form action="" id="form1" style="margin-top: 25px;">
+    <form action="" id="form1" style="margin-top: 25px;" onsubmit="load()">
         <div id="divForm">
             <label id="jobIdLbl" for=" jobId">Job Id</label>
             <input class="inputClass" id="jobId" type="number" placeholder="Endter Id">
             <label for="jobDescription">Job Description</label>
-            <textarea class="inputClass name="" id="jobDescription" cols="21" rows="1" placeholder="Enter Description"></textarea>
+            <input class="inputClass name="" id="jobDescription" required  cols="21" rows="1" placeholder="Enter Description">
             <label for="jobRequirements">Job Requirements</label>
             <textarea class="inputClass" name="" id="jobRequirements" cols="21" rows="1" placeholder="Enter Requirements"></textarea>
             <label for="jobLocation">Job Location</label>
-            <input id="jobLocation" type="text" required class="inputClass" placeholder="Enter Location">
+            <input id="jobLocation" type="text"  class="inputClass" placeholder="Enter Location">
             <label for="jobPayRange">Job PayRange</label>
-            <input id="jobPayRange1" type="text" required class="inputClass" placeholder="Enter PayRange">
+            <input id="jobPayRange1" type="text"  class="inputClass" placeholder="Enter PayRange">
             <p style="margin-bottom: 0px;">to</p>
-            <input id="jobPayRange2" type="text" required class="inputClass" placeholder="Enter PayRange">
+            <input id="jobPayRange2" type="text"  class="inputClass" placeholder="Enter PayRange">
             <label for="">Contact Person</label>
             <input id="contactPer" type="text" class="inputClass" placeholder="Enter ContactPerson">
             <label for="">Contact Phone </label>
@@ -339,16 +339,18 @@
             <label for="" id="payPeriodLbl">PayPeriod</label>
             <br>
             <div id="divSearchBtn">
-                <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
+                <button class="buttonClass" id="btnSearch" type="submit" onsubmit="load()">Search</button>
                 <input class="inputClass" id="searchText" type="text">
             </div>
         </div>
+        <br>
+        <button class="buttonClass" onclick="addCandidateForm()" type="submit">Add new candidate</button>
+        <div id="divmain"></div>
+        <br>
+        <button class="buttonClass" id="savebutton" type="submit" onclick="save()">Save</button>
+        
     </form>
-    <br>
-    <button class="buttonClass" onclick="addCandidateForm()" type="button">Add new candidate</button>
-    <div id="divmain"></div>
-    <br>
-    <button class="buttonClass" id="savebutton" type="button" onclick="save()">Save</button>
+   
 
 
 

@@ -122,37 +122,15 @@
     input.forEach(e => {
         e.addEventListener("change", function () {
             if (e.id == "todayRadioBtn") {
-                // searchByDates([new Date().toDateString()])
                 searchByDate(new Date().toDateString());
             }
             if (e.id == "YesterdayRadioBtn") {
-                // searchByDates([new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString()]);
                 searchByDate(new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString());
             }
-            if (e.id == "ThisMonthRadioBtn") {
-                const first = new Date();
-                first.setDate(1);
-                first.setHours(0);
-                first.setMinutes(0);
-                first.setSeconds(0);
-                const firstOfTheMonth = first.toDateString();
-                const today = new Date(new Date().setDate(new Date().getDate() + 1)).toDateString();
-                searchByDateRange(firstOfTheMonth, today);
-                // searchByDates(
-                //     (() => {
-                //         let thisMonthDays = [];
-                //         let dateSet = {};
-                //         let todayDate = new Date().getDate()
-                //         for (let i = 1; i <= todayDate; i++) {
-                //             dateSet = new Date(new Date().setDate(i)).toDateString()
-                //             thisMonthDays.push(dateSet);
-                //         }
-                //         return thisMonthDays;
-                //     })()
-                // )
-            }
+           
         })
     })
+<<<<<<< Updated upstream
     function searchByDates(date) {
         document.getElementById('divJobs').innerHTML = "";
         jobs = JSON.parse(localStorage.getItem('jobs'));
@@ -183,6 +161,9 @@
         newJobs(jobsOfToday);
     }
 
+=======
+   
+>>>>>>> Stashed changes
     function searchByDate(dateString) {
         document.getElementById('divJobs').innerHTML = "";
         jobs = JSON.parse(localStorage.getItem('jobs'));
@@ -273,8 +254,6 @@
             })
         })
         newJobs(jobsInRange);
-
-
     }
 
     function lookupByStatus(jobs) {

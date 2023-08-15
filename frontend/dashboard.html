@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <script type="text/javascript" src="uiHelper.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Dashboard</title>
@@ -63,7 +64,7 @@
         const trh1 = document.createElement('tr');
         const tdh1 = document.createElement('td')
         tableHeader1 = document.createElement('th4');
-        
+
         tableHeader1.innerText = 'Name Of The Recruiter';
         tdh1.appendChild(tableHeader1);
         trh1.appendChild(tdh1);
@@ -126,6 +127,73 @@
 
     }
     newJobs();
+
+    function lookupByStatus(jobs) {
+
+        let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        const statuses = getSubmissionStatuses();
+
+        jobs = jobs.filter(j => currentUser.teamMembers.includes(j.updatedBy) ||
+            j.candidates.some(c => currentUser.teamMembers.includes(j.updatedBy)))
+
+        const jobsCounter = [];
+
+        jobs.forEach(job => {
+            job.candidates?.forEach(c => {
+                const counted = jobsCounter.find(jc =>
+                    jc?.email == job.updatedBy
+                    &&
+                    jc?.statusid == c.submissionStatusId);
+                if (!counted) {
+                    jobsCounter.push({
+                        email: job.updatedBy,
+                        statusId: c.submissionStatusId,
+                        status: statuses.find(s => s.id = c.submissionStatusId).text,
+                        count: 1
+                    });
+                }
+                else {
+                    jobsCounter.count++
+                }
+            }
+            )
+        })
+        return jobsCounter;
+    };
+
+    function loadJobsByStatus(jobsByStatus) {
+        if (!jobsByStatus) {
+            console.error('input was null!');
+            return;
+        }
+        const tableElement = document.createElement('table');
+        jobsByStatus.forEach(j => {
+            const trElement = document.createElement('tr');
+
+            const tdEmail = document.createElement('td');
+            tdEmail.innerText = j.email;
+            trElement.append(tdEmail);
+
+            const tdCount = document.createElement('td');
+            tdCount.innerText = j.count;
+            trElement.append(tdCount);
+
+            const tdStatus = document.createElement('td');
+            tdStatus.innerText = j.status;
+            trElement.append(tdStatus);
+
+            tableElement.append(trElement);
+        });
+        const divJobs = document.getElementById('divJobs');
+        divJobs.append(document.createElement('hr'));
+        divJobs.append(tableElement);
+    }
+
+    const jobsByStatus = lookupByStatus(JSON.parse(localStorage.getItem('jobs')));
+
+    loadJobsByStatus(jobsByStatus);
+
+    // submissionStatus();
 
     let divButtons = document.getElementById("divButtons")
     let input = divButtons.querySelectorAll('input')
