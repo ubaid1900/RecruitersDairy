@@ -158,6 +158,7 @@
             }
 
             localStorage.setItem('jobs', JSON.stringify(jobs));
+            load();
         }
         let divPayPeriod = document.getElementsByClassName('payPeriodClass');
         function setCreatedDateAndEmail(job, date,email) {
@@ -192,18 +193,20 @@
             newCanNameLabel.setAttribute("class", "labelclass");
             newCanNameLabel.innerText = "Name  :"
             var newCanNameInput = document.createElement('input');
-            newCanNameInput.setAttribute("placeholder", "Enter the Name")
+            newCanNameInput.setAttribute("placeholder", "Enter the Name");
+            newCanNameInput.setAttribute("required","");
             newCanNameInput.setAttribute("class", "inputClass");
-            newCanNameInput.setAttribute("style", "margin-left:35px")
-            newCanNameInput.setAttribute("id", "candidate" + `${candidateCounter}` + "name")
+            newCanNameInput.setAttribute("style", "margin-left:35px");
+            newCanNameInput.setAttribute("id", "candidate" + `${candidateCounter}` + "name");
             newCanNameInput.value = candidate.name;
 
             var divAddress = document.createElement('div');
             var newAddressLabel = document.createElement('label');
             newAddressLabel.setAttribute("class", "labelclass");
-            newAddressLabel.innerText = "Address   :"
+            newAddressLabel.innerText = "Address   :";
             var newAddressInput = document.createElement('input');
-            newAddressInput.setAttribute("placeholder", "Enter the Address")
+            newAddressInput.setAttribute("placeholder", "Enter the Address");
+            newAddressInput.setAttribute("required","");
             newAddressInput.setAttribute("class", "inputClass");
             newAddressInput.setAttribute("type", "address");
             newAddressInput.setAttribute("style", "margin-left:20px");
@@ -213,13 +216,14 @@
             var divPhone = document.createElement('div');
             var newCanPhoneLabel = document.createElement('label');
             newCanPhoneLabel.setAttribute("class", "labelclass");
-            newCanPhoneLabel.innerText = "PhoneNo   :"
+            newCanPhoneLabel.innerText = "PhoneNo   :";
             var newPhoneInput = document.createElement('input');
             newPhoneInput.setAttribute("placeholder", "Enter the Phone Number");
+            newPhoneInput.setAttribute("required","");
             newPhoneInput.setAttribute("class", "inputClass");
             newPhoneInput.setAttribute("type", "phonenumber");
-            newPhoneInput.setAttribute("style", "margin-left:13px")
-            newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone")
+            newPhoneInput.setAttribute("style", "margin-left:13px");
+            newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone");
             newPhoneInput.value = candidate.phone;
 
             var divEmail = document.createElement('div');
@@ -227,11 +231,12 @@
             newCanEmailLabel.setAttribute("class", "labelclass");
             newCanEmailLabel.innerText = "Email  :"
             var newCanEmailInput = document.createElement('input');
-            newCanEmailInput.setAttribute("placeholder", "Enter the Email")
+            newCanEmailInput.setAttribute("placeholder", "Enter the Email");
+            newCanEmailInput.setAttribute("required","");
             newCanEmailInput.setAttribute("class", "inputClass");
             newCanEmailInput.setAttribute("type", "email");
-            newCanEmailInput.setAttribute("style", "margin-left:34px")
-            newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email")
+            newCanEmailInput.setAttribute("style", "margin-left:34px");
+            newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email");
             newCanEmailInput.value = candidate.email;
 
             var divSubmissionStatus = document.createElement('div');
@@ -273,7 +278,7 @@
             div1.append(fieldSet);
             fieldSet.append(legend);
             fieldSet.append(divCandidate);
-            legend.append(newCandidate)
+            legend.append(newCandidate);
 
             
             if (candidateCounter > 0 && candidate.name != "") {
@@ -291,11 +296,11 @@
             divAddress.append(newAddressLabel);
             divAddress.append(newAddressInput);
 
-            divCandidate.append(divPhone)
+            divCandidate.append(divPhone);
             divPhone.append(newCanPhoneLabel);
             divPhone.append(newPhoneInput);
 
-            divCandidate.append(divEmail)
+            divCandidate.append(divEmail);
             divEmail.append(newCanEmailLabel);
             divEmail.append(newCanEmailInput);
 
@@ -318,24 +323,24 @@
     <button id="fillJob" onclick="fillJob()" type="button">Fill</button>
 
 
-    <form action="" id="form1" style="margin-top: 25px;"  onsubmit="load()">
+    <form action="" id="form1" style="margin-top: 25px;"  onsubmit="save()">
         <div id="divForm">
-            <label id="jobIdLbl" for=" jobId">Job Id</label>
-            <input class="inputClass" id="jobId" type="number" placeholder="Endter Id">
+            <label id="jobIdLbl" for=" jobId" >Job Id</label>
+            <input class="inputClass" id="jobId" type="number" required maxlength="3" placeholder="Endter Id">
             <label for="jobDescription">Job Description</label>
-            <input class="inputClass name="" id="jobDescription" type="text" required cols="21" rows="1" placeholder="Enter Description">
+            <input class="inputClass name="" id="jobDescription" type="text" required maxlength="12" cols="21" rows="1" placeholder="Enter Description">
             <label for="jobRequirements">Job Requirements</label>
             <textarea class="inputClass" name="" id="jobRequirements" cols="21" rows="1" placeholder="Enter Requirements"></textarea>
             <label for="jobLocation">Job Location</label>
-            <input id="jobLocation" type="text"  class="inputClass" placeholder="Enter Location">
+            <input id="jobLocation" type="text"  class="inputClass" required maxlength="12" placeholder="Enter Location">
             <label for="jobPayRange">Job PayRange</label>
-            <input id="jobPayRange1" type="text"  class="inputClass" placeholder="Enter PayRange">
+            <input id="jobPayRange1" type="text"  class="inputClass" required maxlength="6" placeholder="Enter PayRange">
             <p style="margin-bottom: 0px;">to</p>
-            <input id="jobPayRange2" type="text"  class="inputClass" placeholder="Enter PayRange">
+            <input id="jobPayRange2" type="text"  class="inputClass" required maxlength="7" placeholder="Enter PayRange">
             <label for="">Contact Person</label>
-            <input id="contactPer" type="text" class="inputClass" placeholder="Enter ContactPerson">
+            <input id="contactPer" type="text" class="inputClass" required maxlength="5" placeholder="Enter ContactPerson">
             <label for="">Contact Phone </label>
-            <input id="contactPhone" type="number" class="inputClass" placeholder="Enter ContactPhone">
+            <input id="contactPhone" type="number" class="inputClass" required maxlength="10" placeholder="Enter ContactPhone">
             <label for="" id="payPeriodLbl">PayPeriod</label>
             <br>
             <div id="divSearchBtn">
@@ -347,7 +352,7 @@
         <button class="buttonClass" onclick="addCandidateForm()" type="button">Add new candidate</button>
         <div id="divmain"></div>
         <br>
-        <button class="buttonClass" id="savebutton" type="submit" onclick="save()">Save</button>
+        <button class="buttonClass" id="savebutton" type="submit" >Save</button>
         
     </form>
    
