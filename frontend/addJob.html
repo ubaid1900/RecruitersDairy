@@ -9,11 +9,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+        integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     <title style="color: blue;">Recruiters Dairy</title>
 
     <script>
-         (() => {
+        (() => {
             const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
             console.log(currentUsers);
             if (currentUsers && currentUsers != null) {
@@ -141,7 +144,7 @@
                     jobs[indexOfJob] = objectJob;
 
                 } else {
-                    objectJob = setCreatedDateAndEmail(objectJob, date,currentUser.email);
+                    objectJob = setCreatedDateAndEmail(objectJob, date, currentUser.email);
                     objectJob.createdDate = date;
                     objectJob.createdBy = currentUser.email;
                     objectJob.updatedBy = currentUser.email;
@@ -150,7 +153,7 @@
             }
             else {
                 jobs = [];
-                objectJob = setCreatedDateAndEmail(objectJob, date,currentUser.email);
+                objectJob = setCreatedDateAndEmail(objectJob, date, currentUser.email);
                 objectJob.createdDate = date;
                 objectJob.createdBy = currentUser.email;
                 objectJob.updatedBy = currentUser.email;
@@ -161,7 +164,7 @@
             load();
         }
         let divPayPeriod = document.getElementsByClassName('payPeriodClass');
-        function setCreatedDateAndEmail(job, date,email) {
+        function setCreatedDateAndEmail(job, date, email) {
             for (let index = 0; index < job.candidates.length; index++) {
                 job.candidates[index].createdDate = date;
                 job.candidates[index].createdBy = email;
@@ -178,6 +181,7 @@
             }
             candidateCounter++
             const div1 = document.getElementById('divmain');
+            div1.setAttribute("class","ui input")
 
             var fieldSet = document.createElement('fieldset');
             fieldSet.setAttribute("class", "fieldsetClass")
@@ -189,51 +193,55 @@
             divCandidate.setAttribute("id", "divCandidateId")
 
             var divName = document.createElement('div');
+            divName.setAttribute("class","ui input")
             var newCanNameLabel = document.createElement('label');
             newCanNameLabel.setAttribute("class", "labelclass");
             newCanNameLabel.innerText = "Name  :"
             var newCanNameInput = document.createElement('input');
             newCanNameInput.setAttribute("placeholder", "Enter the Name");
-            newCanNameInput.setAttribute("required","");
-            newCanNameInput.setAttribute("class", "inputClass");
+            newCanNameInput.setAttribute("required", "");
+            // newCanNameInput.setAttribute("class", "inputClass");
             newCanNameInput.setAttribute("style", "margin-left:35px");
             newCanNameInput.setAttribute("id", "candidate" + `${candidateCounter}` + "name");
             newCanNameInput.value = candidate.name;
 
             var divAddress = document.createElement('div');
+            divAddress.setAttribute("class","ui input")
             var newAddressLabel = document.createElement('label');
             newAddressLabel.setAttribute("class", "labelclass");
             newAddressLabel.innerText = "Address   :";
             var newAddressInput = document.createElement('input');
             newAddressInput.setAttribute("placeholder", "Enter the Address");
-            newAddressInput.setAttribute("required","");
-            newAddressInput.setAttribute("class", "inputClass");
+            newAddressInput.setAttribute("required", "");
+            // newAddressInput.setAttribute("class", "inputClass");
             newAddressInput.setAttribute("type", "address");
             newAddressInput.setAttribute("style", "margin-left:20px");
             newAddressInput.setAttribute("id", "candidate" + `${candidateCounter}` + "address");
             newAddressInput.value = candidate.address;
 
             var divPhone = document.createElement('div');
+            divPhone.setAttribute("class","ui input")
             var newCanPhoneLabel = document.createElement('label');
             newCanPhoneLabel.setAttribute("class", "labelclass");
             newCanPhoneLabel.innerText = "PhoneNo   :";
             var newPhoneInput = document.createElement('input');
             newPhoneInput.setAttribute("placeholder", "Enter the Phone Number");
-            newPhoneInput.setAttribute("required","");
-            newPhoneInput.setAttribute("class", "inputClass");
+            newPhoneInput.setAttribute("required", "");
+            // newPhoneInput.setAttribute("class", "inputClass");
             newPhoneInput.setAttribute("type", "phonenumber");
             newPhoneInput.setAttribute("style", "margin-left:13px");
             newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone");
             newPhoneInput.value = candidate.phone;
 
             var divEmail = document.createElement('div');
+            divEmail.setAttribute("class","ui input")
             var newCanEmailLabel = document.createElement('label');
             newCanEmailLabel.setAttribute("class", "labelclass");
             newCanEmailLabel.innerText = "Email  :"
             var newCanEmailInput = document.createElement('input');
             newCanEmailInput.setAttribute("placeholder", "Enter the Email");
-            newCanEmailInput.setAttribute("required","");
-            newCanEmailInput.setAttribute("class", "inputClass");
+            newCanEmailInput.setAttribute("required", "");
+            // newCanEmailInput.setAttribute("class", "inputClass");
             newCanEmailInput.setAttribute("type", "email");
             newCanEmailInput.setAttribute("style", "margin-left:34px");
             newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email");
@@ -247,7 +255,7 @@
             var newCanTextareaInput = document.createElement('textarea');
             newCanTextareaInput.setAttribute("placeholder", "Enter the Notes");
             newCanTextareaInput.innerText = "Add Notes";
-            newCanTextareaInput.setAttribute("cols", "32");
+            newCanTextareaInput.setAttribute("cols", "34");
             newCanTextareaInput.value = candidate.notes;
 
             if (candidateCounter > 0 && candidate.name != "") {
@@ -263,7 +271,7 @@
             divCanDelete.setAttribute("id", "divCanDelete");
             var newCanDeleteBtn = document.createElement('button');
             newCanDeleteBtn.setAttribute("type", "button");
-            newCanDeleteBtn.setAttribute("class", "editBtnClass");
+            newCanDeleteBtn.setAttribute("class", "ui button blue");
             newCanDeleteBtn.innerText = "Delete";
             const canIndex = candidateCounter - 1;
             newCanDeleteBtn.addEventListener("click", function () {
@@ -280,7 +288,7 @@
             fieldSet.append(divCandidate);
             legend.append(newCandidate);
 
-            
+
             if (candidateCounter > 0 && candidate.name != "") {
                 divCandidate.append(divDate);
                 divDate.append(newCanDateLabelCreated);
@@ -320,42 +328,44 @@
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
 
-    <button id="fillJob" onclick="fillJob()" type="button">Fill</button>
+    <button class="ui blue button" id="fillJob" onclick="fillJob()" type="button">Fill</button>
 
 
-    <form action="" id="form1" style="margin-top: 25px;"  onsubmit="save()">
-        <div id="divForm">
-            <label id="jobIdLbl" for=" jobId" >Job Id</label>
-            <input class="inputClass" id="jobId" type="number" required maxlength="3" placeholder="Endter Id">
+    <form action="" id="form1" style="margin-top: 25px;" onsubmit="save()">
+        <div id="divForm" class="ui input">
+            <label id="jobIdLbl" for=" jobId">Job Id</label>
+            <input id="jobId" type="number" required maxlength="3" placeholder="Endter Id">
             <label for="jobDescription">Job Description</label>
-            <input class="inputClass name="" id="jobDescription" type="text" required maxlength="50" cols="21" rows="1" placeholder="Enter Description">
+            <input name="" id=" jobDescription" type="text" required maxlength="50" cols="21" rows="1" placeholder="Enter Description">
             <label for="jobRequirements">Job Requirements</label>
-            <textarea class="inputClass" name="" id="jobRequirements" cols="21" rows="1" placeholder="Enter Requirements"></textarea>
+            <textarea name="" id="jobRequirements" cols="21" rows="1" placeholder="Enter Requirements"></textarea>
             <label for="jobLocation">Job Location</label>
-            <input id="jobLocation" type="text"  class="inputClass" required maxlength="30" placeholder="Enter Location">
+            <input id="jobLocation" type="text" required maxlength="30" placeholder="Enter Location">
             <label for="jobPayRange">Job PayRange</label>
-            <input id="jobPayRange1" type="text"  class="inputClass" required maxlength="30" placeholder="Enter PayRange">
+            <input id="jobPayRange1" type="text" required maxlength="30" placeholder="Enter PayRange">
             <p style="margin-bottom: 0px;">to</p>
-            <input id="jobPayRange2" type="text"  class="inputClass" required maxlength="30" placeholder="Enter PayRange">
+            <input id="jobPayRange2" type="text" required maxlength="30" placeholder="Enter PayRange">
             <label for="">Contact Person</label>
-            <input id="contactPer" type="text" class="inputClass" required maxlength="100" placeholder="Enter ContactPerson">
+            <input id="contactPer" type="text" required maxlength="100" placeholder="Enter ContactPerson">
             <label for="">Contact Phone </label>
-            <input id="contactPhone" type="tel" class="inputClass" required maxlength="15" placeholder="Enter ContactPhone">
+            <input id="contactPhone" type="tel" required maxlength="15" placeholder="Enter ContactPhone">
             <label for="" id="payPeriodLbl">PayPeriod</label>
             <br>
             <div id="divSearchBtn">
-                <button class="buttonClass" id="btnSearch" type="button" onclick="load()">Search</button>
-                <input class="inputClass" id="searchText" type="text">
+                <button class="ui blue button" id="btnSearch" type="button" onclick="load()">Search</button>
+                <input id="searchText" type="text">
             </div>
         </div>
         <br>
-        <button class="buttonClass" onclick="addCandidateForm()" type="button">Add new candidate</button>
+        <button class="ui blue button" onclick="addCandidateForm()" type="button">Add new candidate</button>
+        <br>
+        <br>
         <div id="divmain"></div>
         <br>
-        <button class="buttonClass" id="savebutton" type="submit" >Save</button>
-        
+        <button class="ui blue button" id="savebutton" type="submit">Save</button>
+
     </form>
-   
+
 
 
 

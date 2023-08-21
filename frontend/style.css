@@ -14,7 +14,7 @@ body {
 #divForm {
     display: grid;
     grid-template-columns: 180px 200px;
-    grid-template-rows: 38px 38px 38px 38px 38px 38px 38px 38px 38px;
+    grid-template-rows: 42px 42px 42px 42px 42px 42px 42px 42px 42px;
     justify-items: start;
     align-items: end;
 }
@@ -28,10 +28,10 @@ body {
 
 #divCandidateId {
     display: grid;
-    grid-template-columns: 300px;
-    grid-template-rows: 40px 40px 40px 40px 40px 40px 40px;
+    grid-template-columns: 350px;
+    grid-template-rows: 45px 45px 45px 45px 45px 45px 45px;
     align-items: end;
-    justify-items: start;
+    /* justify-items: start; */
 }
 
 #divCandidateStatus {
@@ -39,7 +39,7 @@ body {
     grid-template-columns: 125px 200px;
     grid-template-rows: 35px;
     align-items: end;
-    justify-items: start;
+    /* justify-items: start; */
 }
 
 div tr:nth-child(even) {
@@ -110,4 +110,8 @@ fieldset {
 
 .fieldsetClass {
     border-radius: 12px;
+}
+#jobRequirements{
+    height: 35px;
+    width: 181px;
 }
