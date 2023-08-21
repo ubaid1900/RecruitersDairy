@@ -1,6 +1,7 @@
 function getSubmissionStatusSelect(selectedId, elementId) {
     const selectElement = document.createElement('select');
-    selectElement.setAttribute('title', 'Please select a submission status')
+    selectElement.setAttribute("class","ui selection dropdown");
+    selectElement.setAttribute('title', 'Please select a submission status');
 
     if (elementId) {
         selectElement.setAttribute('name', elementId);
@@ -10,6 +11,7 @@ function getSubmissionStatusSelect(selectedId, elementId) {
     for (let index = 0; index < options.length; index++) {
         const element = options[index];
         const optionElement = document.createElement('option');
+        optionElement.setAttribute("class","item");
         optionElement.value = element.id; optionElement.text = element.text;
         if (element.id === selectedId) {
             optionElement.selected = true;
