@@ -45,7 +45,7 @@ function updateJob(id, job) {
             return e.jobid;
         }
     })
-    jobs.splice(jobIndex, 1, job)
+    jobs[jobIndex]= job;
 
     localStorage.setItem('jobs', JSON.stringify(jobs));
 }
