@@ -435,10 +435,13 @@
         }
 
     }
+    // for testing purpose
     load();
     const jobs = JSON.parse(localStorage.getItem("jobs"));
     let job = jobs[0];
     addJob(job);
+    deleteJob(1);
+    updateJob(3, job)
 </script>
 
 

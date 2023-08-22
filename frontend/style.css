@@ -15,7 +15,6 @@ body {
     display: grid;
     grid-template-columns: 130px 250px;
     grid-template-rows: 42px 42px 42px 42px 42px 42px 42px 42px 42px;
-    /* justify-items: start; */
     align-items: end;
 }
 
@@ -31,16 +30,8 @@ body {
     grid-template-columns: 350px;
     grid-template-rows: 45px 45px 45px 45px 45px 45px 45px;
     align-items: end;
-    /* justify-items: end; */
 }
 
-/* #divCandidateStatus {
-    display: grid;
-    grid-template-columns: 125px 200px;
-    grid-template-rows: 35px;
-    align-items: end;
-    justify-items: stretch;
-} */
 
 div tr:nth-child(even) {
     background-color: #dfdfe2
