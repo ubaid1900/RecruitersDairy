@@ -1,6 +1,6 @@
 body {
     background-color: azure;
-    padding: 0px;
+    padding: 15px;
 }
 
 .inputClass {
@@ -13,9 +13,8 @@ body {
 
 #divForm {
     display: grid;
-    grid-template-columns: 180px 200px;
+    grid-template-columns: 130px 250px;
     grid-template-rows: 42px 42px 42px 42px 42px 42px 42px 42px 42px;
-    justify-items: start;
     align-items: end;
 }
 
@@ -31,16 +30,8 @@ body {
     grid-template-columns: 350px;
     grid-template-rows: 45px 45px 45px 45px 45px 45px 45px;
     align-items: end;
-    /* justify-items: start; */
 }
 
-#divCandidateStatus {
-    display: grid;
-    grid-template-columns: 125px 200px;
-    grid-template-rows: 35px;
-    align-items: end;
-    /* justify-items: start; */
-}
 
 div tr:nth-child(even) {
     background-color: #dfdfe2
@@ -112,6 +103,8 @@ fieldset {
     border-radius: 12px;
 }
 #jobRequirements{
-    height: 35px;
-    width: 181px;
+    height: 40px;
+    width: 248px;
+    border-color: #85b7d9;
+    border-radius: 4px;
 }

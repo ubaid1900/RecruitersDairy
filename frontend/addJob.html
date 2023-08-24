@@ -4,6 +4,7 @@
 <head>
     <script type="text/javascript" src="uiHelper.js"></script>
     <script type="text/javascript" src="uiHelper1.js"></script>
+    <script type="text/javascript" src="crudLocalStorage.js"></script>
     <script type="text/javascript" src="dataEntryHelper.js"></script>
     <script type="text/javascript" src="environmentVariables.js"></script>
     <meta charset="UTF-8">
@@ -13,7 +14,7 @@
         integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
-    <title style="color: blue;">Recruiters Dairy</title>
+    <title style="color:blue;">Recruiters Dairy</title>
 
     <script>
         (() => {
@@ -181,7 +182,7 @@
             }
             candidateCounter++
             const div1 = document.getElementById('divmain');
-            div1.setAttribute("class","ui input")
+            div1.setAttribute("class", "ui input")
 
             var fieldSet = document.createElement('fieldset');
             fieldSet.setAttribute("class", "fieldsetClass")
@@ -193,7 +194,7 @@
             divCandidate.setAttribute("id", "divCandidateId")
 
             var divName = document.createElement('div');
-            divName.setAttribute("class","ui input")
+            divName.setAttribute("class", "ui input focus")
             var newCanNameLabel = document.createElement('label');
             newCanNameLabel.setAttribute("class", "labelclass");
             newCanNameLabel.innerText = "Name  :"
@@ -206,7 +207,7 @@
             newCanNameInput.value = candidate.name;
 
             var divAddress = document.createElement('div');
-            divAddress.setAttribute("class","ui input")
+            divAddress.setAttribute("class", "ui input focus")
             var newAddressLabel = document.createElement('label');
             newAddressLabel.setAttribute("class", "labelclass");
             newAddressLabel.innerText = "Address   :";
@@ -220,7 +221,7 @@
             newAddressInput.value = candidate.address;
 
             var divPhone = document.createElement('div');
-            divPhone.setAttribute("class","ui input")
+            divPhone.setAttribute("class", "ui input focus")
             var newCanPhoneLabel = document.createElement('label');
             newCanPhoneLabel.setAttribute("class", "labelclass");
             newCanPhoneLabel.innerText = "PhoneNo   :";
@@ -234,7 +235,7 @@
             newPhoneInput.value = candidate.phone;
 
             var divEmail = document.createElement('div');
-            divEmail.setAttribute("class","ui input")
+            divEmail.setAttribute("class", "ui input focus")
             var newCanEmailLabel = document.createElement('label');
             newCanEmailLabel.setAttribute("class", "labelclass");
             newCanEmailLabel.innerText = "Email  :"
@@ -252,8 +253,10 @@
             var newCanSubmissionStatusLbl = document.createElement('label');
             newCanSubmissionStatusLbl.innerText = "Submission Status:";
 
+
             var newCanTextareaInput = document.createElement('textarea');
             newCanTextareaInput.setAttribute("placeholder", "Enter the Notes");
+            newCanTextareaInput.setAttribute("style", "border-color:#85b7d9")
             newCanTextareaInput.innerText = "Add Notes";
             newCanTextareaInput.setAttribute("cols", "34");
             newCanTextareaInput.value = candidate.notes;
@@ -332,11 +335,12 @@
 
 
     <form action="" id="form1" style="margin-top: 25px;" onsubmit="save()">
-        <div id="divForm" class="ui input">
+        <div id="divForm" class="ui input focus">
             <label id="jobIdLbl" for=" jobId">Job Id</label>
             <input id="jobId" type="number" required maxlength="3" placeholder="Endter Id">
             <label for="jobDescription">Job Description</label>
-            <input name="" id=" jobDescription" type="text" required maxlength="50" cols="21" rows="1" placeholder="Enter Description">
+            <input name="" id=" jobDescription" type="text" required maxlength="50" cols="21" rows="1"
+                placeholder="Enter Description">
             <label for="jobRequirements">Job Requirements</label>
             <textarea name="" id="jobRequirements" cols="21" rows="1" placeholder="Enter Requirements"></textarea>
             <label for="jobLocation">Job Location</label>
@@ -431,7 +435,7 @@
         }
 
     }
-    load();
+  
 </script>
 
 
