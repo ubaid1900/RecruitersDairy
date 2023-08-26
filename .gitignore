@@ -122,3 +122,5 @@ dist
 *.vsidx
 *.sqlite
 *.lock
+*.cache
+/backend/obj/Debug/net6.0/RecruitersDairy.csproj.AssemblyReference.cache

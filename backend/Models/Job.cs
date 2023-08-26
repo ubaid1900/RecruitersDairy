@@ -6,8 +6,8 @@ namespace RecruitersDairy.Models
     public class Job
     {
         
-        [JsonProperty("Id")]
-        public string? Id { get; set; }
+        [JsonProperty("id")]
+        public string? id { get; set; }
         public string? Description { get; set; }
         public string? Client { get; set; }
         public string? Requirements { get; set; }

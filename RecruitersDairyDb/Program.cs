@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Cosmos;
 using Newtonsoft.Json;
+using RecruitersDairy.Models;
 
 namespace RecruitersDairyDb
 {
@@ -82,52 +83,53 @@ namespace RecruitersDairyDb
         /// <returns></returns>
         private async Task AddItemsToContainerAsync()
         {
-            Job Jobs = new Job()
-
+            // Job Jobs = new Job()
+            List<Job> Jobs = new List<Job>()
             {
-                Id = "1",
-                Description = "First Job",
-                Location = "Hyderabad",
-                Requirements = "C#,ASP.NET,SQL Server",
-                ContactPer = "Mujahid Khan Mohammad",
-                ContactPhone = "9898989898",
-                Client = "ABC",
-                PayPeriod = "Monthly",
-                PayRange = "10L-20L",
-                CreatedBy = "recruiter1@gmail.com",
-                Created = new DateTime(),
-                UpdatedBy = "recruiter1@gmail.com",
-                Updated = new DateTime()
-            };
-            //new Job()
-            //{
-            //    Id = "2",
-            //    Description = "Second Job",
-            //    Location = "Pune",
-            //    Requirements = "java",
-            //    ContactPer = "Ubaid",
-            //    ContactPhone = "908909890",
-            //    Client = "ABC",
-            //    PayPeriod = "Monthly",
-            //    PayRange = "10L-20L",
-            //    CreatedBy = "recruiter1@gmail.com",
-            //    Created = new DateTime(),
-            //    UpdatedBy = "recruiter1@gmail.com",
-            //    Updated = new DateTime()
-            //};
-            try
+              new Job {  id = "1", Description = "First Job",Location = "Hyderabad",Requirements = "C#,ASP.NET,SQL Server",
+                ContactPer = "Mujahid Khan Mohammad",ContactPhone = "9898989898",Client = "ABC",PayPeriod = "Monthly",PayRange = "10L-20L",
+                CreatedBy = "recruiter1@gmail.com",Created = new DateTime(),UpdatedBy = "recruiter1@gmail.com",Updated = new DateTime()
+            },
+            new Job
             {
-                // Read the item to see if it exists.  
-                ItemResponse<Job> JobResponse = await this.RDContainer.ReadItemAsync<Job>(Jobs.Id, new PartitionKey(Jobs.Id));
-                Console.WriteLine("Item in database with id: {0} already exists\n", JobResponse.Resource.Id);
+                id = "2",Description = "Second Job",Location = "Pune",Requirements = "java",ContactPer = "Ubaid",ContactPhone = "908909890",
+                Client = "ABC",PayPeriod = "Monthly", PayRange = "10L-20L",CreatedBy = "recruiter1@gmail.com",Created = new DateTime(),
+                UpdatedBy = "recruiter1@gmail.com",Updated = new DateTime()
+            },
+            new Job
+            {
+                id = "3", Description ="Third Job", Location="Delhi",Requirements="C#,ASP.NET,SQL Server",ContactPer="Safi Mohammad",
+                ContactPhone = "4084095849",Client = "XYZ", PayPeriod="Monthly", PayRange="12L-24L", CreatedBy="recruiter2@gmail.com", Created = new DateTime(),
+                UpdatedBy="recruiter2@gmail.com",Updated = new DateTime()
+            },
+            new Job()
+            {
+                id = "4", Description ="Fourth Job", Location="Kolkata",Requirements="C#,ASP.NET,SQL Server",ContactPer="Mujahid Khan Mohammad",
+                ContactPhone = "9898989898",Client = "ABC", PayPeriod="Monthly", PayRange="10L-20L", CreatedBy="recruiter3@gmail.com", Created= new DateTime(),
+                UpdatedBy="recruiter3@gmail.com",Updated=new DateTime()
+            },
+            new Job()
+            {
+                id = "5", Description ="Fifth Job", Location="Hyderabad",Requirements="Manager",ContactPer="Ubaid",
+                ContactPhone = "0984084095",Client = "XYZ", PayPeriod="Monthly", PayRange="15L-20L", CreatedBy="recruiter3@gmail.com", Created = new DateTime(),
+                UpdatedBy="recruiter3@gmail.com",Updated =new DateTime()
             }
-            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
-            {
-                // Create an item in the container representing the Job Object. Note we provide the value of the partition key for this item, which is "Jobs"
-                ItemResponse<Job> JobResponse = await this.RDContainer.CreateItemAsync<Job>(Jobs, new PartitionKey(Jobs.Id));
+            };
+            foreach (Job job in Jobs) {
+                try
+                {
+                    // Read the item to see if it exists.  
+                    ItemResponse<Job> JobResponse = await this.RDContainer.ReadItemAsync<Job>(job.id, new PartitionKey(job.id));
+                    Console.WriteLine("Item in database with id: {0} already exists\n", JobResponse.Resource.id);
+                }
+                catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+                {
+                    // Create an item in the container representing the Job Object. Note we provide the value of the partition key for this item, which is "Jobs"
+                    ItemResponse<Job> JobResponse = await this.RDContainer.CreateItemAsync<Job>(job, new PartitionKey(job.id));
 
-                // Note that after creating the item, we can access the body of the item with the Resource property off the ItemResponse. We can also access the RequestCharge property to see the amount of RUs consumed on this request.
-                Console.WriteLine("Created item in database with id: {0} Operation consumed {1} RUs.\n", JobResponse.Resource.Id, JobResponse.RequestCharge);
+                    // Note that after creating the item, we can access the body of the item with the Resource property off the ItemResponse. We can also access the RequestCharge property to see the amount of RUs consumed on this request.
+                    Console.WriteLine("Created item in database with id: {0} Operation consumed {1} RUs.\n", JobResponse.Resource.id, JobResponse.RequestCharge);
+                }
             }
 
         }
@@ -135,30 +137,7 @@ namespace RecruitersDairyDb
         //private async Task QueryItemsAsync()
         //{
         //    throw new NotImplementedException();
-        //}
-    }
+        //}  
 
-    public class Job
-    {
-
-        [JsonProperty("id")]
-        public string? Id { get; set; }
-        public string? Description { get; set; }
-        public string? Client { get; set; }
-        public string? Requirements { get; set; }
-        public string? Location { get; set; }
-        public string? PayRange { get; set; }
-        public string? PayPeriod { get; set; }
-        public string? ContactPer { get; set; }
-        public string? ContactPhone { get; set; }
-        public DateTime Created { get; set; }
-        // public Recruiter[]? CreatedBy { get; set; }
-        public string? CreatedBy { get; set; }
-        public DateTime Updated { get; set; }
-        // public Recruiter[]? UpdatedBy { get; set; }
-        public string? UpdatedBy { get; set; }
     }
 }
-// See https://aka.ms/new-console-template for more information
-//Console.WriteLine("Hello, World!");
-
