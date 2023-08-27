@@ -820,6 +820,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "Microsoft.Azure.Cosmos": "3.35.3",
           "Newtonsoft.Json": "13.0.3"
         },
         "compile": {
@@ -2033,5 +2034,16 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: Microsoft.Azure.Cosmos from 3.35.3 to 3.35.2. Reference the package directly from the project to select a different version. \r\n RecruitersDairyDb -> RecruitersDairy -> Microsoft.Azure.Cosmos (>= 3.35.3) \r\n RecruitersDairyDb -> Microsoft.Azure.Cosmos (>= 3.35.2)",
+      "libraryId": "Microsoft.Azure.Cosmos",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }
