@@ -38,10 +38,10 @@
 </body>
 <script>
     (() => {
-        const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
-        console.log(currentUsers);
-        if (currentUsers && currentUsers != null) {
-            if (currentUsers.roleId == "1") {
+        const currentUser = getCurrentUser();
+        console.log(currentUser);
+        if (currentUser && currentUser != null) {
+            if (currentUser.roleId == "1") {
             }
             else {
                 alert("You are not allowed in this page")

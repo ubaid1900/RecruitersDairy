@@ -13,9 +13,9 @@
     <title>Dashboard</title>
     <script>
         (() => {
-            const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
-            if (currentUsers && currentUsers != null) {
-                if (currentUsers.roleId == "2") {
+            const currentUser = getCurrentUser();
+            if (currentUser && currentUser != null) {
+                if (currentUser.roleId == "2") {
                 }
                 else {
                     alert("You are not allowed in this page")
@@ -57,7 +57,7 @@
         if (!jobs) {
             jobs = getJobs();
         }
-        let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        let currentUser = getCurrentUser();
         let divJobs = document.getElementById('divJobs');
         if (!jobs || !jobs.length) {
             const divResult = document.createElement("div");
@@ -140,7 +140,7 @@
 
     function lookupByStatus(jobs) {
 
-        let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        let currentUser = getCurrentUser();
         const statuses = getSubmissionStatuses();
 
         jobs = jobs.filter(j => currentUser.teamMembers.includes(j.updatedBy) ||
