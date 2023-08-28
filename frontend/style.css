@@ -20,9 +20,20 @@ body {
 
 #divSearchBtn {
     display: grid;
-    grid-template-columns: 180px 200px;
-    align-items: end;
-    justify-items: start;
+    grid-template-columns: 130px 250px;
+    text-align: center;
+    align-items: center;
+}
+#searchText{
+    align-self: stretch;
+}
+#btnSearch{
+    width: 90px;
+    align-self: start;
+    text-align: center;
+}
+#addCanBtn{
+    width: 170px;;
 }
 
 #divCandidateId {
@@ -31,6 +42,7 @@ body {
     grid-template-rows: 45px 45px 45px 45px 45px 45px 45px;
     align-items: end;
 }
+
 
 
 div tr:nth-child(even) {
@@ -48,7 +60,7 @@ div fieldSet legend {
 }
 
 div fieldSet:nth-child(even) {
-    background-color: gray;
+    background-color: rgb(204, 204, 204);
     color: white;
 }
 
@@ -72,7 +84,7 @@ fieldset {
     font-family: cursive;
     font-size: 40px;
     text-align: center;
-    color: teal;
+    color: blue;
 
 }
 

@@ -312,7 +312,7 @@ function setSeedData() {
         "notes": "Appointed"
       }]
     }];
-  localStorage.setItem("jobs", JSON.stringify(seedData))
+  localStorage.setItem("jobs", JSON.stringify(seedData));
 }
 
 function getSeedUsers() {

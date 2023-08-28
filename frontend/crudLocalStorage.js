@@ -1,22 +1,23 @@
 function getJobs() {
-    const jobs = JSON.parse(localStorage.getItem("jobs"));
+    let jobs = JSON.parse(localStorage.getItem("jobs"));
     if (!jobs) {
-        return null;
+        return jobs=[];
     }
     return jobs;
 }
-function getjob(id) {
+function getJob(id) {
+    let jobs = JSON.parse(localStorage.getItem("jobs"));
     if (id != 0 && id != null) {
-        const jobs = JSON.parse(localStorage.getItem("jobs"));
         if (!jobs) {
-            return null;
+            return jobs=[];
         }
     }
-    jobs.forEach(e => {
-        if (e.jobid == id) {
-            return e;
-        }
+    let job;
+     job=jobs.find(e => {
+     return e.jobid == id;
+        
     });
+    return job;
 
 }
 
@@ -36,11 +37,11 @@ function addJob(job) {
 }
 
 function updateJob(id, job) {
-    const jobs = JSON.parse(localStorage.getItem("jobs"));
+    let jobs = JSON.parse(localStorage.getItem("jobs"));
     if (!jobs) {
-        return null;
+        return jobs=[];
     }
-    var jobIndex = jobs.findIndex(e => {
+    var jobIndex = jobs.foreach(e => {
         if (e.jobid == id) {
             return e.jobid;
         }
@@ -52,9 +53,9 @@ function updateJob(id, job) {
 
 function deleteJob(id) {
 
-    const jobs = JSON.parse(localStorage.getItem("jobs"));
+    let jobs = getJobs();
     if (!jobs) {
-        return null;
+        return jobs=[];
     }
     var jobIndex = jobs.findIndex(e => {
         if (e.jobid == id) {
@@ -64,4 +65,8 @@ function deleteJob(id) {
     jobs.splice(jobIndex, 1);
     localStorage.setItem('jobs', JSON.stringify(jobs));
 
+}
+
+function setJobs(jobs) {
+    localStorage.setItem('jobs', JSON.stringify(jobs));
 }

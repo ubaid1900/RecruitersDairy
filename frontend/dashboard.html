@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="uiHelper.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="crudLocalStorage.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+    integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     <title>Dashboard</title>
     <script>
@@ -30,16 +34,20 @@
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
-    <div id="divButtons" style="display: inline; margin-right: 40px;">
+    <div id="divButtons" class="ui input focus"   style="display: inline; margin-right: 40px;">
         <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup">:Today
-        <input id="YesterdayRadioBtn" type="radio" value="Yesterday" name="datesGroup">:Yesterday
-
+        <input id="YesterdayRadioBtn" type="radio" value="Yesterday" name="datesGroup">:Yesterday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="date" onchange="selectedDate()" id="calenderId1">
     </div>
-    <input type="date" onchange="selectedDate()" id="calenderId1"><br><br>
+    <br>
+    <br>
+    <div class="ui input focus">
     <input type="date" id="calenderId2">
     <input type="date" id="calenderId3">
-    <button id="btnRangeOfDatesId">Range Of Date</button>
-
+    <button id="btnRangeOfDatesId" class="ui button blue">Range Of Date</button>
+    </div>
+    <br>
+    <br>
     <div id="divJobs">
     </div>
 </body>
@@ -47,7 +55,7 @@
 
     function newJobs(jobs) {
         if (!jobs) {
-            jobs = JSON.parse(localStorage.getItem('jobs'));
+            jobs = getJobs();
         }
         let currentUser = JSON.parse(localStorage.getItem("currentUser"));
         let divJobs = document.getElementById('divJobs');
@@ -59,6 +67,7 @@
         }
 
         const table = document.createElement('table');
+        table.setAttribute("class", "ui celled table");
         table.setAttribute("border", "2");
 
         const trh1 = document.createElement('tr');
@@ -106,6 +115,7 @@
             const td2 = document.createElement("td");
             const td3 = document.createElement("td");
             const viewBtn = document.createElement("button")
+            viewBtn.setAttribute("class","ui button blue");
             viewBtn.setAttribute("id", "viewBtnId")
             viewBtn.setAttribute("onclick", "viewDetails()")
             viewBtn.innerText = "view"
@@ -167,6 +177,7 @@
             return;
         }
         const tableElement = document.createElement('table');
+        tableElement.setAttribute("class","ui celled table")
         jobsByStatus.forEach(j => {
             const trElement = document.createElement('tr');
 
@@ -189,7 +200,7 @@
         divJobs.append(tableElement);
     }
 
-    const jobsByStatus = lookupByStatus(JSON.parse(localStorage.getItem('jobs')));
+    const jobsByStatus = lookupByStatus(getJobs());
 
     loadJobsByStatus(jobsByStatus);
 
@@ -200,12 +211,12 @@
         e.addEventListener("change", function () {
             if (e.id == "todayRadioBtn") {
                 document.getElementById('divJobs').innerHTML = "";
-                let jobs = JSON.parse(localStorage.getItem('jobs'));
+                let jobs = getJobs();
                 searchByDate(jobs, new Date());
             }
             if (e.id == "YesterdayRadioBtn") {
                 document.getElementById('divJobs').innerHTML = "";
-                let jobs = JSON.parse(localStorage.getItem('jobs'));
+                let jobs = getJobs();
                 searchByDate(jobs, new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString());
             }
 
@@ -216,14 +227,14 @@
         let dateString1 = document.getElementById('calenderId2').value;
         let dateString2 = document.getElementById('calenderId3').value;
         document.getElementById('divJobs').innerHTML = "";
-        let jobs = JSON.parse(localStorage.getItem('jobs'));
+        let jobs = getJobs();
         searchByRangeOfDates(jobs, dateString1, dateString2);
     })
     function selectedDate() {
         let selectedDate = document.getElementById('calenderId1')
         let dateString = selectedDate.value
         document.getElementById('divJobs').innerHTML = "";
-        let jobs = JSON.parse(localStorage.getItem('jobs'));
+        let jobs = getJobs();
         searchByDate(jobs, dateString);
     };
     let dateString;
