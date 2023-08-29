@@ -124,3 +124,7 @@ dist
 *.lock
 *.cache
 /backend/obj/Debug/net6.0/RecruitersDairy.csproj.AssemblyReference.cache
+/backend/bin/Debug/net6.0/RecruitersDairy.dll
+/backend/bin/Debug/net6.0/RecruitersDairy.pdb
+/backend/obj/Debug/net6.0/RecruitersDairy.dll
+/backend/obj/Debug/net6.0/RecruitersDairy.pdb
