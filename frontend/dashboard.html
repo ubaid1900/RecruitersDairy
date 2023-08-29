@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="crudLocalStorage.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
-    integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     <title>Dashboard</title>
     <script>
@@ -34,17 +34,18 @@
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
     <hr>
-    <div id="divButtons" class="ui input focus"   style="display: inline; margin-right: 40px;">
+    <div id="divButtons" class="ui input focus" style="display: inline; margin-right: 40px;">
         <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup">:Today
-        <input id="YesterdayRadioBtn" type="radio" value="Yesterday" name="datesGroup">:Yesterday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="YesterdayRadioBtn" type="radio" value="Yesterday" name="datesGroup">:Yesterday
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="date" onchange="selectedDate()" id="calenderId1">
     </div>
     <br>
     <br>
     <div class="ui input focus">
-    <input type="date" id="calenderId2">
-    <input type="date" id="calenderId3">
-    <button id="btnRangeOfDatesId" class="ui button blue">Range Of Date</button>
+        <input type="date" id="calenderId2">
+        <input type="date" id="calenderId3">
+        <button id="btnRangeOfDatesId" class="ui button blue">Range Of Date</button>
     </div>
     <br>
     <br>
@@ -115,7 +116,7 @@
             const td2 = document.createElement("td");
             const td3 = document.createElement("td");
             const viewBtn = document.createElement("button")
-            viewBtn.setAttribute("class","ui button blue");
+            viewBtn.setAttribute("class", "ui button blue");
             viewBtn.setAttribute("id", "viewBtnId")
             viewBtn.setAttribute("onclick", "viewDetails()")
             viewBtn.innerText = "view"
@@ -153,21 +154,23 @@
                 const counted = jobsCounter.find(jc =>
                     jc?.email == job.updatedBy
                     &&
-                    jc?.statusid == c.submissionStatusId);
+                    jc?.statusId == c.submissionStatusId
+
+                );
                 if (!counted) {
                     jobsCounter.push({
                         email: job.updatedBy,
                         statusId: c.submissionStatusId,
-                        status: statuses.find(s => s.id = c.submissionStatusId).text,
+                        status: statuses.find(s => s.id == c.submissionStatusId).text,
                         count: 1
                     });
                 }
                 else {
-                    jobsCounter.count++
+                    counted.count++
                 }
-            }
-            )
-        })
+
+            });
+        });
         return jobsCounter;
     };
 
@@ -177,7 +180,7 @@
             return;
         }
         const tableElement = document.createElement('table');
-        tableElement.setAttribute("class","ui celled table")
+        tableElement.setAttribute("class", "ui celled table")
         jobsByStatus.forEach(j => {
             const trElement = document.createElement('tr');
 
