@@ -18,7 +18,7 @@
 
     <script>
         (() => {
-            const currentUsers = JSON.parse(localStorage.getItem("currentUser"));
+            const currentUsers = getCurrentUser();
             console.log(currentUsers);
             if (currentUsers && currentUsers != null) {
                 if (currentUsers.roleId == "1") {
@@ -47,7 +47,7 @@
         }
 
         function save() {
-            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            const currentUser = getCurrentUser();
             let date = new Date();
             // date= date.toDateString();
             let objectJob = { updatedDate: date };

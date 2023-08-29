@@ -70,3 +70,12 @@ function deleteJob(id) {
 function setJobs(jobs) {
     localStorage.setItem('jobs', JSON.stringify(jobs));
 }
+function getCurrentUser() {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    return currentUser;
+    
+}
+function setCurrentUser() {
+    localStorage.setItem('currentUser', JSON.stringify(user))
+    return
+}
