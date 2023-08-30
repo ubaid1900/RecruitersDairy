@@ -8,6 +8,7 @@
     integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="crudLocalStorage.js"></script>
     <title>Login</title>
     <script src="data.js"></script>
     <script>
@@ -25,7 +26,7 @@
                      Please contact your administrator for your role to be setup.`);
                     return;
                 }
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                setCurrentUser(user);
                 event.preventDefault();
                 if (userRole.Description === 'Team Leader') {
                     window.location = 'dashboard.html';
@@ -50,9 +51,9 @@
     <form class="ui input focus" method="post" onsubmit="login()">
         <table class="ui input focus">
             <tr>
-                    <td>Username:</td>
-                    <td>Password:</td>
-                    <td></td>
+                <td>Username:</td>
+                <td>Password:</td>
+                <td></td>
             </tr>
             <tr>
                 <td><input name="txtEmail" id="txtEmail" type="email" required></td>
