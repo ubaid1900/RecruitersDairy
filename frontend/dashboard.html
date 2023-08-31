@@ -11,28 +11,13 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     <title>Dashboard</title>
-    <script>
-        (() => {
-            const currentUser = getCurrentUser();
-            if (currentUser && currentUser != null) {
-                if (currentUser.roleId == "2") {
-                }
-                else {
-                    alert("You are not allowed in this page")
-                    window.location = 'login.html';
-                }
-            }
-            else {
-                alert("You are not allower to view this page")
-                window.location = "login.html"
-            }
-        })();
-
-    </script>
+    
 </head>
 
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
+    <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
+    <div style="display: inline; font-size: large;" id="userNameDiv" ></div>
     <hr>
     <div id="divButtons" class="ui input focus" style="display: inline; margin-right: 40px;">
         <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup">:Today
@@ -52,6 +37,26 @@
     <div id="divJobs">
     </div>
 </body>
+<script>
+    (() => {
+        const currentUser = getCurrentUser();
+        const userNameDiv = document.getElementById("userNameDiv");
+        userNameDiv.innerHTML = currentUser.email;
+        if (currentUser && currentUser != null) {
+            if (currentUser.roleId == "2") {
+            }
+            else {
+                alert("You are not allowed in this page")
+                window.location = 'login.html';
+            }
+        }
+        else {
+            alert("You are not allower to view this page")
+            window.location = "login.html"
+        }
+    })();
+
+</script>
 <script>
 
     function newJobs(jobs) {

@@ -14,12 +14,13 @@
     <script type="text/javascript" src="crudLocalStorage.js"></script>
     <link rel="stylesheet" href="style.css">
 
-
-
 </head>
 
 <body>
+    
     <h1 class="ui huge header" style="color:#2185d0; text-align: center;">Recruiters Dairy</h1>
+    <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
+    <div style="display: inline; font-size: large;" id="userNameDiv" ></div>
     <hr>
     <br>
     <button id="seedJobs" class="ui blue button" onclick="seedJobs()" type="button">Seed</button>
@@ -39,7 +40,8 @@
 <script>
     (() => {
         const currentUser = getCurrentUser();
-        console.log(currentUser);
+        const userNameDiv = document.getElementById("userNameDiv");
+        userNameDiv.innerHTML = currentUser.email;
         if (currentUser && currentUser != null) {
             if (currentUser.roleId == "1") {
             }

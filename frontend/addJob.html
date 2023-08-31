@@ -16,315 +16,13 @@
     <link rel="stylesheet" href="style.css">
     <title style="color:blue;">Recruiters Dairy</title>
 
-    <script>
-        (() => {
-            const currentUsers = getCurrentUser();
-            console.log(currentUsers);
-            if (currentUsers && currentUsers != null) {
-                if (currentUsers.roleId == "1") {
-                }
-                else {
-                    alert("You are not allowed in this page")
-                    window.location = 'login.html';
-                }
-            }
-            else {
-                alert("You are not allower to view this page")
-                window.location = "login.html"
-            }
-        })();
-
-        function fillJob() {
-            var e = getSeedJob();
-            var elementfilljobid = document.getElementById('jobId');
-            elementfilljobid.setAttribute('disabled', 'disabled');
-            elementfilljobid.value = e.jobid;
-            var elementfilljobdes = document.getElementById('jobDescription');
-            elementfilljobdes.value = e.description;
-            e.candidates.forEach(function (candidate) {
-                addCandidateForm(candidate);
-            });
-        }
-
-        function save() {
-            const currentUser = getCurrentUser();
-            let date = new Date();
-            // date= date.toDateString();
-            let objectJob = { updatedDate: date };
-            const form = document.getElementById("form1");
-            const jobId1 = document.getElementById("jobId").value;
-            const jobDescription = document.getElementById("jobDescription").value;
-            const jobRequirements = document.getElementById("jobRequirements").value;
-            const jobLocation = document.getElementById("jobLocation").value;
-            const jobPayRange1 = document.getElementById("jobPayRange1").value;
-            const jobPayRange2 = document.getElementById("jobPayRange2").value;
-            const jobContactPer = document.getElementById("contactPer").value;
-            const jobContactPhone = document.getElementById("contactPhone").value;
-            // const jobPayPeriod = document.getElementById("payPeriodId").value;
-            objectJob.jobid = jobId1;
-            objectJob.description = jobDescription;
-            objectJob.jobRequirements = jobRequirements;
-            objectJob.jobLocation = jobLocation;
-            objectJob.jobPayRange1 = jobPayRange1;
-            objectJob.jobPayRange2 = jobPayRange2;
-            objectJob.jobContactPer = jobContactPer;
-            objectJob.jobContactPhone = jobContactPhone;
-            // objectJob.jobPayPeriod = jobPayPeriod;
-            // console.log(jobPayPeriod);
-            const candidates = [];
-            const div1 = document.getElementById('divmain');
-            div1.querySelectorAll("fieldset").forEach(i => {
-                const objectCandidate = { updatedDate: date };
-                const e = i.querySelectorAll("div");
-                e.forEach(m => {
-                    const canInput = m.querySelector('input');
-                    if (!canInput) {
-                        return;
-                    }
-                    if (canInput.id.endsWith('name')) {
-                        objectCandidate.name = canInput.value;
-                    }
-                    if (canInput.id.endsWith('phone')) {
-                        objectCandidate.phone = canInput.value;
-                    }
-                    if (canInput.id.endsWith('address')) {
-                        objectCandidate.address = canInput.value;
-                    }
-                    if (canInput.id.endsWith('email')) {
-                        objectCandidate.email = canInput.value;
-                    }
-                });
-
-                objectCandidate.submissionStatusId = Number(i.querySelector('select').value);
-
-                const canText = i.querySelector('textarea').value
-                objectCandidate.notes = canText
-                candidates.push(objectCandidate)
-
-            });
-            objectJob.candidates = candidates;
-
-            let jobs = getJobs();
-            let indexOfJob;
-            if (location.search.length > 0) {
-                var qureyString = location.search.substring(1);
-                console.log(qureyString);
-                var jobidSplit = qureyString.split("=");
-                var jobidValue = jobidSplit[1];
-                if (jobidValue) {
-                    indexOfJob = jobs.map((j) => {
-                        return j.jobid;
-                    }).indexOf(jobidValue);
-                }
-            }
-            if (jobs) {
-                if (indexOfJob > -1) {
-                    objectJob.createdDate = jobs[indexOfJob].createdDate;
-                    objectJob.createdBy = jobs[indexOfJob].createdBy;
-
-
-                    // candidate if exists will already have createdDate
-                    // in that case preserve else set new date
-                    // Assumption: the index of candidate in Storage matches the index of candidate built here
-                    for (let index = 0; index < objectJob.candidates.length; index++) {
-                        const element = jobs[indexOfJob].candidates[index];
-                        if (element) {
-                            objectJob.candidates[index].createdDate = element.createdDate;
-                            objectJob.candidates[index].createdBy = element.createdBy;
-
-                        } else {
-                            objectJob.candidates[index].createdDate = date;
-                            objectJob.candidates[index].createdBy = currentUser.email;
-
-                        }
-                    }
-
-                    jobs[indexOfJob] = objectJob;
-
-                } else {
-                    objectJob = setCreatedDateAndEmail(objectJob, date, currentUser.email);
-                    objectJob.createdDate = date;
-                    objectJob.createdBy = currentUser.email;
-                    objectJob.updatedBy = currentUser.email;
-                    jobs.push(objectJob);
-                }
-            }
-            else {
-                jobs = [];
-                objectJob = setCreatedDateAndEmail(objectJob, date, currentUser.email);
-                objectJob.createdDate = date;
-                objectJob.createdBy = currentUser.email;
-                objectJob.updatedBy = currentUser.email;
-                jobs.push(objectJob);
-            }
-            setJobs(jobs);
-            load();
-        }
-        let divPayPeriod = document.getElementsByClassName('payPeriodClass');
-        function setCreatedDateAndEmail(job, date, email) {
-            for (let index = 0; index < job.candidates.length; index++) {
-                job.candidates[index].createdDate = date;
-                job.candidates[index].createdBy = email;
-
-            }
-            return job;
-        }
-
-        var candidateCounter = 0;
-
-        function addCandidateForm(candidate, i) {
-            if (!candidate) {
-                candidate = { name: '', address: '', email: '', phone: '', notes: '', submitionStatus: '', createdDate: new Date() };
-            }
-            candidateCounter++
-            const div1 = document.getElementById('divmain');
-            div1.setAttribute("class", "ui input")
-
-            var fieldSet = document.createElement('fieldset');
-            fieldSet.setAttribute("class", "fieldsetClass")
-            var legend = document.createElement('legend');
-
-            var newCandidate = document.createElement('h4');
-            newCandidate.innerHTML = `Candidate : ${candidateCounter}`;
-            var divCandidate = document.createElement("div");
-            divCandidate.setAttribute("id", "divCandidateId")
-
-            var divName = document.createElement('div');
-            divName.setAttribute("class", "ui input focus")
-            var newCanNameLabel = document.createElement('label');
-            newCanNameLabel.setAttribute("class", "labelclass");
-            newCanNameLabel.innerText = "Name  :"
-            var newCanNameInput = document.createElement('input');
-            newCanNameInput.setAttribute("placeholder", "Enter the Name");
-            newCanNameInput.setAttribute("required", "");
-            // newCanNameInput.setAttribute("class", "inputClass");
-            newCanNameInput.setAttribute("style", "margin-left:35px");
-            newCanNameInput.setAttribute("id", "candidate" + `${candidateCounter}` + "name");
-            newCanNameInput.value = candidate.name;
-
-            var divAddress = document.createElement('div');
-            divAddress.setAttribute("class", "ui input focus")
-            var newAddressLabel = document.createElement('label');
-            newAddressLabel.setAttribute("class", "labelclass");
-            newAddressLabel.innerText = "Address   :";
-            var newAddressInput = document.createElement('input');
-            newAddressInput.setAttribute("placeholder", "Enter the Address");
-            newAddressInput.setAttribute("required", "");
-            // newAddressInput.setAttribute("class", "inputClass");
-            newAddressInput.setAttribute("type", "address");
-            newAddressInput.setAttribute("style", "margin-left:20px");
-            newAddressInput.setAttribute("id", "candidate" + `${candidateCounter}` + "address");
-            newAddressInput.value = candidate.address;
-
-            var divPhone = document.createElement('div');
-            divPhone.setAttribute("class", "ui input focus")
-            var newCanPhoneLabel = document.createElement('label');
-            newCanPhoneLabel.setAttribute("class", "labelclass");
-            newCanPhoneLabel.innerText = "PhoneNo   :";
-            var newPhoneInput = document.createElement('input');
-            newPhoneInput.setAttribute("placeholder", "Enter the Phone Number");
-            newPhoneInput.setAttribute("required", "");
-            // newPhoneInput.setAttribute("class", "inputClass");
-            newPhoneInput.setAttribute("type", "phonenumber");
-            newPhoneInput.setAttribute("style", "margin-left:13px");
-            newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone");
-            newPhoneInput.value = candidate.phone;
-
-            var divEmail = document.createElement('div');
-            divEmail.setAttribute("class", "ui input focus")
-            var newCanEmailLabel = document.createElement('label');
-            newCanEmailLabel.setAttribute("class", "labelclass");
-            newCanEmailLabel.innerText = "Email  :"
-            var newCanEmailInput = document.createElement('input');
-            newCanEmailInput.setAttribute("placeholder", "Enter the Email");
-            newCanEmailInput.setAttribute("required", "");
-            // newCanEmailInput.setAttribute("class", "inputClass");
-            newCanEmailInput.setAttribute("type", "email");
-            newCanEmailInput.setAttribute("style", "margin-left:34px");
-            newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email");
-            newCanEmailInput.value = candidate.email;
-
-            var divSubmissionStatus = document.createElement('div');
-            divSubmissionStatus.setAttribute("id", "divCandidateStatus");
-            var newCanSubmissionStatusLbl = document.createElement('label');
-            newCanSubmissionStatusLbl.innerText = "Submission Status:";
-
-
-            var newCanTextareaInput = document.createElement('textarea');
-            newCanTextareaInput.setAttribute("placeholder", "Enter the Notes");
-            newCanTextareaInput.setAttribute("style", "border-color:#85b7d9")
-            newCanTextareaInput.innerText = "Add Notes";
-            newCanTextareaInput.setAttribute("cols", "34");
-            newCanTextareaInput.value = candidate.notes;
-
-            if (candidateCounter > 0 && candidate.name != "") {
-                var divDate = document.createElement('div');
-                var newCanDateLabelCreated = document.createElement('label');
-                var newCanDateLabel = document.createElement('label');
-                newCanDateLabelCreated.innerText = "Last Updated Date: ";
-                const updatedDateDisplay = `${new Date(candidate.updatedDate).toDateString()} ${new Date(candidate.updatedDate).toLocaleTimeString()}`;
-                newCanDateLabel.innerText = updatedDateDisplay;
-            }
-
-            var divCanDelete = document.createElement('div');
-            divCanDelete.setAttribute("id", "divCanDelete");
-            var newCanDeleteBtn = document.createElement('button');
-            newCanDeleteBtn.setAttribute("type", "button");
-            newCanDeleteBtn.setAttribute("class", "ui button blue");
-            newCanDeleteBtn.innerText = "Delete";
-            const canIndex = candidateCounter - 1;
-            newCanDeleteBtn.addEventListener("click", function () {
-                if (confirm("Are you sure to Delete a Candidate " + `${candidate.name}` + " ?")) {
-                    let jobs = getjobs();
-                    jobs[i].candidates.splice(canIndex, 1);
-                    setJobs(jobs);
-                    load();
-                }
-            });
-
-            div1.append(fieldSet);
-            fieldSet.append(legend);
-            fieldSet.append(divCandidate);
-            legend.append(newCandidate);
-
-
-            if (candidateCounter > 0 && candidate.name != "") {
-                divCandidate.append(divDate);
-                divDate.append(newCanDateLabelCreated);
-                divDate.append(newCanDateLabel);
-            }
-
-            divCandidate.append(divName);
-            divName.append(newCanNameLabel);
-            divName.append(newCanNameInput);
-
-
-            divCandidate.append(divAddress);
-            divAddress.append(newAddressLabel);
-            divAddress.append(newAddressInput);
-
-            divCandidate.append(divPhone);
-            divPhone.append(newCanPhoneLabel);
-            divPhone.append(newPhoneInput);
-
-            divCandidate.append(divEmail);
-            divEmail.append(newCanEmailLabel);
-            divEmail.append(newCanEmailInput);
-
-            divCandidate.append(newCanTextareaInput);
-            divCandidate.append(divSubmissionStatus);
-            divSubmissionStatus.append(newCanSubmissionStatusLbl);
-            divSubmissionStatus.append(getSubmissionStatusSelect(candidate.submissionStatusId, "candidate" + `${candidateCounter}` + "submissionStatus"));
-
-            divCandidate.append(divCanDelete);
-            divCanDelete.append(newCanDeleteBtn);
-
-        }
-    </script>
+   
 </head>
 
 <body >
     <h1 class="banner">Recruiters Dairy</h1>
+    <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
+    <div style="display: inline; font-size: large;" id="userNameDiv" ></div>
     <hr>
 
     <button class="ui blue button" id="fillJob" onclick="fillJob()" type="button">Fill</button>
@@ -366,10 +64,313 @@
 
     </form>
 
-
-
-
 </body>
+<script>
+    (() => {
+        const currentUser = getCurrentUser();
+        const userNameDiv = document.getElementById("userNameDiv");
+        userNameDiv.innerHTML = currentUser.email;
+        if (currentUser && currentUser != null) {
+            if (currentUser.roleId == "1") {
+            }
+            else {
+                alert("You are not allowed in this page")
+                window.location = 'login.html';
+            }
+        }
+        else {
+            alert("You are not allower to view this page")
+            window.location = "login.html"
+        }
+    })();
+
+    function fillJob() {
+        var e = getSeedJob();
+        var elementfilljobid = document.getElementById('jobId');
+        elementfilljobid.setAttribute('disabled', 'disabled');
+        elementfilljobid.value = e.jobid;
+        var elementfilljobdes = document.getElementById('jobDescription');
+        elementfilljobdes.value = e.description;
+        e.candidates.forEach(function (candidate) {
+            addCandidateForm(candidate);
+        });
+    }
+
+    function save() {
+        const currentUser = getCurrentUser();
+        let date = new Date();
+        // date= date.toDateString();
+        let objectJob = { updatedDate: date };
+        const form = document.getElementById("form1");
+        const jobId1 = document.getElementById("jobId").value;
+        const jobDescription = document.getElementById("jobDescription").value;
+        const jobRequirements = document.getElementById("jobRequirements").value;
+        const jobLocation = document.getElementById("jobLocation").value;
+        const jobPayRange1 = document.getElementById("jobPayRange1").value;
+        const jobPayRange2 = document.getElementById("jobPayRange2").value;
+        const jobContactPer = document.getElementById("contactPer").value;
+        const jobContactPhone = document.getElementById("contactPhone").value;
+        // const jobPayPeriod = document.getElementById("payPeriodId").value;
+        objectJob.jobid = jobId1;
+        objectJob.description = jobDescription;
+        objectJob.jobRequirements = jobRequirements;
+        objectJob.jobLocation = jobLocation;
+        objectJob.jobPayRange1 = jobPayRange1;
+        objectJob.jobPayRange2 = jobPayRange2;
+        objectJob.jobContactPer = jobContactPer;
+        objectJob.jobContactPhone = jobContactPhone;
+        // objectJob.jobPayPeriod = jobPayPeriod;
+        // console.log(jobPayPeriod);
+        const candidates = [];
+        const div1 = document.getElementById('divmain');
+        div1.querySelectorAll("fieldset").forEach(i => {
+            const objectCandidate = { updatedDate: date };
+            const e = i.querySelectorAll("div");
+            e.forEach(m => {
+                const canInput = m.querySelector('input');
+                if (!canInput) {
+                    return;
+                }
+                if (canInput.id.endsWith('name')) {
+                    objectCandidate.name = canInput.value;
+                }
+                if (canInput.id.endsWith('phone')) {
+                    objectCandidate.phone = canInput.value;
+                }
+                if (canInput.id.endsWith('address')) {
+                    objectCandidate.address = canInput.value;
+                }
+                if (canInput.id.endsWith('email')) {
+                    objectCandidate.email = canInput.value;
+                }
+            });
+
+            objectCandidate.submissionStatusId = Number(i.querySelector('select').value);
+
+            const canText = i.querySelector('textarea').value
+            objectCandidate.notes = canText
+            candidates.push(objectCandidate)
+
+        });
+        objectJob.candidates = candidates;
+
+        let jobs = getJobs();
+        let indexOfJob;
+        if (location.search.length > 0) {
+            var qureyString = location.search.substring(1);
+            console.log(qureyString);
+            var jobidSplit = qureyString.split("=");
+            var jobidValue = jobidSplit[1];
+            if (jobidValue) {
+                indexOfJob = jobs.map((j) => {
+                    return j.jobid;
+                }).indexOf(jobidValue);
+            }
+        }
+        if (jobs) {
+            if (indexOfJob > -1) {
+                objectJob.createdDate = jobs[indexOfJob].createdDate;
+                objectJob.createdBy = jobs[indexOfJob].createdBy;
+
+
+                // candidate if exists will already have createdDate
+                // in that case preserve else set new date
+                // Assumption: the index of candidate in Storage matches the index of candidate built here
+                for (let index = 0; index < objectJob.candidates.length; index++) {
+                    const element = jobs[indexOfJob].candidates[index];
+                    if (element) {
+                        objectJob.candidates[index].createdDate = element.createdDate;
+                        objectJob.candidates[index].createdBy = element.createdBy;
+
+                    } else {
+                        objectJob.candidates[index].createdDate = date;
+                        objectJob.candidates[index].createdBy = currentUser.email;
+
+                    }
+                }
+
+                jobs[indexOfJob] = objectJob;
+
+            } else {
+                objectJob = setCreatedDateAndEmail(objectJob, date, currentUser.email);
+                objectJob.createdDate = date;
+                objectJob.createdBy = currentUser.email;
+                objectJob.updatedBy = currentUser.email;
+                jobs.push(objectJob);
+            }
+        }
+        else {
+            jobs = [];
+            objectJob = setCreatedDateAndEmail(objectJob, date, currentUser.email);
+            objectJob.createdDate = date;
+            objectJob.createdBy = currentUser.email;
+            objectJob.updatedBy = currentUser.email;
+            jobs.push(objectJob);
+        }
+        setJobs(jobs);
+        load();
+    }
+    let divPayPeriod = document.getElementsByClassName('payPeriodClass');
+    function setCreatedDateAndEmail(job, date, email) {
+        for (let index = 0; index < job.candidates.length; index++) {
+            job.candidates[index].createdDate = date;
+            job.candidates[index].createdBy = email;
+
+        }
+        return job;
+    }
+
+    var candidateCounter = 0;
+
+    function addCandidateForm(candidate, i) {
+        if (!candidate) {
+            candidate = { name: '', address: '', email: '', phone: '', notes: '', submitionStatus: '', createdDate: new Date() };
+        }
+        candidateCounter++
+        const div1 = document.getElementById('divmain');
+        div1.setAttribute("class", "ui input")
+
+        var fieldSet = document.createElement('fieldset');
+        fieldSet.setAttribute("class", "fieldsetClass")
+        var legend = document.createElement('legend');
+
+        var newCandidate = document.createElement('h4');
+        newCandidate.innerHTML = `Candidate : ${candidateCounter}`;
+        var divCandidate = document.createElement("div");
+        divCandidate.setAttribute("id", "divCandidateId")
+
+        var divName = document.createElement('div');
+        divName.setAttribute("class", "ui input focus")
+        var newCanNameLabel = document.createElement('label');
+        newCanNameLabel.setAttribute("class", "labelclass");
+        newCanNameLabel.innerText = "Name  :"
+        var newCanNameInput = document.createElement('input');
+        newCanNameInput.setAttribute("placeholder", "Enter the Name");
+        newCanNameInput.setAttribute("required", "");
+        // newCanNameInput.setAttribute("class", "inputClass");
+        newCanNameInput.setAttribute("style", "margin-left:35px");
+        newCanNameInput.setAttribute("id", "candidate" + `${candidateCounter}` + "name");
+        newCanNameInput.value = candidate.name;
+
+        var divAddress = document.createElement('div');
+        divAddress.setAttribute("class", "ui input focus")
+        var newAddressLabel = document.createElement('label');
+        newAddressLabel.setAttribute("class", "labelclass");
+        newAddressLabel.innerText = "Address   :";
+        var newAddressInput = document.createElement('input');
+        newAddressInput.setAttribute("placeholder", "Enter the Address");
+        newAddressInput.setAttribute("required", "");
+        // newAddressInput.setAttribute("class", "inputClass");
+        newAddressInput.setAttribute("type", "address");
+        newAddressInput.setAttribute("style", "margin-left:20px");
+        newAddressInput.setAttribute("id", "candidate" + `${candidateCounter}` + "address");
+        newAddressInput.value = candidate.address;
+
+        var divPhone = document.createElement('div');
+        divPhone.setAttribute("class", "ui input focus")
+        var newCanPhoneLabel = document.createElement('label');
+        newCanPhoneLabel.setAttribute("class", "labelclass");
+        newCanPhoneLabel.innerText = "PhoneNo   :";
+        var newPhoneInput = document.createElement('input');
+        newPhoneInput.setAttribute("placeholder", "Enter the Phone Number");
+        newPhoneInput.setAttribute("required", "");
+        // newPhoneInput.setAttribute("class", "inputClass");
+        newPhoneInput.setAttribute("type", "phonenumber");
+        newPhoneInput.setAttribute("style", "margin-left:13px");
+        newPhoneInput.setAttribute("id", "candidate" + `${candidateCounter}` + "phone");
+        newPhoneInput.value = candidate.phone;
+
+        var divEmail = document.createElement('div');
+        divEmail.setAttribute("class", "ui input focus")
+        var newCanEmailLabel = document.createElement('label');
+        newCanEmailLabel.setAttribute("class", "labelclass");
+        newCanEmailLabel.innerText = "Email  :"
+        var newCanEmailInput = document.createElement('input');
+        newCanEmailInput.setAttribute("placeholder", "Enter the Email");
+        newCanEmailInput.setAttribute("required", "");
+        // newCanEmailInput.setAttribute("class", "inputClass");
+        newCanEmailInput.setAttribute("type", "email");
+        newCanEmailInput.setAttribute("style", "margin-left:34px");
+        newCanEmailInput.setAttribute("id", "candidate" + `${candidateCounter}` + "email");
+        newCanEmailInput.value = candidate.email;
+
+        var divSubmissionStatus = document.createElement('div');
+        divSubmissionStatus.setAttribute("id", "divCandidateStatus");
+        var newCanSubmissionStatusLbl = document.createElement('label');
+        newCanSubmissionStatusLbl.innerText = "Submission Status:";
+
+
+        var newCanTextareaInput = document.createElement('textarea');
+        newCanTextareaInput.setAttribute("placeholder", "Enter the Notes");
+        newCanTextareaInput.setAttribute("style", "border-color:#85b7d9")
+        newCanTextareaInput.innerText = "Add Notes";
+        newCanTextareaInput.setAttribute("cols", "34");
+        newCanTextareaInput.value = candidate.notes;
+
+        if (candidateCounter > 0 && candidate.name != "") {
+            var divDate = document.createElement('div');
+            var newCanDateLabelCreated = document.createElement('label');
+            var newCanDateLabel = document.createElement('label');
+            newCanDateLabelCreated.innerText = "Last Updated Date: ";
+            const updatedDateDisplay = `${new Date(candidate.updatedDate).toDateString()} ${new Date(candidate.updatedDate).toLocaleTimeString()}`;
+            newCanDateLabel.innerText = updatedDateDisplay;
+        }
+
+        var divCanDelete = document.createElement('div');
+        divCanDelete.setAttribute("id", "divCanDelete");
+        var newCanDeleteBtn = document.createElement('button');
+        newCanDeleteBtn.setAttribute("type", "button");
+        newCanDeleteBtn.setAttribute("class", "ui button blue");
+        newCanDeleteBtn.innerText = "Delete";
+        const canIndex = candidateCounter - 1;
+        newCanDeleteBtn.addEventListener("click", function () {
+            if (confirm("Are you sure to Delete a Candidate " + `${candidate.name}` + " ?")) {
+                let jobs = getjobs();
+                jobs[i].candidates.splice(canIndex, 1);
+                setJobs(jobs);
+                load();
+            }
+        });
+
+        div1.append(fieldSet);
+        fieldSet.append(legend);
+        fieldSet.append(divCandidate);
+        legend.append(newCandidate);
+
+
+        if (candidateCounter > 0 && candidate.name != "") {
+            divCandidate.append(divDate);
+            divDate.append(newCanDateLabelCreated);
+            divDate.append(newCanDateLabel);
+        }
+
+        divCandidate.append(divName);
+        divName.append(newCanNameLabel);
+        divName.append(newCanNameInput);
+
+
+        divCandidate.append(divAddress);
+        divAddress.append(newAddressLabel);
+        divAddress.append(newAddressInput);
+
+        divCandidate.append(divPhone);
+        divPhone.append(newCanPhoneLabel);
+        divPhone.append(newPhoneInput);
+
+        divCandidate.append(divEmail);
+        divEmail.append(newCanEmailLabel);
+        divEmail.append(newCanEmailInput);
+
+        divCandidate.append(newCanTextareaInput);
+        divCandidate.append(divSubmissionStatus);
+        divSubmissionStatus.append(newCanSubmissionStatusLbl);
+        divSubmissionStatus.append(getSubmissionStatusSelect(candidate.submissionStatusId, "candidate" + `${candidateCounter}` + "submissionStatus"));
+
+        divCandidate.append(divCanDelete);
+        divCanDelete.append(newCanDeleteBtn);
+
+    }
+</script>
 
 <script>
     function load() {
