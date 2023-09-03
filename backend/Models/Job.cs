@@ -1,4 +1,5 @@
 ﻿//using Newtonsoft.Json;
+using Microsoft.Azure.Cosmos;
 using System.Text.Json;
 
 namespace RecruitersDairy.Models
@@ -22,6 +23,11 @@ namespace RecruitersDairy.Models
         public DateTime Updated { get; set; }
         // public Recruiter[]? UpdatedBy { get; set; }
         public string? UpdatedBy { get; set; }
+
+        public static implicit operator ItemResponse<object>(Job v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     internal class JsonPropertyAttribute : Attribute
