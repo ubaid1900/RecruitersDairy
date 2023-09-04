@@ -21,8 +21,8 @@
     <div style="display: inline; font-size: large;" id="userNameDiv"></div>
     <hr>
     <div id="divRadio" class="ui input focus">
-        <input id="inputToday" type="radio">:Today
-        <input id="inputYesterday" type="radio">:Yesterday
+        <input id="inputToday" type="radio" value="today" name="datesGroup">:Today
+        <input id="inputYesterday" type="radio" value="Yesterday" name="datesGroup">:Yesterday
     </div>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="ui input focus">
@@ -96,12 +96,13 @@
 
         let count = 0;
         for (let j = 0; j < currentUser.team.length; j++) {
-            for (let i = 0; i < currentUser.team[j].teamMembers.length; i++) {
-                let jobsFilter = jobs.filter(job => {
-                    if (job.createdBy == currentUser.team[j].teamMembers[i]) {
+                let jobsFilter;
+                jobsFilter = jobs.filter(job => {
+                    if (currentUser.team[j].teamMembers.includes(job.createdBy)) {
                         count++;
-                        return job;
+                        return job
                     }
+                    
                 })
 
                 const tr1 = document.createElement("tr");
@@ -124,7 +125,6 @@
                 table.append(tr1);
                 count = 0;
 
-            }
         }
 
     }
@@ -219,9 +219,7 @@
                 const jobs = getJobs();
                 searchByDate(jobs, new Date(new Date().setDate(new Date().getDate()) - 1));
             }
-
-        }
-        )
+        })
     });
 
     let btnRangeOfDates = document.getElementById("btnRangeOfDatesId")
