@@ -9,15 +9,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
         integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link rel="stylesheet" href="style.css">
     <title>Dashboard</title>
-    
+
 </head>
 
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
     <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
-    <div style="display: inline; font-size: large;" id="userNameDiv" ></div>
+    <div style="display: inline; font-size: large;" id="userNameDiv"></div>
     <hr>
     <div id="divButtons" class="ui input focus" style="display: inline; margin-right: 40px;">
         <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup">:Today
@@ -36,6 +38,10 @@
     <br>
     <div id="divJobs">
     </div>
+    <div>
+        <canvas id="myChart"></canvas>
+        <canvas id="recruitersChart"></canvas>
+    </div>
 </body>
 <script>
     (() => {
@@ -51,7 +57,7 @@
             }
         }
         else {
-            alert("You are not allower to view this page")
+            alert("You are not allowed to view this page")
             window.location = "login.html"
         }
     })();
@@ -290,7 +296,29 @@
 
     };
 
+    function chartJobsByStatus(jobsByStatus) {
+        const recruitersCtx = document.getElementById('recruitersChart');
 
+        new Chart(recruitersCtx, {
+            type: 'bar',
+            data: {
+                labels: jobsByStatus.map(j => j.email + '-' + j.status),
+                datasets: [{
+                    label: 'Recruiters by candidate status',
+                    data: jobsByStatus.map(j => j.count),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+    chartJobsByStatus(jobsByStatus);
 </script>
 
 </html>

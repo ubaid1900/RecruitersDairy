@@ -328,7 +328,8 @@ function getSeedUsers() {
       email: 'teamlead2@gmail.com', password: 'qwert1234', roleId: 2
       , teamMembers: ['recruiter3@gmail.com']
     },
-    { email: 'manager1@gmail.com', password: 'qwert1234', roleId: 3 },
+    { email: 'manager1@gmail.com', password: 'qwert1234', roleId: 3 ,
+    team: [{email:'teamlead1@gmail.com',teamMembers:['recruiter1@gmail.com','recruiter2@gmail.com']},{email:'teamlead2@gmail.com', teamMembers:['recruiter3@gmail.com']}]}
   ];
 }
 
