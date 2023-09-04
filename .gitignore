@@ -102,3 +102,31 @@ dist
 
 # TernJS port file
 .tern-port
+/backend/RecruitmentsDiary/.vs/ProjectEvaluation/recruitmentsdiary.metadata.v7.bin
+/backend/RecruitmentsDiary/.vs/ProjectEvaluation/recruitmentsdiary.projects.v7.bin
+/backend/RecruitmentsDiary/.vs/RecruitmentsDiary/DesignTimeBuild/.dtbcache.v2
+/backend/RecruitmentsDiary/.vs/RecruitmentsDiary/FileContentIndex/452036ce-3892-444e-8dce-5d7a3c57d920.vsidx
+/backend/RecruitmentsDiary/.vs/RecruitmentsDiary/FileContentIndex/5e9eb6e4-4b77-4a8d-bed3-708d96f29b32.vsidx
+/backend/RecruitmentsDiary/.vs/RecruitmentsDiary/FileContentIndex/790877bd-98dd-48a2-a8cb-95ef6cd5cd2e.vsidx
+/backend/RecruitmentsDiary/.vs/RecruitmentsDiary/FileContentIndex/af16a128-d57b-486f-b89c-86ca96b311ff.vsidx
+/backend/RecruitmentsDiary/.vs/RecruitmentsDiary/FileContentIndex/b3e8dd35-a877-4198-bc79-2bdfc133a728.vsidx
+/backend/RecruitmentsDiary/.vs/RecruitmentsDiary/FileContentIndex/dd0d7a4d-6f8d-459a-8c51-aedc5ad58b57.vsidx
+/backend/RecruitmentsDiary/.vs/RecruitmentsDiary/v17/.futdcache.v2
+/backend/RecruitmentsDiary/.vs/RecruitmentsDiary/v17/.suo
+/backend/RecruitmentsDiary/obj/Debug/net6.0/RecruitmentsDiary.csproj.AssemblyReference.cache
+*.suo
+/.vs/RecruitersDairy/v17/.wsuo
+*.wsuo
+*.bin
+*.v2
+*.vsidx
+*.sqlite
+*.lock
+*.cache
+/backend/obj/Debug/net6.0/RecruitersDairy.csproj.AssemblyReference.cache
+/backend/bin/Debug/net6.0/RecruitersDairy.dll
+/backend/bin/Debug/net6.0/RecruitersDairy.pdb
+/backend/obj/Debug/net6.0/RecruitersDairy.dll
+/backend/obj/Debug/net6.0/RecruitersDairy.pdb
+/backend/obj/Debug/net6.0/ref/RecruitersDairy.dll
+/backend/obj/Debug/net6.0/refint/RecruitersDairy.dll
