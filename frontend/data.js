@@ -1,8 +1,13 @@
 
 function getDateForDaysAgo(howManyDaysAgo) {
+  if (new Date().getDate()==1) {
+    const d=new Date(new Date().setMonth(new Date().getMonth()-1,0))
+    return dateDaysAgo;
+  }
   const dateDaysAgo = new Date(new Date().setDate(new Date().getDate() - howManyDaysAgo));
   return dateDaysAgo;
 }
+
 
 function setSeedData() {
   var seedData = [
@@ -329,7 +334,7 @@ function getSeedUsers() {
       , teamMembers: ['recruiter3@gmail.com']
     },
     { email: 'manager1@gmail.com', password: 'qwert1234', roleId: 3 ,
-    team: [{email:'teamlead1@gmail.com',teamMembers:['recruiter1@gmail.com','recruiter2@gmail.com']},{email:'teamlead2@gmail.com', teamMembers:['recruiter3@gmail.com']}]}
+    teamMembers:['teamlead1@gmail.com','teamlead2@gmail.com']}
   ];
 }
 

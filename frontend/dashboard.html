@@ -231,7 +231,12 @@
             if (e.id == "YesterdayRadioBtn") {
                 document.getElementById('divJobs').innerHTML = "";
                 let jobs = getJobs();
+                if (new Date().getDate()==1) {
+                    searchByDate(jobs, new Date(new Date().setMonth(new Date().getMonth()-1,0))) 
+                }
+                else{
                 searchByDate(jobs, new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString());
+                }
             }
 
         })
