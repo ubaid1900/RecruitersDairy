@@ -202,26 +202,27 @@
         }
         let currentUser = getCurrentUser();
         let users = getSeedUsers();
-        let filterdUsers=[];
+        let filterdUsers = [];
         let filterdUser;
         for (let i = 0; i < currentUser.teamMembers.length; i++) {
-            filterdUser = users.filter(k => 
-               (k.email == currentUser.teamMembers[i])
+            filterdUser = users.filter(k =>
+                (k.email == currentUser.teamMembers[i])
             );
             filterdUsers.push(filterdUser);
         }
         const tableElement = document.createElement('table');
-        tableElement.setAttribute("class", "ui celled table")
+        tableElement.setAttribute("class", "ui celled table");
+
         jobsByStatus.forEach(j => {
             const trElement = document.createElement('tr');
-
             const tdEmail = document.createElement('td');
-            for (let i = 0; i < filterdUsers.length-1; i++) {
+
+            for (let i = 0; i < filterdUsers.length - 1; i++) {
                 for (let k = 0; k < filterdUsers.length; k++) {
-                if (j.email == filterdUsers[k][i].teamMembers[i]) {
-                    tdEmail.innerText = filterdUsers[k][i].email;
+                    if (j.email == filterdUsers[k][i].teamMembers[i]) {
+                        tdEmail.innerText = filterdUsers[k][i].email;
+                    }
                 }
-            }
             }
             trElement.append(tdEmail);
 
@@ -338,7 +339,27 @@
     };
     function chartJobsByStatus(jobsByStatus) {
         const recruitersCtx = document.getElementById('recruitersChart');
+        let currentUser = getCurrentUser();
+        let users = getSeedUsers();
+        let filterdUsers = [];
+        let filterdUser;
+        for (let i = 0; i < currentUser.teamMembers.length; i++) {
+            filterdUser = users.filter(k =>
+                (k.email == currentUser.teamMembers[i])
+            );
+            filterdUsers.push(filterdUser);
+        }
+       jobsByStatus.map(j => {
 
+            for (let i = 0; i < filterdUsers.length - 1; i++) {
+                for (let k = 0; k < filterdUsers.length; k++) {
+                    if (j.email == filterdUsers[k][i].teamMembers[i]) {
+                      j.email=  filterdUsers[k][i].email;
+                      
+                    }
+                }
+            }
+        });
         new Chart(recruitersCtx, {
             type: 'bar',
             data: {
