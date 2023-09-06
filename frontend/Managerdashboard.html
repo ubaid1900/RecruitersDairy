@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="uiHelper.js"></script>
+    <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="crudLocalStorage.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
         integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
@@ -95,35 +96,43 @@
         const currentUser = getCurrentUser();
 
         let count = 0;
-        for (let j = 0; j < currentUser.team.length; j++) {
-                let jobsFilter;
-                jobsFilter = jobs.filter(job => {
-                    if (currentUser.team[j].teamMembers.includes(job.createdBy)) {
-                        count++;
-                        return job
+        for (let j = 0; j < currentUser.teamMembers.length; j++) {
+            let jobsFilter;
+            let users = getSeedUsers();
+
+            jobsFilter = jobs.filter(job => {
+                let filterdUser = users.filter(i => {
+                    if (i.email == currentUser.teamMembers[j]) {
+                        return i
                     }
-                    
+
                 })
+                if (filterdUser[0].teamMembers.includes(job.createdBy)) {
+                    count++;
+                    return job;
 
-                const tr1 = document.createElement("tr");
-                const td1 = document.createElement("td");
-                const td2 = document.createElement("td");
-                const td3 = document.createElement("td");
-                const viewBtn = document.createElement("button");
-                viewBtn.setAttribute("type", "button");
-                viewBtn.setAttribute("class", "ui button blue")
-                viewBtn.innerText = "view"
+                }
+            })
 
-                td1.innerText = currentUser.team[j].email;
-                td2.innerText = count;
-                td3.innerText = viewBtn.innerText;
+            const tr1 = document.createElement("tr");
+            const td1 = document.createElement("td");
+            const td2 = document.createElement("td");
+            const td3 = document.createElement("td");
+            const viewBtn = document.createElement("button");
+            viewBtn.setAttribute("type", "button");
+            viewBtn.setAttribute("class", "ui button blue")
+            viewBtn.innerText = "view"
 
-                tr1.append(td1);
-                tr1.append(td2);
-                tr1.append(td3);
+            td1.innerText = currentUser.teamMembers[j];
+            td2.innerText = count;
+            td3.innerText = viewBtn.innerText;
 
-                table.append(tr1);
-                count = 0;
+            tr1.append(td1);
+            tr1.append(td2);
+            tr1.append(td3);
+
+            table.append(tr1);
+            count = 0;
 
         }
 
@@ -137,9 +146,26 @@
         const statuses = getSubmissionStatuses();
         const jobsCounter = [];
         let filterJobs = [];
-        for (let i = 0; i < currentUser.team.length; i++) {
-            filterJobs = jobs.filter(j => currentUser.team[i].teamMembers.includes(j.updatedBy) ||
-                j.candidates.some(c => currentUser.team[i].teamMembers.includes(j.updatedBy)))
+        let filterdUser;
+        let users = getSeedUsers();
+        for (let i = 0; i < currentUser.teamMembers.length; i++) {
+
+            filterJobs = jobs.filter(j => {
+                currentUser.teamMembers[i]
+                filterdUser = users.filter(k => {
+                    if (k.email == currentUser.teamMembers[i]) {
+                        return k;
+                    }
+                });
+
+                for (let m = 0; m < filterdUser.length; m++) {
+                    if (filterdUser[m].teamMembers[m].includes(j.updatedBy) ||
+                        j.candidates.some(c => filterdUser[m].teamMembers[m].includes(j.updatedBy))) {
+                        return j
+                    }
+                }
+
+            })
 
 
             filterJobs.forEach(job => {
@@ -174,13 +200,29 @@
             console.error('input was null!');
             return;
         }
+        let currentUser = getCurrentUser();
+        let users = getSeedUsers();
+        let filterdUsers=[];
+        let filterdUser;
+        for (let i = 0; i < currentUser.teamMembers.length; i++) {
+            filterdUser = users.filter(k => 
+               (k.email == currentUser.teamMembers[i])
+            );
+            filterdUsers.push(filterdUser);
+        }
         const tableElement = document.createElement('table');
         tableElement.setAttribute("class", "ui celled table")
         jobsByStatus.forEach(j => {
             const trElement = document.createElement('tr');
 
             const tdEmail = document.createElement('td');
-            tdEmail.innerText = j.email;
+            for (let i = 0; i < filterdUsers.length-1; i++) {
+                for (let k = 0; k < filterdUsers.length; k++) {
+                if (j.email == filterdUsers[k][i].teamMembers[i]) {
+                    tdEmail.innerText = filterdUsers[k][i].email;
+                }
+            }
+            }
             trElement.append(tdEmail);
 
             const tdCount = document.createElement('td');
@@ -217,7 +259,12 @@
             if (e.id == "inputYesterday") {
                 document.getElementById("inputToday").innerHTML = "";
                 const jobs = getJobs();
-                searchByDate(jobs, new Date(new Date().setDate(new Date().getDate()) - 1));
+                if (new Date().getDate() == 1) {
+                    searchByDate(jobs, new Date(new Date().setMonth(new Date().getMonth() - 1, 0)))
+                }
+                else {
+                    searchByDate(jobs, new Date(new Date().setDate(new Date().getDate() - 1)));
+                }
             }
         })
     });
@@ -239,7 +286,10 @@
         filteredJobs = jobs.filter(job => {
             if (job.candidates) {
                 canUpdated = job.candidates.some(can => {
-                    new Date(can.updatedDate).toDateString() == new Date(dateString).toDateString()
+                    if (new Date(can.updatedDate).toLocaleDateString() == new Date(dateString).toLocaleDateString()) {
+                        return can
+                    }
+
                 })
 
                 let jobsUpdateBy = new Date(job.updatedDate).toDateString() == new Date(dateString).toDateString()
@@ -309,6 +359,7 @@
         });
     }
     chartJobsByStatus(jobsByStatus);
+
 
 </script>
 
