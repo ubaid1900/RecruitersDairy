@@ -18,8 +18,13 @@
 
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
-    <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
-    <div style="display: inline; font-size: large;" id="userNameDiv"></div>
+    <div id="divLogOut">
+        <div>
+            <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
+        </div>
+        &nbsp;&nbsp;&nbsp;
+        <div style="display: inline; font-size: large;" id="userNameDiv"></div>
+    </div>
     <hr>
     <div id="divButtons" class="ui input focus" style="display: inline; margin-right: 40px;">
         <input id="todayRadioBtn" type="radio" value="Today" name="datesGroup">:Today
@@ -231,11 +236,11 @@
             if (e.id == "YesterdayRadioBtn") {
                 document.getElementById('divJobs').innerHTML = "";
                 let jobs = getJobs();
-                if (new Date().getDate()==1) {
-                    searchByDate(jobs, new Date(new Date().setMonth(new Date().getMonth()-1,0))) 
+                if (new Date().getDate() == 1) {
+                    searchByDate(jobs, new Date(new Date().setMonth(new Date().getMonth() - 1, 0)))
                 }
-                else{
-                searchByDate(jobs, new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString());
+                else {
+                    searchByDate(jobs, new Date((new Date().setDate((new Date().getDate() - 1)))).toDateString());
                 }
             }
 

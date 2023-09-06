@@ -16,13 +16,18 @@
     <link rel="stylesheet" href="style.css">
     <title style="color:blue;">Recruiters Dairy</title>
 
-   
+
 </head>
 
-<body >
+<body>
     <h1 class="banner">Recruiters Dairy</h1>
-    <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
-    <div style="display: inline; font-size: large;" id="userNameDiv" ></div>
+    <div id="divLogOut">
+        <div>
+            <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
+        </div>
+        &nbsp;&nbsp;&nbsp;
+        <div style="display: inline; font-size: large;" id="userNameDiv"></div>
+    </div>
     <hr>
 
     <button class="ui blue button" id="fillJob" onclick="fillJob()" type="button">Fill</button>
@@ -48,14 +53,15 @@
             <label for="">Contact Phone </label>
             <input id="contactPhone" type="tel" required maxlength="15" placeholder="Enter ContactPhone">
             <label for="" id="payPeriodLbl">PayPeriod</label>
-           <br>
+            <br>
             <div class="ui input focus" id="divSearchBtn">
                 <button class="ui blue button" id="btnSearch" type="button" onclick="load()">Search</button>
-                <input  id="searchText" type="text">
+                <input id="searchText" type="text">
             </div>
         </div>
         <br>
-        <button class="ui blue button" id="addCanBtn" onclick="addCandidateForm()" type="button">Add new candidate</button>
+        <button class="ui blue button" id="addCanBtn" onclick="addCandidateForm()" type="button">Add new
+            candidate</button>
         <br>
         <br>
         <div id="divmain"></div>
@@ -389,38 +395,38 @@
         if (jobidValue != 0 && jobidValue != null) {
             let job;
             job = getJob(jobidValue);
-            
-                if (job) {
-                    var elementfilljobid = document.getElementById('jobId');
-                    elementfilljobid.setAttribute('disabled', 'disabled');
-                    elementfilljobid.value = job.jobid;
-                    var elementfilljobdes = document.getElementById('jobDescription');
-                    elementfilljobdes.value = job.description;
-                    var elementfilljobReq = document.getElementById('jobRequirements');
-                    elementfilljobReq.value = job.jobRequirements;
-                    var elementfilljobLoc = document.getElementById('jobLocation');
-                    elementfilljobLoc.value = job.jobLocation;
-                    var elementfilljobPay1 = document.getElementById('jobPayRange1');
-                    elementfilljobPay1.value = job.jobPayRange1;
-                    var elementfilljobPay2 = document.getElementById('jobPayRange2');
-                    elementfilljobPay2.value = job.jobPayRange2;
-                    var elementfillContactPerson = document.getElementById("contactPer");
-                    elementfillContactPerson.value = job.jobContactPer;
-                    var elementfillContactPhone = document.getElementById("contactPhone");
-                    elementfillContactPhone.value = job.jobContactPhone;
-                    var elementfillContactPayPeriod = document.getElementById("payPeriod");
-                    // elementfillContactPayPeriod.value = job.jobPayPeriod;
 
-                    const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
-                    const filterCandidates = job.candidates.filter
-                        (c => c.address.toLowerCase().indexOf(elementSearchValue) > -1 || c.name.toLowerCase().indexOf(elementSearchValue) > -1 || c.phone.indexOf(elementSearchValue) > -1 || c.email.indexOf(elementSearchValue) > -1 || c.notes.indexOf(elementSearchValue) > -1 );
+            if (job) {
+                var elementfilljobid = document.getElementById('jobId');
+                elementfilljobid.setAttribute('disabled', 'disabled');
+                elementfilljobid.value = job.jobid;
+                var elementfilljobdes = document.getElementById('jobDescription');
+                elementfilljobdes.value = job.description;
+                var elementfilljobReq = document.getElementById('jobRequirements');
+                elementfilljobReq.value = job.jobRequirements;
+                var elementfilljobLoc = document.getElementById('jobLocation');
+                elementfilljobLoc.value = job.jobLocation;
+                var elementfilljobPay1 = document.getElementById('jobPayRange1');
+                elementfilljobPay1.value = job.jobPayRange1;
+                var elementfilljobPay2 = document.getElementById('jobPayRange2');
+                elementfilljobPay2.value = job.jobPayRange2;
+                var elementfillContactPerson = document.getElementById("contactPer");
+                elementfillContactPerson.value = job.jobContactPer;
+                var elementfillContactPhone = document.getElementById("contactPhone");
+                elementfillContactPhone.value = job.jobContactPhone;
+                var elementfillContactPayPeriod = document.getElementById("payPeriod");
+                // elementfillContactPayPeriod.value = job.jobPayPeriod;
 
-                    filterCandidates.forEach(function (candidate) {
-                        addCandidateForm(candidate, jobidValue);
-                    });
-                    return;
-                }
-            
+                const elementSearchValue = document.getElementById('searchText').value.toLowerCase();
+                const filterCandidates = job.candidates.filter
+                    (c => c.address.toLowerCase().indexOf(elementSearchValue) > -1 || c.name.toLowerCase().indexOf(elementSearchValue) > -1 || c.phone.indexOf(elementSearchValue) > -1 || c.email.indexOf(elementSearchValue) > -1 || c.notes.indexOf(elementSearchValue) > -1);
+
+                filterCandidates.forEach(function (candidate) {
+                    addCandidateForm(candidate, jobidValue);
+                });
+                return;
+            }
+
         }
         else {
             document.getElementById("btnSearch").setAttribute("style", "display:none");

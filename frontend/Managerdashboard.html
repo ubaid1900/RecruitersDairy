@@ -18,8 +18,13 @@
 
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
-    <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
-    <div style="display: inline; font-size: large;" id="userNameDiv"></div>
+    <div id="divLogOut">
+        <div>
+            <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
+        </div>
+        &nbsp;&nbsp;&nbsp;
+        <div style="display: inline; font-size: large;" id="userNameDiv"></div>
+    </div>
     <hr>
     <div id="divRadio" class="ui input focus">
         <input id="inputToday" type="radio" value="today" name="datesGroup">:Today
@@ -349,13 +354,13 @@
             );
             filterdUsers.push(filterdUser);
         }
-       jobsByStatus.map(j => {
+        jobsByStatus.map(j => {
 
             for (let i = 0; i < filterdUsers.length - 1; i++) {
                 for (let k = 0; k < filterdUsers.length; k++) {
                     if (j.email == filterdUsers[k][i].teamMembers[i]) {
-                      j.email=  filterdUsers[k][i].email;
-                      
+                        j.email = filterdUsers[k][i].email;
+
                     }
                 }
             }
