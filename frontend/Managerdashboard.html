@@ -72,6 +72,13 @@
     })();
 
     function newJobs(jobs) {
+        let divJobs = document.getElementById('divTable');
+        if (!jobs || !jobs.length) {
+            const divResult = document.createElement("div");
+            divResult.innerText = "NO Results Found";
+            divJobs.appendChild(divResult);
+            return;
+        }
 
         const table = document.createElement("table");
         const currentUser1 = getCurrentUser();
