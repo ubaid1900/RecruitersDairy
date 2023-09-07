@@ -18,10 +18,15 @@
 </head>
 
 <body>
-    
+
     <h1 class="ui huge header" style="color:#2185d0; text-align: center;">Recruiters Dairy</h1>
-    <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
-    <div style="display: inline; font-size: large;" id="userNameDiv" ></div>
+    <div id="divLogOut">
+        <div>
+            <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
+        </div>
+        &nbsp;&nbsp;&nbsp;
+        <div style="display: inline; font-size: large;" id="userNameDiv"></div>
+    </div>
     <hr>
     <br>
     <button id="seedJobs" class="ui blue button" onclick="seedJobs()" type="button">Seed</button>

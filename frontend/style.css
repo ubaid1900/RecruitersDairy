@@ -10,6 +10,10 @@ body {
     border-width: 1px;
     align-content: end;
 }
+#divLogOut{
+    display: flex;
+    flex-direction: row-reverse;
+}
 
 #divForm {
     display: grid;

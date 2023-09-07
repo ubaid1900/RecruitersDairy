@@ -18,8 +18,13 @@
 
 <body>
     <h1 class="banner">Recruiters Dairy</h1>
-    <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
-    <div style="display: inline; font-size: large;" id="userNameDiv"></div>
+    <div id="divLogOut">
+        <div>
+            <button class="ui blue button" onclick="window.location='login.html'">Log Out</button>
+        </div>
+        &nbsp;&nbsp;&nbsp;
+        <div style="display: inline; font-size: large;" id="userNameDiv"></div>
+    </div>
     <hr>
     <div id="divRadio" class="ui input focus">
         <input id="inputToday" type="radio" value="today" name="datesGroup">:Today
@@ -67,6 +72,13 @@
     })();
 
     function newJobs(jobs) {
+        let divJobs = document.getElementById('divTable');
+        if (!jobs || !jobs.length) {
+            const divResult = document.createElement("div");
+            divResult.innerText = "NO Results Found";
+            divJobs.appendChild(divResult);
+            return;
+        }
 
         const table = document.createElement("table");
         const currentUser1 = getCurrentUser();
@@ -110,10 +122,8 @@
                 if (filterdUser[0].teamMembers.includes(job.createdBy)) {
                     count++;
                     return job;
-
                 }
             })
-
             const tr1 = document.createElement("tr");
             const td1 = document.createElement("td");
             const td2 = document.createElement("td");
@@ -202,27 +212,30 @@
         }
         let currentUser = getCurrentUser();
         let users = getSeedUsers();
-        let filterdUsers=[];
+        let filterdUsers = [];
         let filterdUser;
         for (let i = 0; i < currentUser.teamMembers.length; i++) {
-            filterdUser = users.filter(k => 
-               (k.email == currentUser.teamMembers[i])
+            filterdUser = users.filter(k =>
+                (k.email == currentUser.teamMembers[i])
+
             );
             filterdUsers.push(filterdUser);
         }
         const tableElement = document.createElement('table');
-        tableElement.setAttribute("class", "ui celled table")
+        tableElement.setAttribute("class", "ui celled table");
+
         jobsByStatus.forEach(j => {
             const trElement = document.createElement('tr');
-
             const tdEmail = document.createElement('td');
-            for (let i = 0; i < filterdUsers.length-1; i++) {
+
+            for (let i = 0; i < filterdUsers.length - 1; i++) {
                 for (let k = 0; k < filterdUsers.length; k++) {
-                if (j.email == filterdUsers[k][i].teamMembers[i]) {
-                    tdEmail.innerText = filterdUsers[k][i].email;
+                    if (j.email == filterdUsers[k][i].teamMembers[i]) {
+                        tdEmail.innerText = filterdUsers[k][i].email;
+                    }
                 }
             }
-            }
+
             trElement.append(tdEmail);
 
             const tdCount = document.createElement('td');
@@ -338,7 +351,27 @@
     };
     function chartJobsByStatus(jobsByStatus) {
         const recruitersCtx = document.getElementById('recruitersChart');
+        let currentUser = getCurrentUser();
+        let users = getSeedUsers();
+        let filterdUsers = [];
+        let filterdUser;
+        for (let i = 0; i < currentUser.teamMembers.length; i++) {
+            filterdUser = users.filter(k =>
+                (k.email == currentUser.teamMembers[i])
+            );
+            filterdUsers.push(filterdUser);
+        }
+        jobsByStatus.map(j => {
 
+            for (let i = 0; i < filterdUsers.length - 1; i++) {
+                for (let k = 0; k < filterdUsers.length; k++) {
+                    if (j.email == filterdUsers[k][i].teamMembers[i]) {
+                        j.email = filterdUsers[k][i].email;
+
+                    }
+                }
+            }
+        });
         new Chart(recruitersCtx, {
             type: 'bar',
             data: {
