@@ -13,10 +13,15 @@ namespace RecruitersDairy.Controllers
     [ApiController]
     public class JobController : ControllerBase
     {
-
+        private readonly ILogger<JobController> _logger; 
         public IJobRepository _jobRepository;
-        public JobController(IJobRepository jobRepository) { _jobRepository = jobRepository; }
-
+        public JobController(IJobRepository jobRepository, ILogger<JobController> logger)
+        { 
+            _jobRepository = jobRepository;
+            _logger = logger;
+        }
+       
+      
         // GET: api/<JobController>
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -35,7 +40,9 @@ namespace RecruitersDairy.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                //return BadRequest(ex.Message); 
+                _logger.LogInformation(ex.Message);
+                return NotFound("Please check the Job Id. Job Id you are looking for" +JobId +"  Not Found");
             }
         }
 
@@ -50,7 +57,9 @@ namespace RecruitersDairy.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                //return BadRequest(ex.Message);
+                _logger.LogInformation(ex.Message);
+                return NotFound("Error in update.  Please retry....");
             }
 
         }
@@ -61,11 +70,12 @@ namespace RecruitersDairy.Controllers
             try
             {
                 var response = await _jobRepository.DeleteJob(JobId, partitionKey);
-                return Ok(response); 
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogInformation(ex.Message);
+                return NotFound("Error in delete.  Please retry....");
             }
         }
     }
