@@ -1,3 +1,6 @@
+
+// CRUD - Create Read Update Delete
+
 function getJobs() {
     let jobs = JSON.parse(localStorage.getItem("jobs"));
     if (!jobs) {
